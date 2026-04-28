@@ -1,0 +1,47 @@
+{
+  "id": "javascript-fizzbuzz-console",
+  "topic": "javascript",
+  "type": "build",
+  "title": "FizzBuzz en consola",
+  "difficulty": "reto",
+  "estimatedMinutes": 18,
+  "prompt": "Genera los numeros del 1 al 15. Sustituye multiplos de 3 por Fizz, multiplos de 5 por Buzz y multiplos de ambos por FizzBuzz. Muestra el resultado completo con console.log.",
+  "notes": [
+    "Pulsa Ejecutar antes de comprobar para refrescar la consola.",
+    "Una salida valida puede ser una lista o un string, siempre que contenga FizzBuzz."
+  ],
+  "starterCode": {
+    "html": "<main>\n  <h1>FizzBuzz</h1>\n  <p>Revisa la consola del ejercicio despues de ejecutar.</p>\n</main>",
+    "css": "body {\n  min-height: 100vh;\n  display: grid;\n  place-items: center;\n  background: #17201e;\n  color: #fffdf8;\n}\n\nmain {\n  text-align: center;\n}\n",
+    "javascript": "// Escribe tu solucion aqui\n"
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "FizzBuzz esta saliendo por consola.",
+    "rules": [
+      {
+        "type": "contains",
+        "field": "javascript",
+        "value": "for",
+        "message": "Usa un bucle para recorrer del 1 al 15."
+      },
+      {
+        "type": "contains",
+        "field": "javascript",
+        "value": "%",
+        "message": "Usa el operador modulo para detectar multiplos."
+      },
+      {
+        "type": "contains",
+        "field": "javascript",
+        "value": "console.log",
+        "message": "Muestra el resultado con console.log."
+      },
+      {
+        "type": "consoleIncludes",
+        "value": "FizzBuzz",
+        "message": "La consola debe incluir FizzBuzz."
+      }
+    ]
+  }
+}

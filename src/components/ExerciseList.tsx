@@ -1,0 +1,133 @@
+import { CheckCircle2, Clock3 } from "lucide-react";
+
+import { Badge } from "@/components/ui/badge";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import { cn } from "@/lib/utils";
+import type { Exercise, ExerciseProgress, Topic } from "../lib/types";
+
+type ExerciseListProps = {
+  exercises: Exercise[];
+  selectedId: string | null;
+  topic: Topic | "todos";
+  progressById: Record<string, ExerciseProgress>;
+  onTopicChange: (topic: Topic | "todos") => void;
+  onSelect: (exercise: Exercise) => void;
+};
+
+const topicOptions: Array<{ value: Topic | "todos"; label: string }> = [
+  { value: "todos", label: "Todos" },
+  { value: "html", label: "HTML" },
+  { value: "css", label: "CSS" },
+  { value: "javascript", label: "JS" },
+];
+
+const topicDotClass: Record<Topic, string> = {
+  html: "bg-topic-html",
+  css: "bg-topic-css",
+  javascript: "bg-topic-javascript",
+};
+
+export default function ExerciseList({
+  exercises,
+  selectedId,
+  topic,
+  progressById,
+  onTopicChange,
+  onSelect,
+}: ExerciseListProps) {
+  const filteredExercises =
+    topic === "todos"
+      ? exercises
+      : exercises.filter((exercise) => exercise.topic === topic);
+
+  return (
+    <aside className="flex h-screen min-h-0 flex-col gap-4 overflow-hidden border-r bg-secondary/40 p-4 lg:sticky lg:top-0">
+      <div className="flex items-center gap-3">
+        <div className="grid h-8 w-8 place-items-center rounded-md border bg-background text-[0.7rem] font-bold tracking-wider">
+          DW
+        </div>
+        <div className="min-w-0">
+          <p className="truncate text-sm font-semibold leading-none">
+            DAW Practice Lab
+          </p>
+          <p className="mt-1 text-xs text-muted-foreground">
+            {exercises.length} ejercicios
+          </p>
+        </div>
+      </div>
+
+      <ToggleGroup
+        type="single"
+        value={topic}
+        onValueChange={(value) => {
+          if (value) onTopicChange(value as Topic | "todos");
+        }}
+        className="grid w-full grid-cols-4 rounded-md border bg-background p-0.5"
+      >
+        {topicOptions.map(({ value, label }) => (
+          <ToggleGroupItem
+            key={value}
+            value={value}
+            size="sm"
+            className="h-7 w-full text-xs font-medium"
+          >
+            {label}
+          </ToggleGroupItem>
+        ))}
+      </ToggleGroup>
+
+      <div className="flex items-center justify-between px-1 text-[0.68rem] font-semibold uppercase tracking-wider text-muted-foreground/80">
+        <span>Ejercicios</span>
+        <span>{filteredExercises.length}</span>
+      </div>
+
+      <ScrollArea className="-mx-1 flex-1">
+        <div className="flex flex-col gap-1 px-1">
+          {filteredExercises.map((exercise) => {
+            const progress = progressById[exercise.id];
+            const isActive = selectedId === exercise.id;
+
+            return (
+              <button
+                key={exercise.id}
+                type="button"
+                onClick={() => onSelect(exercise)}
+                className={cn(
+                  "group grid grid-cols-[10px_minmax(0,1fr)] items-start gap-3 rounded-md border border-transparent p-3 text-left transition-colors",
+                  "hover:border-border hover:bg-background",
+                  isActive && "border-border bg-background shadow-sm",
+                )}
+              >
+                <span
+                  aria-hidden
+                  className={cn(
+                    "mt-1.5 h-2 w-2 rounded-full",
+                    topicDotClass[exercise.topic],
+                  )}
+                />
+                <span className="flex min-w-0 flex-col gap-1">
+                  <span className="break-words text-sm font-semibold leading-snug">
+                    {exercise.title}
+                  </span>
+                  <span className="inline-flex items-center gap-1.5 text-xs text-muted-foreground">
+                    <Clock3 size={12} aria-hidden />
+                    {exercise.estimatedMinutes} min
+                    <span className="opacity-50">·</span>
+                    <span className="capitalize">{exercise.difficulty}</span>
+                  </span>
+                  {progress?.completed ? (
+                    <Badge variant="success" className="mt-1 w-fit">
+                      <CheckCircle2 size={12} aria-hidden />
+                      Hecho
+                    </Badge>
+                  ) : null}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+      </ScrollArea>
+    </aside>
+  );
+}

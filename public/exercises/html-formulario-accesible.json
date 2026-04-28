@@ -1,0 +1,50 @@
+{
+  "id": "html-formulario-accesible",
+  "topic": "html",
+  "type": "build",
+  "title": "Formulario de contacto accesible",
+  "difficulty": "base",
+  "estimatedMinutes": 12,
+  "prompt": "Construye un formulario de contacto con estructura semántica. Debe pedir nombre, email y mensaje, y cada campo tiene que estar asociado a su label correspondiente.",
+  "notes": [
+    "Usa elementos HTML, no resuelvas la estructura con divs sin significado.",
+    "El botón debe enviar el formulario con type=\"submit\"."
+  ],
+  "starterCode": {
+    "html": "<main>\n  <!-- Crea aqui el formulario -->\n</main>",
+    "css": "body {\n  display: grid;\n  min-height: 100vh;\n  place-items: center;\n  background: #f4f7f5;\n}\n\nform {\n  width: min(420px, 92vw);\n}\n",
+    "javascript": ""
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "Formulario listo: estructura, labels y boton de envio estan en su sitio.",
+    "rules": [
+      {
+        "type": "domSelector",
+        "selector": "form",
+        "message": "Incluye un elemento <form>."
+      },
+      {
+        "type": "domSelector",
+        "selector": "label[for]",
+        "minCount": 3,
+        "message": "Crea al menos tres labels asociados con for."
+      },
+      {
+        "type": "domSelector",
+        "selector": "input[type='email']",
+        "message": "Usa un input de tipo email."
+      },
+      {
+        "type": "domSelector",
+        "selector": "textarea",
+        "message": "Incluye un textarea para el mensaje."
+      },
+      {
+        "type": "domSelector",
+        "selector": "button[type='submit']",
+        "message": "Anade un boton de envio con type=\"submit\"."
+      }
+    ]
+  }
+}

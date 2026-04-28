@@ -1,0 +1,63 @@
+{
+  "id": "css-tarjeta-producto",
+  "topic": "css",
+  "type": "visual-match",
+  "title": "Clona una tarjeta de producto",
+  "difficulty": "media",
+  "estimatedMinutes": 18,
+  "prompt": "Replica visualmente la tarjeta objetivo. Puedes tocar el CSS todo lo que necesites, pero intenta mantener el HTML inicial sin cambios.",
+  "notes": [
+    "Observa espaciado, alineacion, border radius, color del precio y jerarquia visual.",
+    "No hace falta que sea pixel-perfect; usa la vista objetivo como referencia."
+  ],
+  "starterCode": {
+    "html": "<article class=\"product-card\">\n  <span class=\"tag\">Nuevo</span>\n  <h1>Mochila Atlas</h1>\n  <p>Una mochila compacta para clase, portatil y escapadas cortas.</p>\n  <strong>49,90 EUR</strong>\n  <button>Comprar</button>\n</article>",
+    "css": "body {\n  min-height: 100vh;\n  display: grid;\n  place-items: center;\n  background: #edf2f0;\n}\n\n.product-card {\n  /* Escribe tu CSS aqui */\n}\n",
+    "javascript": ""
+  },
+  "targetCode": {
+    "html": "<article class=\"product-card\">\n  <span class=\"tag\">Nuevo</span>\n  <h1>Mochila Atlas</h1>\n  <p>Una mochila compacta para clase, portatil y escapadas cortas.</p>\n  <strong>49,90 EUR</strong>\n  <button>Comprar</button>\n</article>",
+    "css": "body {\n  min-height: 100vh;\n  display: grid;\n  place-items: center;\n  background: #edf2f0;\n}\n\n.product-card {\n  width: 320px;\n  display: grid;\n  gap: 14px;\n  border: 1px solid #d7ded9;\n  border-radius: 18px;\n  background: #fffdf8;\n  padding: 24px;\n  box-shadow: 0 18px 40px rgba(40, 55, 49, 0.16);\n}\n\n.tag {\n  width: max-content;\n  border-radius: 999px;\n  background: #2a9d8f;\n  padding: 6px 10px;\n  color: white;\n  font-size: 0.8rem;\n  font-weight: 800;\n}\n\nh1 {\n  margin: 0;\n  color: #17201e;\n  font-size: 1.7rem;\n}\n\np {\n  margin: 0;\n  color: #5b655f;\n  line-height: 1.5;\n}\n\nstrong {\n  color: #e76f51;\n  font-size: 1.35rem;\n}\n\nbutton {\n  border: 0;\n  border-radius: 12px;\n  background: #17201e;\n  padding: 12px 14px;\n  color: white;\n  font-weight: 800;\n}\n",
+    "javascript": ""
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "La tarjeta ya tiene la estructura visual principal.",
+    "rules": [
+      {
+        "type": "contains",
+        "field": "css",
+        "value": ".product-card",
+        "message": "Estiliza la clase .product-card."
+      },
+      {
+        "type": "regex",
+        "field": "css",
+        "pattern": "display\\s*:\\s*grid",
+        "flags": "i",
+        "message": "Usa grid para ordenar el contenido de la tarjeta."
+      },
+      {
+        "type": "regex",
+        "field": "css",
+        "pattern": "border-radius\\s*:",
+        "flags": "i",
+        "message": "Anade border-radius para redondear la tarjeta o sus elementos."
+      },
+      {
+        "type": "regex",
+        "field": "css",
+        "pattern": "box-shadow\\s*:",
+        "flags": "i",
+        "message": "Incluye una sombra suave."
+      },
+      {
+        "type": "regex",
+        "field": "css",
+        "pattern": "background\\s*:",
+        "flags": "i",
+        "message": "Define un color de fondo en el CSS."
+      }
+    ]
+  }
+}

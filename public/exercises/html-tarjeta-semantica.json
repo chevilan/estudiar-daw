@@ -1,0 +1,49 @@
+{
+  "id": "html-tarjeta-semantica",
+  "topic": "html",
+  "type": "build",
+  "title": "Tarjeta de articulo con HTML semantico",
+  "difficulty": "base",
+  "estimatedMinutes": 10,
+  "prompt": "Crea una tarjeta de articulo para una entrada sobre CSS Grid. Debe tener article, una imagen con texto alternativo, un h2, un parrafo resumen y un enlace para leer mas.",
+  "notes": [
+    "Piensa en la jerarquia de contenido antes de pensar en estilos.",
+    "El enlace puede apuntar a # si solo estas practicando."
+  ],
+  "starterCode": {
+    "html": "<main class=\"blog-list\">\n  <!-- Tu article va aqui -->\n</main>",
+    "css": ".blog-list {\n  display: grid;\n  min-height: 100vh;\n  place-items: center;\n  background: #eef4f1;\n}\n\narticle {\n  width: min(360px, 90vw);\n  background: white;\n  padding: 20px;\n}\n",
+    "javascript": ""
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "Tarjeta semantica completada.",
+    "rules": [
+      {
+        "type": "domSelector",
+        "selector": "article",
+        "message": "Usa un <article> para la tarjeta."
+      },
+      {
+        "type": "domSelector",
+        "selector": "article img[alt]",
+        "message": "Incluye una imagen dentro del article con atributo alt."
+      },
+      {
+        "type": "domSelector",
+        "selector": "article h2",
+        "message": "Anade un h2 dentro del article."
+      },
+      {
+        "type": "domSelector",
+        "selector": "article p",
+        "message": "Incluye un parrafo resumen."
+      },
+      {
+        "type": "domSelector",
+        "selector": "article a[href]",
+        "message": "Cierra con un enlace para leer mas."
+      }
+    ]
+  }
+}

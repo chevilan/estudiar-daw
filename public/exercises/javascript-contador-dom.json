@@ -1,0 +1,42 @@
+{
+  "id": "javascript-contador-dom",
+  "topic": "javascript",
+  "type": "build",
+  "title": "Contador con eventos del DOM",
+  "difficulty": "base",
+  "estimatedMinutes": 15,
+  "prompt": "Haz que el boton sume 1 al contador cada vez que se pulse. El valor debe mostrarse dentro de #counter.",
+  "notes": [
+    "Selecciona los elementos del DOM desde JavaScript.",
+    "Usa addEventListener para escuchar el click."
+  ],
+  "starterCode": {
+    "html": "<main class=\"counter-card\">\n  <p>Clicks: <strong id=\"counter\">0</strong></p>\n  <button id=\"increment\">Sumar</button>\n</main>",
+    "css": "body {\n  min-height: 100vh;\n  display: grid;\n  place-items: center;\n  background: #f5f7f1;\n}\n\n.counter-card {\n  display: grid;\n  gap: 14px;\n  border: 1px solid #d7ded9;\n  border-radius: 16px;\n  background: white;\n  padding: 24px;\n}\n",
+    "javascript": "const counter = document.querySelector('#counter');\nconst button = document.querySelector('#increment');\n\n// Completa el ejercicio aqui\n"
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "El contador tiene la base correcta para responder al click.",
+    "rules": [
+      {
+        "type": "contains",
+        "field": "javascript",
+        "value": "addEventListener",
+        "message": "Escucha el click con addEventListener."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "(let|const)\\s+[a-zA-Z_$][\\w$]*\\s*=\\s*0",
+        "message": "Crea una variable numerica inicializada a 0."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "(textContent|innerText)\\s*=",
+        "message": "Actualiza el texto visible del contador."
+      }
+    ]
+  }
+}

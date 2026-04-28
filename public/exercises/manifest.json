@@ -1,0 +1,10 @@
+{
+  "files": [
+    "html-formulario-accesible.json",
+    "html-tarjeta-semantica.json",
+    "css-tarjeta-producto.json",
+    "css-galeria-responsive.json",
+    "javascript-contador-dom.json",
+    "javascript-fizzbuzz-console.json"
+  ]
+}

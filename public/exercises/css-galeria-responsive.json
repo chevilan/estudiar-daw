@@ -1,0 +1,55 @@
+{
+  "id": "css-galeria-responsive",
+  "topic": "css",
+  "type": "visual-match",
+  "title": "Galeria responsive con Grid",
+  "difficulty": "media",
+  "estimatedMinutes": 20,
+  "prompt": "Convierte la lista de destinos en una galeria responsive. En escritorio debe verse como una cuadricula fluida; en pantallas pequenas debe caer a una columna legible.",
+  "notes": [
+    "Practica minmax, repeat y auto-fit.",
+    "Puedes comprobar el comportamiento estrechando la ventana del navegador."
+  ],
+  "starterCode": {
+    "html": "<section class=\"gallery\">\n  <article>HTML</article>\n  <article>CSS</article>\n  <article>JavaScript</article>\n  <article>Responsive</article>\n</section>",
+    "css": "body {\n  min-height: 100vh;\n  margin: 0;\n  display: grid;\n  place-items: center;\n  background: #f2f5f0;\n}\n\n.gallery {\n  width: min(900px, 92vw);\n}\n\n.gallery article {\n  min-height: 150px;\n}\n",
+    "javascript": ""
+  },
+  "targetCode": {
+    "html": "<section class=\"gallery\">\n  <article>HTML</article>\n  <article>CSS</article>\n  <article>JavaScript</article>\n  <article>Responsive</article>\n</section>",
+    "css": "body {\n  min-height: 100vh;\n  margin: 0;\n  display: grid;\n  place-items: center;\n  background: #f2f5f0;\n}\n\n.gallery {\n  width: min(900px, 92vw);\n  display: grid;\n  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));\n  gap: 16px;\n}\n\n.gallery article {\n  min-height: 150px;\n  display: grid;\n  place-items: center;\n  border-radius: 18px;\n  background: #264653;\n  color: #fffdf8;\n  font-size: 1.25rem;\n  font-weight: 800;\n}\n",
+    "javascript": ""
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "La galeria usa una cuadricula responsive.",
+    "rules": [
+      {
+        "type": "regex",
+        "field": "css",
+        "pattern": "grid-template-columns\\s*:",
+        "flags": "i",
+        "message": "Define grid-template-columns."
+      },
+      {
+        "type": "contains",
+        "field": "css",
+        "value": "auto-fit",
+        "message": "Usa auto-fit para que la cuadricula se adapte."
+      },
+      {
+        "type": "contains",
+        "field": "css",
+        "value": "minmax",
+        "message": "Usa minmax para controlar el ancho minimo de cada tarjeta."
+      },
+      {
+        "type": "regex",
+        "field": "css",
+        "pattern": "gap\\s*:",
+        "flags": "i",
+        "message": "Anade separacion con gap."
+      }
+    ]
+  }
+}

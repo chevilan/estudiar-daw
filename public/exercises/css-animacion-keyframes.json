@@ -1,0 +1,52 @@
+{
+  "id": "css-animacion-keyframes",
+  "topic": "css",
+  "type": "build",
+  "title": "Animacion con @keyframes",
+  "difficulty": "media",
+  "estimatedMinutes": 12,
+  "prompt": "Anima la pelota para que rebote suavemente en bucle. Define una @keyframes llamada bounce que mueva la pelota hacia arriba y vuelva, y aplica la animacion al elemento .ball con duracion, infinite y un easing apropiado.",
+  "notes": [
+    "Puedes usar transform: translateY para el movimiento vertical.",
+    "infinite hace que la animacion se repita sin parar."
+  ],
+  "starterCode": {
+    "html": "<main>\n  <div class=\"ball\"></div>\n</main>",
+    "css": "body {\n  display: grid;\n  place-items: end center;\n  min-height: 100vh;\n  margin: 0;\n  background: linear-gradient(#bde0fe, #f4f7f5);\n}\n\nmain {\n  padding-bottom: 100px;\n}\n\n.ball {\n  width: 60px;\n  height: 60px;\n  border-radius: 50%;\n  background: #e76f51;\n}\n\n/* Define la animacion bounce y aplicala a .ball */\n",
+    "javascript": ""
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "La pelota rebota.",
+    "rules": [
+      {
+        "type": "regex",
+        "field": "css",
+        "pattern": "@keyframes\\s+bounce",
+        "flags": "i",
+        "message": "Define @keyframes bounce."
+      },
+      {
+        "type": "regex",
+        "field": "css",
+        "pattern": "\\.ball[^}]*animation\\s*:",
+        "flags": "is",
+        "message": "Aplica la propiedad animation a .ball."
+      },
+      {
+        "type": "regex",
+        "field": "css",
+        "pattern": "infinite",
+        "flags": "i",
+        "message": "La animacion debe repetirse de forma infinita."
+      },
+      {
+        "type": "regex",
+        "field": "css",
+        "pattern": "transform\\s*:\\s*translate(Y|3d|\\()",
+        "flags": "i",
+        "message": "Usa transform: translateY dentro de los keyframes."
+      }
+    ]
+  }
+}

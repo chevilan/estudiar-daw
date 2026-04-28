@@ -1,0 +1,52 @@
+{
+  "id": "css-media-queries",
+  "topic": "css",
+  "type": "build",
+  "title": "Layout adaptativo con media queries",
+  "difficulty": "media",
+  "estimatedMinutes": 15,
+  "prompt": "Adapta el layout segun el ancho de la ventana. Por defecto los articulos van en una sola columna. A partir de 600px deben aparecer en dos columnas, y a partir de 900px en tres columnas. Usa media queries con min-width.",
+  "notes": [
+    "Los breakpoints se escriben con @media (min-width: ...).",
+    "Empieza por movil y ve sumando columnas en cada breakpoint."
+  ],
+  "starterCode": {
+    "html": "<section class=\"layout\">\n  <article>1</article>\n  <article>2</article>\n  <article>3</article>\n  <article>4</article>\n  <article>5</article>\n  <article>6</article>\n</section>",
+    "css": "body {\n  font-family: system-ui, sans-serif;\n  margin: 0;\n  background: #eef2f7;\n}\n\n.layout {\n  padding: 16px;\n  display: grid;\n  gap: 12px;\n  /* Define grid-template-columns por defecto */\n}\n\narticle {\n  background: #264653;\n  color: white;\n  padding: 24px;\n  border-radius: 10px;\n  text-align: center;\n  font-weight: 800;\n}\n\n/* Anade aqui los media queries */\n",
+    "javascript": ""
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "El layout responde a los breakpoints.",
+    "rules": [
+      {
+        "type": "regex",
+        "field": "css",
+        "pattern": "@media[^{]*min-width\\s*:\\s*600",
+        "flags": "i",
+        "message": "Anade un media query a 600px."
+      },
+      {
+        "type": "regex",
+        "field": "css",
+        "pattern": "@media[^{]*min-width\\s*:\\s*900",
+        "flags": "i",
+        "message": "Anade un media query a 900px."
+      },
+      {
+        "type": "regex",
+        "field": "css",
+        "pattern": "grid-template-columns\\s*:[^;}]*1fr\\s+1fr",
+        "flags": "i",
+        "message": "Configura dos columnas (1fr 1fr) en el breakpoint medio."
+      },
+      {
+        "type": "regex",
+        "field": "css",
+        "pattern": "grid-template-columns\\s*:[^;}]*1fr\\s+1fr\\s+1fr|grid-template-columns\\s*:[^;}]*repeat\\(3",
+        "flags": "i",
+        "message": "Configura tres columnas en el breakpoint mas ancho."
+      }
+    ]
+  }
+}

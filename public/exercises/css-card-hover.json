@@ -1,0 +1,56 @@
+{
+  "id": "css-card-hover",
+  "topic": "css",
+  "type": "visual-match",
+  "title": "Tarjeta con efecto hover",
+  "difficulty": "media",
+  "estimatedMinutes": 15,
+  "prompt": "Estiliza la tarjeta para que coincida con la vista objetivo. Al pasar el raton, la tarjeta debe elevarse ligeramente (translateY negativo) y aumentar su sombra. Usa transition para que el efecto sea suave.",
+  "notes": [
+    "Aplica transition en el estado normal, no en el hover.",
+    "transform: translateY(-6px) crea el efecto de elevarse."
+  ],
+  "starterCode": {
+    "html": "<article class=\"card\">\n  <h2>Curso DAW</h2>\n  <p>Aprende desarrollo web con practica continua.</p>\n  <a href=\"#\">Saber mas</a>\n</article>",
+    "css": "body {\n  display: grid;\n  place-items: center;\n  min-height: 100vh;\n  background: #f4f7f5;\n  font-family: system-ui, sans-serif;\n}\n\n.card {\n  /* Estiliza la tarjeta */\n}\n",
+    "javascript": ""
+  },
+  "targetCode": {
+    "html": "<article class=\"card\">\n  <h2>Curso DAW</h2>\n  <p>Aprende desarrollo web con practica continua.</p>\n  <a href=\"#\">Saber mas</a>\n</article>",
+    "css": "body {\n  display: grid;\n  place-items: center;\n  min-height: 100vh;\n  background: #f4f7f5;\n  font-family: system-ui, sans-serif;\n}\n\n.card {\n  width: 300px;\n  padding: 24px;\n  background: white;\n  border-radius: 14px;\n  box-shadow: 0 8px 18px rgba(15, 30, 25, 0.08);\n  display: grid;\n  gap: 10px;\n  transition: transform 0.25s ease, box-shadow 0.25s ease;\n}\n\n.card h2 {\n  margin: 0;\n  color: #17201e;\n}\n\n.card p {\n  margin: 0;\n  color: #5b655f;\n  line-height: 1.5;\n}\n\n.card a {\n  color: #2a9d8f;\n  font-weight: 700;\n  text-decoration: none;\n}\n\n.card:hover {\n  transform: translateY(-6px);\n  box-shadow: 0 18px 32px rgba(15, 30, 25, 0.18);\n}\n",
+    "javascript": ""
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "Tarjeta con hover suave preparada.",
+    "rules": [
+      {
+        "type": "regex",
+        "field": "css",
+        "pattern": "\\.card[^}]*transition\\s*:",
+        "flags": "is",
+        "message": "Define transition en .card."
+      },
+      {
+        "type": "regex",
+        "field": "css",
+        "pattern": "\\.card:hover",
+        "message": "Define un estilo hover para .card."
+      },
+      {
+        "type": "regex",
+        "field": "css",
+        "pattern": "\\.card:hover[^}]*transform\\s*:\\s*translateY",
+        "flags": "is",
+        "message": "Aplica transform: translateY en el hover."
+      },
+      {
+        "type": "regex",
+        "field": "css",
+        "pattern": "\\.card:hover[^}]*box-shadow\\s*:",
+        "flags": "is",
+        "message": "Aumenta la sombra en el hover."
+      }
+    ]
+  }
+}

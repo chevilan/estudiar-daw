@@ -1,0 +1,42 @@
+{
+  "id": "html-anclas-internas",
+  "topic": "html",
+  "type": "build",
+  "title": "Indice con anclas internas",
+  "difficulty": "base",
+  "estimatedMinutes": 10,
+  "prompt": "Crea un indice de seccion con una lista de tres enlaces que salten dentro de la misma pagina (anclas internas). Cada enlace apunta a una <section> con su propio id y un titulo h2 que coincida con el ancla.",
+  "notes": [
+    "Los enlaces internos usan la sintaxis href=\"#id-de-la-seccion\".",
+    "El navegador desplaza la vista al elemento con ese id."
+  ],
+  "starterCode": {
+    "html": "<main>\n  <h1>Guia rapida</h1>\n  <nav>\n    <!-- Indice con tres enlaces internos -->\n  </nav>\n  <!-- Tres secciones objetivo -->\n</main>",
+    "css": "body {\n  font-family: system-ui, sans-serif;\n  padding: 24px;\n  max-width: 640px;\n  margin: auto;\n}\n\nsection {\n  margin-top: 24px;\n  padding: 16px;\n  background: #f1f3f5;\n  border-radius: 10px;\n}\n",
+    "javascript": ""
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "Anclas internas funcionando.",
+    "rules": [
+      {
+        "type": "domSelector",
+        "selector": "nav a[href^='#']",
+        "minCount": 3,
+        "message": "El nav necesita tres enlaces internos (href que empieza por #)."
+      },
+      {
+        "type": "domSelector",
+        "selector": "section[id]",
+        "minCount": 3,
+        "message": "Crea tres <section> con id."
+      },
+      {
+        "type": "domSelector",
+        "selector": "section h2",
+        "minCount": 3,
+        "message": "Cada seccion necesita un h2 con el titulo."
+      }
+    ]
+  }
+}

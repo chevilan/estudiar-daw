@@ -1,0 +1,60 @@
+{
+  "id": "javascript-todo-list",
+  "topic": "javascript",
+  "type": "build",
+  "title": "Lista de tareas dinamica",
+  "difficulty": "reto",
+  "estimatedMinutes": 25,
+  "prompt": "Construye una lista de tareas. Al pulsar el boton se debe leer el texto del input, anadir un nuevo <li> a la lista (con el texto y un boton para eliminar) y limpiar el input. Cada boton de eliminar debe quitar su <li> al pulsarlo.",
+  "notes": [
+    "Usa createElement y appendChild para anadir elementos.",
+    "Para eliminar un elemento, usa li.remove() en el handler del boton."
+  ],
+  "starterCode": {
+    "html": "<main>\n  <h1>Mis tareas</h1>\n  <form id=\"new-task\">\n    <input id=\"task-input\" type=\"text\" placeholder=\"Nueva tarea\">\n    <button type=\"submit\">Anadir</button>\n  </form>\n  <ul id=\"task-list\"></ul>\n</main>",
+    "css": "body {\n  font-family: system-ui, sans-serif;\n  padding: 24px;\n  max-width: 420px;\n  margin: auto;\n}\n\n#new-task { display: flex; gap: 8px; }\ninput { flex: 1; padding: 8px; border-radius: 6px; border: 1px solid #ccc; }\nbutton { padding: 8px 12px; border-radius: 6px; border: 0; background: #2a9d8f; color: white; cursor: pointer; }\nul { list-style: none; padding: 0; }\nli { display: flex; justify-content: space-between; align-items: center; padding: 8px; margin-top: 6px; background: #f1f3f5; border-radius: 6px; }\nli button { background: #e76f51; }\n",
+    "javascript": "const form = document.querySelector('#new-task');\nconst input = document.querySelector('#task-input');\nconst list = document.querySelector('#task-list');\n\n// Implementa anadir y eliminar tareas\n"
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "Lista de tareas funcional.",
+    "rules": [
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "addEventListener\\(['\\\"]submit['\\\"]",
+        "message": "Escucha el submit del formulario."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "preventDefault\\(\\)",
+        "message": "Llama a preventDefault."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "createElement\\(['\\\"]li['\\\"]\\)",
+        "message": "Crea un nuevo <li> con createElement."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "appendChild|append\\s*\\(",
+        "message": "Inserta el nuevo <li> en la lista con appendChild o append."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "\\.remove\\(\\)",
+        "message": "Usa .remove() para eliminar la tarea al pulsar el boton."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "input\\.value\\s*=\\s*['\\\"]['\\\"]",
+        "message": "Limpia el input despues de anadir."
+      }
+    ]
+  }
+}

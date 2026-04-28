@@ -1,0 +1,48 @@
+{
+  "id": "css-selectores-avanzados",
+  "topic": "css",
+  "type": "build",
+  "title": "Selectores avanzados",
+  "difficulty": "media",
+  "estimatedMinutes": 12,
+  "prompt": "Aplica estilos usando selectores avanzados: el primer hijo de la lista debe ser distinto, los enlaces externos (atributo target='_blank') deben mostrarse en otro color, las filas pares de la tabla deben tener un fondo zebra, y el ultimo parrafo del article debe ir en cursiva.",
+  "notes": [
+    "Combina :first-child, :last-child, :nth-child(even) y selectores de atributo [target='_blank'].",
+    "Comprueba que los cambios realmente se aplican."
+  ],
+  "starterCode": {
+    "html": "<article>\n  <ul>\n    <li>Uno</li>\n    <li>Dos</li>\n    <li>Tres</li>\n  </ul>\n  <p><a href=\"https://www.example.com\" target=\"_blank\">Externo</a></p>\n  <p><a href=\"#\">Interno</a></p>\n  <table>\n    <tr><td>1</td><td>A</td></tr>\n    <tr><td>2</td><td>B</td></tr>\n    <tr><td>3</td><td>C</td></tr>\n    <tr><td>4</td><td>D</td></tr>\n  </table>\n  <p>Primer parrafo</p>\n  <p>Ultimo parrafo</p>\n</article>",
+    "css": "body {\n  font-family: system-ui, sans-serif;\n  padding: 24px;\n}\n\ntable {\n  border-collapse: collapse;\n  margin: 16px 0;\n}\n\ntd {\n  padding: 6px 12px;\n  border: 1px solid #ddd;\n}\n\n/* Escribe los selectores aqui */\n",
+    "javascript": ""
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "Los selectores avanzados funcionan correctamente.",
+    "rules": [
+      {
+        "type": "regex",
+        "field": "css",
+        "pattern": "li:first-child",
+        "message": "Usa li:first-child para el primer item."
+      },
+      {
+        "type": "regex",
+        "field": "css",
+        "pattern": "a\\[target=['\\\"]?_blank['\\\"]?\\]",
+        "message": "Selecciona los enlaces externos con a[target='_blank']."
+      },
+      {
+        "type": "regex",
+        "field": "css",
+        "pattern": "tr:nth-child\\(even\\)",
+        "message": "Aplica tr:nth-child(even) para el zebra striping."
+      },
+      {
+        "type": "regex",
+        "field": "css",
+        "pattern": "p:last-child|p:last-of-type",
+        "message": "Usa p:last-child o p:last-of-type para el ultimo parrafo."
+      }
+    ]
+  }
+}

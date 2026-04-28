@@ -1,0 +1,42 @@
+{
+  "id": "html-listas-anidadas",
+  "topic": "html",
+  "type": "build",
+  "title": "Listas anidadas para un menu",
+  "difficulty": "base",
+  "estimatedMinutes": 8,
+  "prompt": "Crea una lista no ordenada con al menos tres categorias. Una de ellas debe contener una sublista con al menos dos elementos.",
+  "notes": [
+    "Usa <ul> y <li> para las listas.",
+    "La sublista va dentro del <li> de la categoria padre."
+  ],
+  "starterCode": {
+    "html": "<main>\n  <h1>Menu</h1>\n  <!-- Crea aqui las listas -->\n</main>",
+    "css": "body {\n  font-family: system-ui, sans-serif;\n  padding: 24px;\n}\n",
+    "javascript": ""
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "Listas anidadas correctamente.",
+    "rules": [
+      {
+        "type": "domSelector",
+        "selector": "ul",
+        "minCount": 2,
+        "message": "Necesitas al menos dos <ul> (la principal y la anidada)."
+      },
+      {
+        "type": "domSelector",
+        "selector": "ul > li",
+        "minCount": 3,
+        "message": "Incluye al menos tres <li> en la lista principal."
+      },
+      {
+        "type": "domSelector",
+        "selector": "li ul li",
+        "minCount": 2,
+        "message": "La sublista debe tener al menos dos elementos."
+      }
+    ]
+  }
+}

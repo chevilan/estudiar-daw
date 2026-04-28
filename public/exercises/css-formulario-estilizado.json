@@ -1,0 +1,59 @@
+{
+  "id": "css-formulario-estilizado",
+  "topic": "css",
+  "type": "build",
+  "title": "Estiliza un formulario",
+  "difficulty": "media",
+  "estimatedMinutes": 15,
+  "prompt": "Da forma al formulario: los campos deben ocupar todo el ancho, tener padding agradable y borde redondeado. Cuando un input recibe foco debe destacarse con un color de borde diferente. El boton de envio tiene que distinguirse del resto.",
+  "notes": [
+    "Selecciona inputs y textarea juntos con coma.",
+    "Usa :focus para el estilo de foco."
+  ],
+  "starterCode": {
+    "html": "<form>\n  <label>Nombre <input type=\"text\" required></label>\n  <label>Email <input type=\"email\" required></label>\n  <label>Mensaje <textarea rows=\"4\"></textarea></label>\n  <button type=\"submit\">Enviar</button>\n</form>",
+    "css": "body {\n  display: grid;\n  place-items: center;\n  min-height: 100vh;\n  background: #f4f7f5;\n  font-family: system-ui, sans-serif;\n}\n\nform {\n  display: grid;\n  gap: 12px;\n  width: min(360px, 92vw);\n  padding: 24px;\n  background: white;\n  border-radius: 14px;\n}\n\nlabel {\n  display: grid;\n  gap: 4px;\n  font-weight: 600;\n}\n\n/* Estiliza inputs, textarea y boton */\n",
+    "javascript": ""
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "Formulario estilizado.",
+    "rules": [
+      {
+        "type": "regex",
+        "field": "css",
+        "pattern": "input[^{]*,\\s*textarea|input,\\s*textarea|textarea[^{]*,\\s*input",
+        "flags": "i",
+        "message": "Selecciona input y textarea en una misma regla."
+      },
+      {
+        "type": "regex",
+        "field": "css",
+        "pattern": "(input|textarea)[^}]*width\\s*:\\s*100%",
+        "flags": "is",
+        "message": "Los campos deben ocupar el 100% de ancho."
+      },
+      {
+        "type": "regex",
+        "field": "css",
+        "pattern": "(input|textarea):focus",
+        "flags": "i",
+        "message": "Define un estilo :focus para los campos."
+      },
+      {
+        "type": "regex",
+        "field": "css",
+        "pattern": "button[^}]*background\\s*:",
+        "flags": "is",
+        "message": "El boton necesita un background propio."
+      },
+      {
+        "type": "regex",
+        "field": "css",
+        "pattern": "border-radius\\s*:",
+        "flags": "i",
+        "message": "Aplica border-radius para suavizar los bordes."
+      }
+    ]
+  }
+}

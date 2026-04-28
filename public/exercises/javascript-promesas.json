@@ -1,0 +1,60 @@
+{
+  "id": "javascript-promesas",
+  "topic": "javascript",
+  "type": "build",
+  "title": "Crear y consumir una Promise",
+  "difficulty": "reto",
+  "estimatedMinutes": 15,
+  "prompt": "Crea una funcion esperar(ms) que devuelva una Promise resuelta tras 'ms' milisegundos con setTimeout. Despues consumela con .then().catch() y tambien con async/await dentro de una funcion. Muestra un mensaje por consola cada vez que termine.",
+  "notes": [
+    "Una Promise recibe (resolve, reject).",
+    "setTimeout sirve para simular esperas asincronas."
+  ],
+  "starterCode": {
+    "html": "<main>\n  <p>Mira la consola del ejercicio.</p>\n</main>",
+    "css": "body { font-family: system-ui, sans-serif; padding: 24px; }",
+    "javascript": "// Define esperar(ms)\n// Consumela con then() y con await\n"
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "Promesa creada y consumida.",
+    "rules": [
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "new\\s+Promise\\s*\\(",
+        "message": "Crea una Promise con new Promise."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "setTimeout\\s*\\(",
+        "message": "Usa setTimeout dentro de la promesa."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "resolve\\s*\\(",
+        "message": "Llama a resolve."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "\\.then\\s*\\(",
+        "message": "Consume la promesa con .then()."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "await\\s+esperar\\s*\\(",
+        "message": "Usa await sobre esperar() en algun sitio."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "console\\.log",
+        "message": "Muestra resultados con console.log."
+      }
+    ]
+  }
+}

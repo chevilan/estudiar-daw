@@ -1,0 +1,47 @@
+{
+  "id": "html-tabla-datos",
+  "topic": "html",
+  "type": "build",
+  "title": "Tabla de datos con cabecera y cuerpo",
+  "difficulty": "base",
+  "estimatedMinutes": 10,
+  "prompt": "Crea una tabla con tres columnas (Producto, Precio, Stock) y al menos tres filas de datos. Separa la cabecera del cuerpo usando thead y tbody, y anade un caption descriptivo.",
+  "notes": [
+    "El <caption> describe la tabla y mejora la accesibilidad.",
+    "Usa <th> para las celdas de cabecera, no <td>."
+  ],
+  "starterCode": {
+    "html": "<main>\n  <!-- Construye la tabla aqui -->\n</main>",
+    "css": "body {\n  font-family: system-ui, sans-serif;\n  padding: 24px;\n}\n\ntable {\n  border-collapse: collapse;\n}\n\nth, td {\n  border: 1px solid #ccc;\n  padding: 8px 12px;\n}\n",
+    "javascript": ""
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "La tabla esta bien estructurada.",
+    "rules": [
+      {
+        "type": "domSelector",
+        "selector": "table caption",
+        "message": "Incluye un <caption> dentro de la tabla."
+      },
+      {
+        "type": "domSelector",
+        "selector": "table thead tr th",
+        "minCount": 3,
+        "message": "Crea un <thead> con al menos tres <th>."
+      },
+      {
+        "type": "domSelector",
+        "selector": "table tbody tr",
+        "minCount": 3,
+        "message": "Anade al menos tres filas de datos en el <tbody>."
+      },
+      {
+        "type": "domSelector",
+        "selector": "table tbody tr td",
+        "minCount": 9,
+        "message": "Cada fila del cuerpo debe tener tres celdas <td>."
+      }
+    ]
+  }
+}

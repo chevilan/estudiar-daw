@@ -1,0 +1,42 @@
+{
+  "id": "html-details-summary",
+  "topic": "html",
+  "type": "build",
+  "title": "Acordeon FAQ con details y summary",
+  "difficulty": "base",
+  "estimatedMinutes": 8,
+  "prompt": "Crea una seccion de preguntas frecuentes con tres bloques. Cada bloque debe usar <details> con un <summary> visible que actua como pregunta y la respuesta dentro de un parrafo.",
+  "notes": [
+    "<details> y <summary> ofrecen un acordeon nativo sin JavaScript.",
+    "Puedes anadir el atributo open al primer detalle si quieres que aparezca abierto."
+  ],
+  "starterCode": {
+    "html": "<main>\n  <h1>Preguntas frecuentes</h1>\n  <!-- Anade los acordeones -->\n</main>",
+    "css": "body {\n  font-family: system-ui, sans-serif;\n  padding: 24px;\n  max-width: 540px;\n  margin: auto;\n}\n\ndetails {\n  border: 1px solid #d7ded9;\n  border-radius: 8px;\n  padding: 8px 12px;\n  margin-bottom: 8px;\n}\n\nsummary {\n  cursor: pointer;\n  font-weight: 600;\n}\n",
+    "javascript": ""
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "FAQ accesible terminada.",
+    "rules": [
+      {
+        "type": "domSelector",
+        "selector": "details",
+        "minCount": 3,
+        "message": "Necesitas al menos tres elementos <details>."
+      },
+      {
+        "type": "domSelector",
+        "selector": "details > summary",
+        "minCount": 3,
+        "message": "Cada <details> debe contener un <summary>."
+      },
+      {
+        "type": "domSelector",
+        "selector": "details p",
+        "minCount": 3,
+        "message": "Coloca la respuesta dentro de un <p> en cada <details>."
+      }
+    ]
+  }
+}

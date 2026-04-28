@@ -1,0 +1,48 @@
+{
+  "id": "javascript-eventos-teclado",
+  "topic": "javascript",
+  "type": "build",
+  "title": "Detectar eventos de teclado",
+  "difficulty": "media",
+  "estimatedMinutes": 12,
+  "prompt": "Escucha el evento keydown del documento. Cuando se pulse cualquier tecla, muestra el codigo de la tecla en #ultima. Si la tecla pulsada es 'Escape', limpia el contenido de #ultima.",
+  "notes": [
+    "El parametro del listener es un KeyboardEvent con la propiedad key.",
+    "Puedes comparar event.key === 'Escape'."
+  ],
+  "starterCode": {
+    "html": "<main>\n  <h1>Pulsa una tecla</h1>\n  <p>Ultima tecla: <strong id=\"ultima\">-</strong></p>\n  <p class=\"hint\">Pulsa Escape para limpiar.</p>\n</main>",
+    "css": "body { font-family: system-ui, sans-serif; padding: 24px; text-align: center; }\n#ultima { color: #2a9d8f; font-size: 1.4rem; }\n.hint { color: #5b655f; }\n",
+    "javascript": "const ultima = document.querySelector('#ultima');\n\n// Escucha keydown en document\n"
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "Eventos de teclado capturados.",
+    "rules": [
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "addEventListener\\(['\\\"]keydown['\\\"]",
+        "message": "Escucha el evento keydown."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "\\.key",
+        "message": "Lee la propiedad event.key."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "['\\\"]Escape['\\\"]",
+        "message": "Compara con 'Escape'."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "(textContent|innerText)\\s*=",
+        "message": "Actualiza el texto del DOM."
+      }
+    ]
+  }
+}

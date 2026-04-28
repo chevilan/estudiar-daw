@@ -1,0 +1,48 @@
+{
+  "id": "javascript-array-methods",
+  "topic": "javascript",
+  "type": "build",
+  "title": "Map, filter y reduce con productos",
+  "difficulty": "media",
+  "estimatedMinutes": 15,
+  "prompt": "Tienes un array de productos. Filtra los que estan disponibles (stock > 0), aplica un descuento del 10% al precio con map y suma el total final con reduce. Muestra por consola el array filtrado, el array con descuento y el total.",
+  "notes": [
+    "Encadena los metodos o guarda los pasos en variables intermedias.",
+    "reduce recibe un acumulador y el valor actual."
+  ],
+  "starterCode": {
+    "html": "<main>\n  <h1>Productos</h1>\n  <p>Mira la consola del ejercicio.</p>\n</main>",
+    "css": "body { font-family: system-ui, sans-serif; padding: 24px; }",
+    "javascript": "const productos = [\n  { nombre: 'Mochila', precio: 50, stock: 3 },\n  { nombre: 'Cuaderno', precio: 8, stock: 0 },\n  { nombre: 'Boli', precio: 2, stock: 12 },\n  { nombre: 'Auriculares', precio: 80, stock: 1 }\n];\n\n// Filtra, mapea y reduce\n"
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "Map, filter y reduce funcionando.",
+    "rules": [
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "\\.filter\\(",
+        "message": "Usa el metodo filter."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "\\.map\\(",
+        "message": "Usa el metodo map para aplicar el descuento."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "\\.reduce\\(",
+        "message": "Usa reduce para sumar el total."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "console\\.log",
+        "message": "Muestra los resultados con console.log."
+      }
+    ]
+  }
+}

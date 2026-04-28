@@ -1,0 +1,60 @@
+{
+  "id": "javascript-clases-es6",
+  "topic": "javascript",
+  "type": "build",
+  "title": "Clases ES6 con herencia",
+  "difficulty": "media",
+  "estimatedMinutes": 15,
+  "prompt": "Define una clase Vehiculo con propiedades marca y velocidad y un metodo describir que devuelve un texto. Crea una clase Coche que extienda Vehiculo, anada la propiedad puertas y sobreescriba describir incluyendo el numero de puertas. Instancia un coche y muestra su descripcion por consola.",
+  "notes": [
+    "Usa class, constructor, super y extends.",
+    "El metodo del padre puede llamarse con super.describir()."
+  ],
+  "starterCode": {
+    "html": "<main>\n  <p>Mira la consola.</p>\n</main>",
+    "css": "body { font-family: system-ui, sans-serif; padding: 24px; }",
+    "javascript": "// Define Vehiculo y Coche aqui\n"
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "Clases con herencia listas.",
+    "rules": [
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "class\\s+Vehiculo",
+        "message": "Define class Vehiculo."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "class\\s+Coche\\s+extends\\s+Vehiculo",
+        "message": "Coche debe heredar de Vehiculo (extends)."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "constructor\\s*\\(",
+        "message": "Define al menos un constructor."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "super\\s*\\(",
+        "message": "Llama a super() en el constructor del hijo."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "new\\s+Coche\\s*\\(",
+        "message": "Instancia un Coche con new."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "console\\.log",
+        "message": "Muestra el resultado con console.log."
+      }
+    ]
+  }
+}

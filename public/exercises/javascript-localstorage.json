@@ -1,0 +1,48 @@
+{
+  "id": "javascript-localstorage",
+  "topic": "javascript",
+  "type": "build",
+  "title": "Persistir nota en localStorage",
+  "difficulty": "media",
+  "estimatedMinutes": 12,
+  "prompt": "Implementa un editor de notas basico. Al cargar la pagina, lee de localStorage la clave 'nota' y vuelcala en el textarea si existe. Cada vez que el usuario escriba en el textarea, guarda el contenido en localStorage para que persista al recargar.",
+  "notes": [
+    "Usa localStorage.getItem y localStorage.setItem.",
+    "Escucha el evento input del textarea."
+  ],
+  "starterCode": {
+    "html": "<main>\n  <h1>Mi nota</h1>\n  <textarea id=\"nota\" rows=\"6\" placeholder=\"Escribe algo...\"></textarea>\n  <p class=\"hint\">Recarga la pagina y la nota seguira aqui.</p>\n</main>",
+    "css": "body { font-family: system-ui, sans-serif; padding: 24px; max-width: 480px; margin: auto; }\ntextarea { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ccc; font: inherit; }\n.hint { color: #5b655f; font-size: 0.9rem; }\n",
+    "javascript": "const textarea = document.querySelector('#nota');\n\n// Carga la nota guardada y guarda los cambios al escribir\n"
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "La nota se guarda en localStorage.",
+    "rules": [
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "localStorage\\.getItem\\(['\\\"]nota['\\\"]\\)",
+        "message": "Lee la clave 'nota' con localStorage.getItem."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "localStorage\\.setItem\\(['\\\"]nota['\\\"]",
+        "message": "Guarda la nota con localStorage.setItem('nota', ...)."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "addEventListener\\(['\\\"]input['\\\"]",
+        "message": "Escucha el evento input del textarea."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "textarea\\.value",
+        "message": "Asigna y lee textarea.value."
+      }
+    ]
+  }
+}

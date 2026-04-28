@@ -1,0 +1,66 @@
+{
+  "id": "javascript-fetch-api",
+  "topic": "javascript",
+  "type": "build",
+  "title": "Mostrar datos con fetch y async/await",
+  "difficulty": "reto",
+  "estimatedMinutes": 20,
+  "prompt": "Pide datos a la API publica https://jsonplaceholder.typicode.com/users con fetch. Convierte la respuesta a JSON y pinta dentro de #lista un <li> por cada usuario con su nombre. Usa una funcion async con await y captura los errores con try/catch.",
+  "notes": [
+    "El metodo .json() de la respuesta tambien devuelve una promesa.",
+    "Maneja los errores para que la pagina no se rompa si no hay red."
+  ],
+  "starterCode": {
+    "html": "<main>\n  <h1>Usuarios</h1>\n  <ul id=\"lista\"></ul>\n</main>",
+    "css": "body { font-family: system-ui, sans-serif; padding: 24px; max-width: 460px; margin: auto; }\nul { list-style: none; padding: 0; display: grid; gap: 6px; }\nli { padding: 8px 12px; background: #f1f3f5; border-radius: 8px; }\n",
+    "javascript": "const lista = document.querySelector('#lista');\n\n// Define una async function que pida los datos y los pinte\n"
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "Datos cargados desde la API.",
+    "rules": [
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "async\\s+function|async\\s*\\(",
+        "message": "Usa una funcion async."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "fetch\\s*\\(",
+        "message": "Usa fetch para pedir los datos."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "await\\s+",
+        "message": "Usa await para esperar la respuesta."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "\\.json\\(\\)",
+        "message": "Convierte la respuesta a JSON con .json()."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "try\\s*\\{[\\s\\S]*catch",
+        "message": "Captura errores con try/catch."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "(forEach|for\\s*\\(|\\.map\\()",
+        "message": "Recorre la lista de usuarios para pintar cada uno."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "createElement\\(['\\\"]li['\\\"]\\)|innerHTML\\s*\\+?=",
+        "message": "Anade un <li> a la lista por cada usuario."
+      }
+    ]
+  }
+}

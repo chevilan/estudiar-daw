@@ -1,0 +1,60 @@
+{
+  "id": "javascript-regex-validar",
+  "topic": "javascript",
+  "type": "build",
+  "title": "Validar email y telefono con regex",
+  "difficulty": "media",
+  "estimatedMinutes": 15,
+  "prompt": "Crea dos expresiones regulares: una para validar emails (formato algo@algo.dominio) y otra para validar telefonos espanoles de 9 digitos. Aplica .test() sobre tres valores de ejemplo y muestra el resultado por consola.",
+  "notes": [
+    "Las regex en JS se delimitan con /.../ o se crean con new RegExp().",
+    "El metodo test devuelve true o false."
+  ],
+  "starterCode": {
+    "html": "<main>\n  <p>Mira la consola.</p>\n</main>",
+    "css": "body { font-family: system-ui, sans-serif; padding: 24px; }",
+    "javascript": "// Crea regexEmail y regexTelefono\n// Prueba con tres valores de cada uno\n"
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "Regex validando correctamente.",
+    "rules": [
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "regexEmail\\s*=\\s*/",
+        "message": "Crea una constante regexEmail con una expresion regular."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "regexTelefono\\s*=\\s*/",
+        "message": "Crea una constante regexTelefono con una expresion regular."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "\\\\d|\\[0-9\\]",
+        "message": "La regex de telefono debe usar digitos (\\\\d o [0-9])."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "@",
+        "message": "La regex de email debe contener @."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "\\.test\\(",
+        "message": "Usa .test() para comprobar valores."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "console\\.log",
+        "message": "Muestra los resultados con console.log."
+      }
+    ]
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "id": "javascript-formato-json",
+  "topic": "javascript",
+  "type": "build",
+  "title": "Trabajar con JSON: parse y stringify",
+  "difficulty": "base",
+  "estimatedMinutes": 10,
+  "prompt": "Tienes una cadena JSON con un objeto. Conviertela en objeto JavaScript con JSON.parse, anade una propiedad nueva 'verificado' a true y vuelve a serializarlo con JSON.stringify formateado (indentacion de 2 espacios). Muestra ambos resultados por consola.",
+  "notes": [
+    "JSON.parse convierte string a objeto.",
+    "JSON.stringify(obj, null, 2) formatea con indentacion."
+  ],
+  "starterCode": {
+    "html": "<main>\n  <p>Revisa la consola.</p>\n</main>",
+    "css": "body { font-family: system-ui, sans-serif; padding: 24px; }",
+    "javascript": "const cadena = '{\"nombre\":\"Ana\",\"edad\":29,\"rol\":\"developer\"}';\n\n// Parsea, modifica y vuelve a serializar\n"
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "Conversion JSON terminada.",
+    "rules": [
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "JSON\\.parse\\s*\\(",
+        "message": "Usa JSON.parse para convertir la cadena."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "verificado\\s*[:=]\\s*true",
+        "message": "Anade la propiedad verificado: true."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "JSON\\.stringify\\s*\\([^,]+,\\s*null\\s*,\\s*2\\s*\\)",
+        "message": "Serializa con JSON.stringify(obj, null, 2)."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "console\\.log",
+        "message": "Muestra el resultado con console.log."
+      }
+    ]
+  }
+}

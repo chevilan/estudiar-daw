@@ -1,0 +1,48 @@
+{
+  "id": "javascript-destructuring",
+  "topic": "javascript",
+  "type": "build",
+  "title": "Destructuring de objetos y arrays",
+  "difficulty": "media",
+  "estimatedMinutes": 12,
+  "prompt": "Dado el objeto usuario y el array colores, extrae con destructuring las propiedades nombre y edad del objeto, y los dos primeros colores del array. Muestra cada variable por consola.",
+  "notes": [
+    "Sintaxis para objetos: const { propiedad } = objeto.",
+    "Para arrays se usan corchetes: const [a, b] = array."
+  ],
+  "starterCode": {
+    "html": "<main>\n  <p>Mira la consola del ejercicio.</p>\n</main>",
+    "css": "body { font-family: system-ui, sans-serif; padding: 24px; }",
+    "javascript": "const usuario = { nombre: 'Lucia', edad: 24, ciudad: 'Madrid' };\nconst colores = ['rojo', 'verde', 'azul', 'amarillo'];\n\n// Extrae nombre, edad y los dos primeros colores con destructuring\n"
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "Destructuring aplicado.",
+    "rules": [
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "const\\s*\\{\\s*nombre",
+        "message": "Usa destructuring para extraer nombre."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "edad\\s*\\}\\s*=\\s*usuario",
+        "message": "Extrae edad del objeto usuario."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "const\\s*\\[\\s*[a-zA-Z_$][\\w$]*\\s*,\\s*[a-zA-Z_$][\\w$]*\\s*\\]\\s*=\\s*colores",
+        "message": "Extrae los dos primeros colores con destructuring de array."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "console\\.log",
+        "message": "Muestra los resultados con console.log."
+      }
+    ]
+  }
+}

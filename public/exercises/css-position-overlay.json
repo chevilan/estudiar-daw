@@ -1,0 +1,52 @@
+{
+  "id": "css-position-overlay",
+  "topic": "css",
+  "type": "build",
+  "title": "Etiqueta superpuesta con position",
+  "difficulty": "base",
+  "estimatedMinutes": 10,
+  "prompt": "Coloca la etiqueta .badge encima de la esquina superior derecha de la tarjeta usando posicionamiento. La tarjeta debe ser el contexto de posicionamiento.",
+  "notes": [
+    "Aplica position: relative al contenedor y position: absolute al elemento que quieres superponer.",
+    "Usa top y right para colocar la etiqueta."
+  ],
+  "starterCode": {
+    "html": "<article class=\"card\">\n  <span class=\"badge\">Oferta</span>\n  <h2>Producto destacado</h2>\n  <p>Texto de descripcion del producto.</p>\n</article>",
+    "css": "body {\n  display: grid;\n  place-items: center;\n  min-height: 100vh;\n  background: #eef2f7;\n  font-family: system-ui, sans-serif;\n}\n\n.card {\n  /* Hazlo contexto de posicionamiento */\n  width: 280px;\n  padding: 22px;\n  background: white;\n  border-radius: 12px;\n  box-shadow: 0 6px 20px rgba(0,0,0,0.08);\n}\n\n.badge {\n  /* Posiciona la etiqueta */\n  background: #e76f51;\n  color: white;\n  padding: 4px 10px;\n  border-radius: 999px;\n  font-size: 0.8rem;\n  font-weight: 700;\n}\n",
+    "javascript": ""
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "La etiqueta se posiciona sobre la tarjeta.",
+    "rules": [
+      {
+        "type": "regex",
+        "field": "css",
+        "pattern": "\\.card[^}]*position\\s*:\\s*relative",
+        "flags": "is",
+        "message": "Aplica position: relative en .card."
+      },
+      {
+        "type": "regex",
+        "field": "css",
+        "pattern": "\\.badge[^}]*position\\s*:\\s*absolute",
+        "flags": "is",
+        "message": "Aplica position: absolute en .badge."
+      },
+      {
+        "type": "regex",
+        "field": "css",
+        "pattern": "\\.badge[^}]*top\\s*:",
+        "flags": "is",
+        "message": "Define top en .badge."
+      },
+      {
+        "type": "regex",
+        "field": "css",
+        "pattern": "\\.badge[^}]*right\\s*:",
+        "flags": "is",
+        "message": "Define right en .badge."
+      }
+    ]
+  }
+}

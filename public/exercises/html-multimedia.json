@@ -1,0 +1,44 @@
+{
+  "id": "html-multimedia",
+  "topic": "html",
+  "type": "build",
+  "title": "Audio y video con controles",
+  "difficulty": "base",
+  "estimatedMinutes": 8,
+  "prompt": "Inserta un elemento <audio> y un elemento <video> con controles visibles. Cada uno debe tener al menos una fuente <source> y un texto alternativo dentro del propio elemento por si el navegador no soporta el formato.",
+  "notes": [
+    "Puedes usar URLs ficticias en src; lo importante es la estructura.",
+    "El atributo controls hace que aparezcan los botones de reproduccion."
+  ],
+  "starterCode": {
+    "html": "<main>\n  <h1>Galeria multimedia</h1>\n  <!-- Inserta los elementos aqui -->\n</main>",
+    "css": "body {\n  font-family: system-ui, sans-serif;\n  padding: 24px;\n}\n",
+    "javascript": ""
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "Audio y video con controles preparados.",
+    "rules": [
+      {
+        "type": "domSelector",
+        "selector": "audio[controls]",
+        "message": "Incluye un <audio> con el atributo controls."
+      },
+      {
+        "type": "domSelector",
+        "selector": "video[controls]",
+        "message": "Incluye un <video> con el atributo controls."
+      },
+      {
+        "type": "domSelector",
+        "selector": "audio source[src]",
+        "message": "Anade un <source> dentro del <audio> con un atributo src."
+      },
+      {
+        "type": "domSelector",
+        "selector": "video source[src]",
+        "message": "Anade un <source> dentro del <video> con un atributo src."
+      }
+    ]
+  }
+}

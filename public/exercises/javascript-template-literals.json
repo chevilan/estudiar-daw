@@ -1,0 +1,49 @@
+{
+  "id": "javascript-template-literals",
+  "topic": "javascript",
+  "type": "build",
+  "title": "Plantillas con template literals",
+  "difficulty": "base",
+  "estimatedMinutes": 10,
+  "prompt": "Dado el array de productos, genera una cadena HTML usando template literals (con backticks) que contenga un <article> por producto con su nombre y precio. Inserta el resultado dentro de #salida con innerHTML.",
+  "notes": [
+    "Los template literals usan ` ` y ${expresion} para interpolar.",
+    "Puedes generar la lista con .map() y .join('')."
+  ],
+  "starterCode": {
+    "html": "<main>\n  <h1>Catalogo</h1>\n  <section id=\"salida\"></section>\n</main>",
+    "css": "body { font-family: system-ui, sans-serif; padding: 24px; max-width: 460px; margin: auto; }\narticle { padding: 10px 14px; margin-top: 6px; background: #f1f3f5; border-radius: 8px; }\n",
+    "javascript": "const productos = [\n  { nombre: 'Mochila', precio: 49.9 },\n  { nombre: 'Cuaderno', precio: 7.5 },\n  { nombre: 'Boli', precio: 1.2 }\n];\n\nconst salida = document.querySelector('#salida');\n\n// Genera el HTML con template literals e inyectalo\n"
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "Template literals aplicados.",
+    "rules": [
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "`[^`]*\\$\\{[^}]+\\}[^`]*`",
+        "flags": "s",
+        "message": "Usa template literals con interpolacion ${...}."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "\\.map\\(",
+        "message": "Recorre el array con map."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "\\.join\\(",
+        "message": "Une el array con .join('')."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "salida\\.innerHTML\\s*=",
+        "message": "Inserta el resultado con salida.innerHTML."
+      }
+    ]
+  }
+}

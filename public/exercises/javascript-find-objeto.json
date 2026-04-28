@@ -1,0 +1,48 @@
+{
+  "id": "javascript-find-objeto",
+  "topic": "javascript",
+  "type": "build",
+  "title": "Buscar un objeto con find",
+  "difficulty": "base",
+  "estimatedMinutes": 10,
+  "prompt": "Dado el array de alumnos, usa el metodo find para localizar al alumno con id = 3 y muestra su objeto entero por consola. Despues, usa some para comprobar si hay algun alumno con nota >= 9 y every para saber si todos tienen nota >= 5. Muestra los tres resultados.",
+  "notes": [
+    "find devuelve el primer elemento que cumple la condicion (o undefined).",
+    "some devuelve true si al menos uno cumple; every si todos cumplen."
+  ],
+  "starterCode": {
+    "html": "<main>\n  <p>Mira la consola.</p>\n</main>",
+    "css": "body { font-family: system-ui, sans-serif; padding: 24px; }",
+    "javascript": "const alumnos = [\n  { id: 1, nombre: 'Ana', nota: 6 },\n  { id: 2, nombre: 'Luis', nota: 8 },\n  { id: 3, nombre: 'Eva', nota: 9.5 },\n  { id: 4, nombre: 'Marc', nota: 5 }\n];\n\n// Encuentra el alumno con id 3, comprueba some y every\n"
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "Busqueda con find, some y every lista.",
+    "rules": [
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "\\.find\\(",
+        "message": "Usa el metodo find."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "\\.some\\(",
+        "message": "Usa el metodo some."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "\\.every\\(",
+        "message": "Usa el metodo every."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "console\\.log",
+        "message": "Muestra los resultados con console.log."
+      }
+    ]
+  }
+}

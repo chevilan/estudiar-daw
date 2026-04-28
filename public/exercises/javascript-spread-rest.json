@@ -1,0 +1,48 @@
+{
+  "id": "javascript-spread-rest",
+  "topic": "javascript",
+  "type": "build",
+  "title": "Spread y rest",
+  "difficulty": "base",
+  "estimatedMinutes": 10,
+  "prompt": "Crea una funcion sumar que acepte cualquier cantidad de argumentos usando rest. Despues, combina dos arrays en uno usando spread y crea un nuevo objeto que copie usuario anadiendo la propiedad activo: true.",
+  "notes": [
+    "Rest se usa en el parametro de la funcion: function sumar(...nums).",
+    "Spread se usa para expandir un array u objeto: [...a, ...b] o { ...obj }."
+  ],
+  "starterCode": {
+    "html": "<main>\n  <p>Revisa la consola.</p>\n</main>",
+    "css": "body { font-family: system-ui, sans-serif; padding: 24px; }",
+    "javascript": "const usuario = { nombre: 'Mario', edad: 30 };\nconst a = [1, 2, 3];\nconst b = [4, 5, 6];\n\n// Define la funcion sumar(...nums)\n// Combina a y b\n// Crea un nuevo usuario con la propiedad activo: true\n"
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "Spread y rest funcionando.",
+    "rules": [
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "function\\s+sumar\\s*\\(\\s*\\.\\.\\.\\s*[a-zA-Z_$][\\w$]*|sumar\\s*=\\s*\\(\\s*\\.\\.\\.\\s*[a-zA-Z_$][\\w$]*",
+        "message": "Define sumar usando rest (...nums)."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "\\[\\s*\\.\\.\\.[a-zA-Z_$][\\w$]*\\s*,\\s*\\.\\.\\.[a-zA-Z_$][\\w$]*\\s*\\]",
+        "message": "Combina los arrays con spread."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "\\{\\s*\\.\\.\\.\\s*usuario",
+        "message": "Crea un nuevo objeto con spread sobre usuario."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "activo\\s*:\\s*true",
+        "message": "Anade la propiedad activo: true."
+      }
+    ]
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "id": "javascript-arrow-functions",
+  "topic": "javascript",
+  "type": "build",
+  "title": "Practica con arrow functions",
+  "difficulty": "base",
+  "estimatedMinutes": 10,
+  "prompt": "Reescribe las tres funciones declaradas con function como arrow functions equivalentes (suma, esPar y saludar). Asignalas a const con el mismo nombre y muestra al menos un resultado de cada una con console.log.",
+  "notes": [
+    "Las arrow functions de una expresion no necesitan return ni llaves.",
+    "Las funciones de un solo parametro pueden omitir los parentesis."
+  ],
+  "starterCode": {
+    "html": "<main>\n  <p>Revisa la consola del ejercicio.</p>\n</main>",
+    "css": "body { font-family: system-ui, sans-serif; padding: 24px; }",
+    "javascript": "// function suma(a, b) { return a + b; }\n// function esPar(n) { return n % 2 === 0; }\n// function saludar(nombre) { return 'Hola ' + nombre; }\n\n// Reescribelas como arrow functions y muestralas\n"
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "Arrow functions reescritas.",
+    "rules": [
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "const\\s+suma\\s*=\\s*\\([^)]*\\)\\s*=>",
+        "message": "Define const suma como arrow function."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "const\\s+esPar\\s*=",
+        "message": "Define const esPar."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "=>",
+        "message": "Usa la sintaxis =>."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "const\\s+saludar\\s*=",
+        "message": "Define const saludar."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "console\\.log",
+        "message": "Muestra resultados con console.log."
+      }
+    ]
+  }
+}

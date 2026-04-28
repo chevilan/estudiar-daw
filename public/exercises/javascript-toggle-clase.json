@@ -1,0 +1,42 @@
+{
+  "id": "javascript-toggle-clase",
+  "topic": "javascript",
+  "type": "build",
+  "title": "Modo oscuro con toggle de clase",
+  "difficulty": "base",
+  "estimatedMinutes": 10,
+  "prompt": "Implementa un boton que active o desactive el modo oscuro alternando la clase 'dark' en el body. Selecciona el boton, escucha el click y usa classList.toggle.",
+  "notes": [
+    "El CSS ya define .dark con un tema oscuro.",
+    "classList.toggle anade la clase si no esta y la quita si esta."
+  ],
+  "starterCode": {
+    "html": "<header>\n  <h1>Mi blog</h1>\n  <button id=\"theme\">Cambiar tema</button>\n</header>\n<main>\n  <p>Texto de ejemplo para ver el cambio de tema.</p>\n</main>",
+    "css": "body {\n  font-family: system-ui, sans-serif;\n  margin: 0;\n  padding: 24px;\n  background: white;\n  color: #17201e;\n  transition: background 0.2s, color 0.2s;\n}\n\nbody.dark {\n  background: #17201e;\n  color: #f4f7f5;\n}\n\nbutton {\n  padding: 8px 14px;\n  border-radius: 8px;\n  border: 1px solid currentColor;\n  background: transparent;\n  color: inherit;\n  cursor: pointer;\n}\n",
+    "javascript": "// Selecciona el boton y alterna la clase 'dark' en body\n"
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "El toggle de tema funciona.",
+    "rules": [
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "querySelector|getElementById",
+        "message": "Selecciona el boton del DOM."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "addEventListener\\(['\\\"]click['\\\"]",
+        "message": "Escucha el evento click con addEventListener."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "classList\\.toggle\\(['\\\"]dark['\\\"]\\)",
+        "message": "Usa classList.toggle('dark') sobre body."
+      }
+    ]
+  }
+}

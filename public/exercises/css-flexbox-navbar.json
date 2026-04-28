@@ -1,0 +1,57 @@
+{
+  "id": "css-flexbox-navbar",
+  "topic": "css",
+  "type": "visual-match",
+  "title": "Barra de navegacion con Flexbox",
+  "difficulty": "media",
+  "estimatedMinutes": 15,
+  "prompt": "Convierte la cabecera en una barra horizontal usando Flexbox. El logo debe quedar a la izquierda y los enlaces alineados a la derecha, con espacio uniforme entre ellos.",
+  "notes": [
+    "justify-content: space-between separa logo y enlaces.",
+    "Recuerda quitar los puntos de la lista y los margenes por defecto."
+  ],
+  "starterCode": {
+    "html": "<header class=\"navbar\">\n  <div class=\"logo\">DAW</div>\n  <ul>\n    <li><a href=\"#\">Inicio</a></li>\n    <li><a href=\"#\">Cursos</a></li>\n    <li><a href=\"#\">Contacto</a></li>\n  </ul>\n</header>",
+    "css": "body {\n  font-family: system-ui, sans-serif;\n  margin: 0;\n  background: #f4f7f5;\n}\n\n.navbar {\n  /* Aplica flexbox aqui */\n  background: #17201e;\n  color: white;\n  padding: 14px 24px;\n}\n\n.logo {\n  font-weight: 800;\n}\n\nul {\n  list-style: none;\n  margin: 0;\n  padding: 0;\n}\n\na {\n  color: white;\n  text-decoration: none;\n}\n",
+    "javascript": ""
+  },
+  "targetCode": {
+    "html": "<header class=\"navbar\">\n  <div class=\"logo\">DAW</div>\n  <ul>\n    <li><a href=\"#\">Inicio</a></li>\n    <li><a href=\"#\">Cursos</a></li>\n    <li><a href=\"#\">Contacto</a></li>\n  </ul>\n</header>",
+    "css": "body {\n  font-family: system-ui, sans-serif;\n  margin: 0;\n  background: #f4f7f5;\n}\n\n.navbar {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  background: #17201e;\n  color: white;\n  padding: 14px 24px;\n}\n\n.logo {\n  font-weight: 800;\n}\n\nul {\n  list-style: none;\n  margin: 0;\n  padding: 0;\n  display: flex;\n  gap: 18px;\n}\n\na {\n  color: white;\n  text-decoration: none;\n}\n",
+    "javascript": ""
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "Navbar con Flexbox listo.",
+    "rules": [
+      {
+        "type": "regex",
+        "field": "css",
+        "pattern": "\\.navbar[^}]*display\\s*:\\s*flex",
+        "flags": "is",
+        "message": "Aplica display: flex en .navbar."
+      },
+      {
+        "type": "regex",
+        "field": "css",
+        "pattern": "justify-content\\s*:\\s*space-between",
+        "flags": "i",
+        "message": "Usa justify-content: space-between para separar logo y enlaces."
+      },
+      {
+        "type": "regex",
+        "field": "css",
+        "pattern": "ul[^}]*display\\s*:\\s*flex",
+        "flags": "is",
+        "message": "El <ul> tambien necesita display: flex para alinear los enlaces en fila."
+      },
+      {
+        "type": "regex",
+        "field": "css",
+        "pattern": "gap\\s*:",
+        "flags": "i",
+        "message": "Anade gap entre los enlaces."
+      }
+    ]
+  }
+}

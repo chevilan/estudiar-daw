@@ -1,0 +1,51 @@
+{
+  "id": "css-variables-tema",
+  "topic": "css",
+  "type": "build",
+  "title": "Tema con variables CSS",
+  "difficulty": "media",
+  "estimatedMinutes": 12,
+  "prompt": "Define al menos cuatro variables CSS en :root (color de fondo, color de texto, color principal y radio de borde) y usalas con var() para estilizar el body, los titulos y la tarjeta. La idea es que cambiar una variable repercuta en toda la pagina.",
+  "notes": [
+    "Las custom properties se definen como --nombre: valor.",
+    "Se consumen con var(--nombre)."
+  ],
+  "starterCode": {
+    "html": "<main class=\"card\">\n  <h1>Variables CSS</h1>\n  <p>Cambia los valores en :root y observa.</p>\n  <button>Accion</button>\n</main>",
+    "css": ":root {\n  /* Define aqui las variables */\n}\n\nbody {\n  font-family: system-ui, sans-serif;\n  display: grid;\n  place-items: center;\n  min-height: 100vh;\n  margin: 0;\n}\n\n.card {\n  padding: 24px;\n  width: min(360px, 92vw);\n}\n",
+    "javascript": ""
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "Variables CSS aplicadas en toda la pagina.",
+    "rules": [
+      {
+        "type": "regex",
+        "field": "css",
+        "pattern": ":root[^}]*--[a-zA-Z-]+\\s*:",
+        "flags": "is",
+        "message": "Define al menos una variable dentro de :root."
+      },
+      {
+        "type": "regex",
+        "field": "css",
+        "pattern": "(--[a-zA-Z-]+\\s*:[^;]+;[^}]*){4,}",
+        "flags": "s",
+        "message": "Define al menos cuatro variables CSS."
+      },
+      {
+        "type": "regex",
+        "field": "css",
+        "pattern": "var\\(--",
+        "message": "Usa var(--...) para consumir las variables."
+      },
+      {
+        "type": "regex",
+        "field": "css",
+        "pattern": "(var\\(--[^)]+\\)[^;]*;[^}]*){3,}",
+        "flags": "s",
+        "message": "Aplica las variables al menos en tres reglas distintas."
+      }
+    ]
+  }
+}

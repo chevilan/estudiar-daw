@@ -1,0 +1,42 @@
+{
+  "id": "html-figure-figcaption",
+  "topic": "html",
+  "type": "build",
+  "title": "Galeria con figure y figcaption",
+  "difficulty": "base",
+  "estimatedMinutes": 8,
+  "prompt": "Crea una galeria con tres figuras. Cada figura usa <figure>, contiene una imagen con texto alternativo y un <figcaption> que la describe.",
+  "notes": [
+    "Las imagenes pueden apuntar a URLs ficticias.",
+    "El <figcaption> normalmente va al final del <figure>."
+  ],
+  "starterCode": {
+    "html": "<main class=\"gallery\">\n  <!-- Tres figuras -->\n</main>",
+    "css": "body {\n  font-family: system-ui, sans-serif;\n  padding: 24px;\n}\n\n.gallery {\n  display: grid;\n  gap: 16px;\n  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));\n}\n\nfigure {\n  margin: 0;\n  background: #f6f7f9;\n  padding: 12px;\n  border-radius: 12px;\n}\n\nfigure img {\n  width: 100%;\n  height: 120px;\n  object-fit: cover;\n  border-radius: 8px;\n}\n",
+    "javascript": ""
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "Galeria semantica completada.",
+    "rules": [
+      {
+        "type": "domSelector",
+        "selector": "figure",
+        "minCount": 3,
+        "message": "Crea al menos tres elementos <figure>."
+      },
+      {
+        "type": "domSelector",
+        "selector": "figure img[alt]",
+        "minCount": 3,
+        "message": "Cada <figure> debe tener una imagen con atributo alt."
+      },
+      {
+        "type": "domSelector",
+        "selector": "figure figcaption",
+        "minCount": 3,
+        "message": "Anade un <figcaption> dentro de cada <figure>."
+      }
+    ]
+  }
+}

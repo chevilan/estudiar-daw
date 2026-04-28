@@ -1,0 +1,60 @@
+{
+  "id": "javascript-formulario-validar",
+  "topic": "javascript",
+  "type": "build",
+  "title": "Validar formulario al enviar",
+  "difficulty": "media",
+  "estimatedMinutes": 18,
+  "prompt": "Cuando el formulario se envie, evita el envio por defecto, comprueba que el nombre tiene al menos 3 caracteres y que el email contiene '@'. Muestra un mensaje en el div .feedback indicando si los datos son validos o no.",
+  "notes": [
+    "Usa preventDefault para frenar el envio.",
+    "Selecciona los inputs por id y lee value."
+  ],
+  "starterCode": {
+    "html": "<form id=\"form\">\n  <label>Nombre <input id=\"nombre\" type=\"text\"></label>\n  <label>Email <input id=\"email\" type=\"text\"></label>\n  <button type=\"submit\">Enviar</button>\n  <p class=\"feedback\"></p>\n</form>",
+    "css": "body { font-family: system-ui, sans-serif; padding: 24px; max-width: 360px; margin: auto; }\nform { display: grid; gap: 10px; }\nlabel { display: grid; gap: 4px; }\ninput { padding: 8px; border-radius: 6px; border: 1px solid #ccc; }\n.feedback { min-height: 1.4em; font-weight: 600; }\n",
+    "javascript": "const form = document.querySelector('#form');\nconst feedback = document.querySelector('.feedback');\n\n// Escucha el submit y valida\n"
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "Validacion del formulario lista.",
+    "rules": [
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "addEventListener\\(['\\\"]submit['\\\"]",
+        "message": "Escucha el evento submit."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "preventDefault\\(\\)",
+        "message": "Llama a event.preventDefault() para frenar el envio."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "\\.value",
+        "message": "Lee el valor de los inputs con .value."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "\\.length\\s*[<>]=?\\s*3|length\\s*<\\s*3|length\\s*>=\\s*3",
+        "message": "Comprueba la longitud minima del nombre."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "includes\\(['\\\"]@['\\\"]\\)|indexOf\\(['\\\"]@['\\\"]\\)|@",
+        "message": "Verifica que el email incluye '@'."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "feedback\\.(textContent|innerText|innerHTML)\\s*=",
+        "message": "Escribe el mensaje en .feedback."
+      }
+    ]
+  }
+}

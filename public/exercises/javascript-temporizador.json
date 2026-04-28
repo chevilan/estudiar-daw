@@ -1,0 +1,54 @@
+{
+  "id": "javascript-temporizador",
+  "topic": "javascript",
+  "type": "build",
+  "title": "Temporizador con setInterval",
+  "difficulty": "media",
+  "estimatedMinutes": 15,
+  "prompt": "Crea un cronometro que muestre los segundos transcurridos. El boton 'Iniciar' arranca el contador con setInterval (cada 1000 ms). El boton 'Parar' detiene el cronometro con clearInterval y el boton 'Reiniciar' lo deja a 0.",
+  "notes": [
+    "setInterval devuelve un id que se pasa a clearInterval.",
+    "Guarda el id en una variable para poder pararlo."
+  ],
+  "starterCode": {
+    "html": "<main>\n  <h1>Cronometro</h1>\n  <p>Segundos: <strong id=\"display\">0</strong></p>\n  <button id=\"start\">Iniciar</button>\n  <button id=\"stop\">Parar</button>\n  <button id=\"reset\">Reiniciar</button>\n</main>",
+    "css": "body { font-family: system-ui, sans-serif; padding: 24px; text-align: center; }\nbutton { margin: 4px; padding: 8px 14px; border-radius: 8px; border: 0; cursor: pointer; }\n#display { font-size: 2rem; color: #2a9d8f; }\n",
+    "javascript": "const display = document.querySelector('#display');\nconst startBtn = document.querySelector('#start');\nconst stopBtn = document.querySelector('#stop');\nconst resetBtn = document.querySelector('#reset');\n\n// Implementa el cronometro\n"
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "Cronometro listo.",
+    "rules": [
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "setInterval\\s*\\(",
+        "message": "Usa setInterval para el conteo."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "clearInterval\\s*\\(",
+        "message": "Usa clearInterval para parar."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "1000",
+        "message": "El intervalo debe ser de 1000 milisegundos."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "addEventListener\\(['\\\"]click['\\\"]",
+        "message": "Escucha los clicks de los botones."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "(textContent|innerText)\\s*=",
+        "message": "Actualiza el texto de #display."
+      }
+    ]
+  }
+}

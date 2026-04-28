@@ -1,0 +1,50 @@
+{
+  "id": "html-estructura-pagina",
+  "topic": "html",
+  "type": "build",
+  "title": "Estructura semantica de una pagina",
+  "difficulty": "media",
+  "estimatedMinutes": 14,
+  "prompt": "Construye el esqueleto de una pagina con header, nav, main, aside y footer. El nav debe contener una lista de enlaces, el main debe tener al menos un article y el aside debe acompanar al contenido principal.",
+  "notes": [
+    "Cada etiqueta semantica describe el rol de su contenido.",
+    "El nav puede ir dentro del header o como hermano, segun lo que prefieras."
+  ],
+  "starterCode": {
+    "html": "<!-- Define aqui la estructura -->",
+    "css": "body {\n  font-family: system-ui, sans-serif;\n  margin: 0;\n}\n\nheader, footer {\n  padding: 16px;\n  background: #264653;\n  color: white;\n}\n\nmain {\n  display: grid;\n  grid-template-columns: 1fr 240px;\n  gap: 16px;\n  padding: 16px;\n}\n\naside {\n  background: #f1f3f5;\n  padding: 12px;\n}\n",
+    "javascript": ""
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "Layout semantico listo.",
+    "rules": [
+      {
+        "type": "domSelector",
+        "selector": "header",
+        "message": "Incluye un <header>."
+      },
+      {
+        "type": "domSelector",
+        "selector": "header nav ul li a, nav ul li a",
+        "minCount": 3,
+        "message": "El <nav> debe tener una lista con al menos tres enlaces."
+      },
+      {
+        "type": "domSelector",
+        "selector": "main article",
+        "message": "Incluye al menos un <article> dentro de <main>."
+      },
+      {
+        "type": "domSelector",
+        "selector": "aside",
+        "message": "Anade un <aside>."
+      },
+      {
+        "type": "domSelector",
+        "selector": "footer",
+        "message": "Cierra con un <footer>."
+      }
+    ]
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "id": "css-grid-areas",
+  "topic": "css",
+  "type": "visual-match",
+  "title": "Layout con grid-template-areas",
+  "difficulty": "reto",
+  "estimatedMinutes": 18,
+  "prompt": "Reproduce el layout objetivo usando grid-template-areas. La cabecera ocupa todo el ancho arriba, debajo hay un sidebar a la izquierda y el contenido a la derecha, y el footer cierra abajo ocupando todo.",
+  "notes": [
+    "Asigna un grid-area a cada elemento (header, sidebar, content, footer).",
+    "grid-template-areas usa cadenas, una por fila."
+  ],
+  "starterCode": {
+    "html": "<div class=\"layout\">\n  <header>Header</header>\n  <aside>Sidebar</aside>\n  <main>Contenido</main>\n  <footer>Footer</footer>\n</div>",
+    "css": "body {\n  font-family: system-ui, sans-serif;\n  margin: 0;\n  background: #f1f3f5;\n}\n\n.layout {\n  /* Define la cuadricula con areas */\n  min-height: 100vh;\n}\n\nheader, footer {\n  background: #264653;\n  color: white;\n  padding: 16px;\n  text-align: center;\n}\n\naside {\n  background: #2a9d8f;\n  color: white;\n  padding: 16px;\n}\n\nmain {\n  background: white;\n  padding: 16px;\n}\n",
+    "javascript": ""
+  },
+  "targetCode": {
+    "html": "<div class=\"layout\">\n  <header>Header</header>\n  <aside>Sidebar</aside>\n  <main>Contenido</main>\n  <footer>Footer</footer>\n</div>",
+    "css": "body {\n  font-family: system-ui, sans-serif;\n  margin: 0;\n  background: #f1f3f5;\n}\n\n.layout {\n  display: grid;\n  grid-template-columns: 200px 1fr;\n  grid-template-rows: auto 1fr auto;\n  grid-template-areas:\n    'header header'\n    'sidebar content'\n    'footer footer';\n  min-height: 100vh;\n}\n\nheader { grid-area: header; background: #264653; color: white; padding: 16px; text-align: center; }\nfooter { grid-area: footer; background: #264653; color: white; padding: 16px; text-align: center; }\naside { grid-area: sidebar; background: #2a9d8f; color: white; padding: 16px; }\nmain { grid-area: content; background: white; padding: 16px; }\n",
+    "javascript": ""
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "Layout con areas configurado.",
+    "rules": [
+      {
+        "type": "regex",
+        "field": "css",
+        "pattern": "display\\s*:\\s*grid",
+        "flags": "i",
+        "message": "El contenedor debe ser display: grid."
+      },
+      {
+        "type": "regex",
+        "field": "css",
+        "pattern": "grid-template-areas\\s*:",
+        "flags": "i",
+        "message": "Define grid-template-areas en .layout."
+      },
+      {
+        "type": "regex",
+        "field": "css",
+        "pattern": "grid-area\\s*:\\s*header",
+        "flags": "i",
+        "message": "Asigna grid-area: header al <header>."
+      },
+      {
+        "type": "regex",
+        "field": "css",
+        "pattern": "grid-area\\s*:\\s*sidebar",
+        "flags": "i",
+        "message": "Asigna grid-area: sidebar al <aside>."
+      },
+      {
+        "type": "regex",
+        "field": "css",
+        "pattern": "grid-area\\s*:\\s*footer",
+        "flags": "i",
+        "message": "Asigna grid-area: footer al <footer>."
+      }
+    ]
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "id": "css-pseudoclases",
+  "topic": "css",
+  "type": "build",
+  "title": "Boton interactivo con pseudoclases",
+  "difficulty": "base",
+  "estimatedMinutes": 10,
+  "prompt": "Estiliza el boton para que cambie de aspecto al pasar el raton (hover), al recibir el foco con teclado (focus) y al pulsarlo (active). Cada estado debe tener un cambio visual claro.",
+  "notes": [
+    "Las pseudoclases se escriben tras el selector con dos puntos: button:hover.",
+    "El estado focus es importante para la accesibilidad por teclado."
+  ],
+  "starterCode": {
+    "html": "<main>\n  <button class=\"cta\">Subscribirme</button>\n</main>",
+    "css": "body {\n  display: grid;\n  place-items: center;\n  min-height: 100vh;\n  background: #eef2f7;\n}\n\n.cta {\n  border: 0;\n  padding: 12px 22px;\n  background: #2a9d8f;\n  color: white;\n  border-radius: 10px;\n  font-weight: 700;\n  cursor: pointer;\n  transition: transform 0.2s ease, background 0.2s ease;\n}\n\n/* Define los estados hover, focus y active */\n",
+    "javascript": ""
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "El boton responde a los tres estados interactivos.",
+    "rules": [
+      {
+        "type": "regex",
+        "field": "css",
+        "pattern": "\\.cta:hover",
+        "message": "Define un estilo para .cta:hover."
+      },
+      {
+        "type": "regex",
+        "field": "css",
+        "pattern": "\\.cta:focus",
+        "message": "Define un estilo para .cta:focus."
+      },
+      {
+        "type": "regex",
+        "field": "css",
+        "pattern": "\\.cta:active",
+        "message": "Define un estilo para .cta:active."
+      }
+    ]
+  }
+}

@@ -90,3 +90,34 @@
     background: transparent;
   }
 }
+
+@layer components {
+  .code-mirror-box {
+    @apply h-full overflow-hidden;
+    background: var(--code-editor-bg, hsl(var(--code)));
+  }
+
+  .code-mirror-box .cm-editor {
+    @apply h-full;
+  }
+
+  .code-mirror-box .cm-scroller {
+    scrollbar-width: thin;
+    scrollbar-color: var(--code-editor-scrollbar, #3e3e42)
+      var(--code-editor-bg, #1e1e1e);
+  }
+
+  .code-mirror-box .cm-scroller::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  .code-mirror-box .cm-scroller::-webkit-scrollbar-thumb {
+    background: var(--code-editor-scrollbar, #3e3e42);
+    border-radius: 0;
+  }
+
+  .code-mirror-box .cm-scroller::-webkit-scrollbar-track {
+    background: var(--code-editor-bg, #1e1e1e);
+  }
+}

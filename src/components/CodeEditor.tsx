@@ -1,5 +1,13 @@
-import { Code2, FileCode2, Paintbrush, RotateCcw, TerminalSquare } from "lucide-react";
+import {
+  Code2,
+  FileCode2,
+  Paintbrush,
+  Palette,
+  RotateCcw,
+  TerminalSquare,
+} from "lucide-react";
 
+import CodeMirrorBox from "@/components/CodeMirrorBox";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import {
@@ -7,14 +15,22 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import {
+  codeThemes,
+  codeThemeOptions,
+  isCodeThemeId,
+  type CodeThemeId,
+} from "@/lib/codeThemes";
 import { cn } from "@/lib/utils";
 import type { CodeFiles, ValidationField } from "../lib/types";
 
 type CodeEditorProps = {
   files: CodeFiles;
   activeFile: ValidationField;
+  codeThemeId: CodeThemeId;
   onActiveFileChange: (file: ValidationField) => void;
   onChange: (file: ValidationField, value: string) => void;
+  onCodeThemeChange: (themeId: CodeThemeId) => void;
   onReset: () => void;
 };
 
@@ -31,10 +47,14 @@ const fileTabs: Array<{
 export default function CodeEditor({
   files,
   activeFile,
+  codeThemeId,
   onActiveFileChange,
   onChange,
+  onCodeThemeChange,
   onReset,
 }: CodeEditorProps) {
+  const selectedTheme = codeThemes[codeThemeId];
+
   return (
     <Card className="flex flex-col overflow-hidden">
       <div className="flex items-center justify-between border-b px-4 py-3">
@@ -42,20 +62,45 @@ export default function CodeEditor({
           <Code2 size={16} className="text-muted-foreground" aria-hidden />
           <h2 className="m-0 text-sm font-semibold">Tu solución</h2>
         </div>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Button
-              variant="outline"
-              size="icon"
-              className="h-8 w-8"
-              onClick={onReset}
-              aria-label="Restaurar inicio"
+        <div className="flex items-center gap-2">
+          <label className="relative inline-flex items-center">
+            <Palette
+              size={14}
+              className="pointer-events-none absolute left-2.5 text-muted-foreground"
+              aria-hidden
+            />
+            <select
+              value={codeThemeId}
+              onChange={(event) => {
+                if (isCodeThemeId(event.target.value)) {
+                  onCodeThemeChange(event.target.value);
+                }
+              }}
+              aria-label="Tema del editor"
+              className="h-8 max-w-[10rem] rounded-md border bg-background py-0 pl-8 pr-7 text-xs font-medium text-foreground outline-none transition-colors hover:bg-secondary focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             >
-              <RotateCcw size={14} aria-hidden />
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent>Restaurar inicio</TooltipContent>
-        </Tooltip>
+              {codeThemeOptions.map((theme) => (
+                <option key={theme.id} value={theme.id}>
+                  {theme.label}
+                </option>
+              ))}
+            </select>
+          </label>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                variant="outline"
+                size="icon"
+                className="h-8 w-8"
+                onClick={onReset}
+                aria-label="Restaurar inicio"
+              >
+                <RotateCcw size={14} aria-hidden />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>Restaurar inicio</TooltipContent>
+          </Tooltip>
+        </div>
       </div>
 
       <div
@@ -92,13 +137,19 @@ export default function CodeEditor({
         })}
       </div>
 
-      <textarea
-        spellCheck="false"
-        value={files[activeFile]}
-        onChange={(event) => onChange(activeFile, event.target.value)}
-        aria-label={`Editor ${activeFile}`}
-        className="block min-h-[460px] flex-1 resize-y border-0 bg-code p-4 font-mono text-[0.84rem] leading-relaxed text-code-foreground outline-none [tab-size:2] focus-visible:outline-none"
-      />
+      <div
+        className="min-h-[460px] flex-1 overflow-hidden"
+        style={{ backgroundColor: selectedTheme.background }}
+      >
+        <CodeMirrorBox
+          value={files[activeFile]}
+          language={activeFile}
+          ariaLabel={`Editor ${activeFile}`}
+          themeId={codeThemeId}
+          minHeight="460px"
+          onChange={(value) => onChange(activeFile, value)}
+        />
+      </div>
     </Card>
   );
 }

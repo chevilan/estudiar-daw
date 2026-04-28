@@ -12,6 +12,7 @@ import {
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 import CodeEditor from "@/components/CodeEditor";
+import CodeMirrorBox from "@/components/CodeMirrorBox";
 import ExerciseList from "@/components/ExerciseList";
 import PreviewFrame from "@/components/PreviewFrame";
 import ValidationPanel from "@/components/ValidationPanel";
@@ -20,6 +21,11 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import {
+  defaultCodeThemeId,
+  isCodeThemeId,
+  type CodeThemeId,
+} from "@/lib/codeThemes";
 import { loadExercises } from "@/lib/exerciseLoader";
 import {
   loadProgress,
@@ -43,10 +49,18 @@ const emptyFiles: CodeFiles = {
   javascript: "",
 };
 
+const codeThemeStorageKey = "daw-lab:code-theme";
+
 const topicLabels: Record<Topic, string> = {
   html: "HTML",
   css: "CSS",
   javascript: "JavaScript",
+};
+
+const fileLabels: Record<ValidationField, string> = {
+  html: "HTML",
+  css: "CSS",
+  javascript: "JS",
 };
 
 function createPendingResults(exercise: Exercise): ValidationResult[] {
@@ -55,6 +69,13 @@ function createPendingResults(exercise: Exercise): ValidationResult[] {
     message: rule.message,
     rule,
   }));
+}
+
+function loadCodeTheme(): CodeThemeId {
+  const savedTheme = localStorage.getItem(codeThemeStorageKey);
+  return savedTheme && isCodeThemeId(savedTheme)
+    ? savedTheme
+    : defaultCodeThemeId;
 }
 
 export default function App() {
@@ -70,6 +91,7 @@ export default function App() {
   const [progressById, setProgressById] = useState<Record<string, ExerciseProgress>>({});
   const [previewNonce, setPreviewNonce] = useState(0);
   const [showTargetCode, setShowTargetCode] = useState(false);
+  const [codeThemeId, setCodeThemeId] = useState<CodeThemeId>(loadCodeTheme);
 
   useEffect(() => {
     let isMounted = true;
@@ -167,6 +189,11 @@ export default function App() {
       [file]: value,
     }));
     setHasRunValidation(false);
+  }, []);
+
+  const handleCodeThemeChange = useCallback((themeId: CodeThemeId) => {
+    setCodeThemeId(themeId);
+    localStorage.setItem(codeThemeStorageKey, themeId);
   }, []);
 
   const handleReset = useCallback(() => {
@@ -331,8 +358,10 @@ export default function App() {
               <CodeEditor
                 files={files}
                 activeFile={activeFile}
+                codeThemeId={codeThemeId}
                 onActiveFileChange={setActiveFile}
                 onChange={handleChangeFile}
+                onCodeThemeChange={handleCodeThemeChange}
                 onReset={handleReset}
               />
             </div>
@@ -397,11 +426,17 @@ export default function App() {
                 <div className="overflow-hidden rounded-md border">
                   <div className="flex items-center gap-2 border-b bg-secondary/60 px-3 py-2 text-[0.72rem] font-semibold uppercase tracking-wider text-muted-foreground">
                     <Save size={13} aria-hidden />
-                    <span>Código objetivo</span>
+                    <span>Código objetivo: {fileLabels[activeFile]}</span>
                   </div>
-                  <pre className="m-0 max-h-60 overflow-auto whitespace-pre-wrap bg-code p-3 font-mono text-xs leading-relaxed text-code-foreground">
-                    {JSON.stringify(selectedExercise.targetCode, null, 2)}
-                  </pre>
+                  <CodeMirrorBox
+                    value={selectedExercise.targetCode[activeFile]}
+                    language={activeFile}
+                    ariaLabel="Código objetivo"
+                    themeId={codeThemeId}
+                    minHeight="180px"
+                    maxHeight="240px"
+                    readOnly
+                  />
                 </div>
               ) : null}
 

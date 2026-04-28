@@ -2,6 +2,10 @@
 
 Aplicacion local para practicar HTML, CSS y JavaScript con ejercicios declarados en JSON.
 
+## Ejemplo
+
+![Ejemplo de DAW Practice Lab](docs/assets/daw-practice-lab-example.png)
+
 ## Ejecutar en local
 
 ```bash

@@ -1,0 +1,42 @@
+{
+  "id": "css-selector-div-hermano-adyacente-p",
+  "topic": "css",
+  "type": "visual-match",
+  "title": "Selector div + p de examen",
+  "difficulty": "base",
+  "estimatedMinutes": 8,
+  "prompt": "Usa exactamente el selector div + p para colorear solo los parrafos que van inmediatamente despues de un div. No cambies el HTML.",
+  "notes": [
+    "Practicas el combinador de hermanos adyacentes aplicado a div + p.",
+    "Si entre el div y el p hay otro elemento, ya no debe contar."
+  ],
+  "starterCode": {
+    "html": "<section class=\"figura\">\n  <div>Bloque 1</div>\n  <p>Primer parrafo adyacente</p>\n  <p>Segundo parrafo</p>\n  <div>Bloque 2</div>\n  <span>Separador</span>\n  <p>No adyacente</p>\n  <div>Bloque 3</div>\n  <p>Ultimo adyacente</p>\n</section>",
+    "css": "body {\n  margin: 0;\n  padding: 24px;\n  background: #fbf8f2;\n  font-family: 'Trebuchet MS', sans-serif;\n  color: #1f2937;\n}\n\n.figura {\n  max-width: 420px;\n}\n\ndiv {\n  margin-top: 12px;\n  padding: 10px 12px;\n  background: #e2e8f0;\n  border-radius: 10px;\n  font-weight: 700;\n}\n\np,\nspan {\n  margin: 8px 0;\n}\n\n/* Escribe aqui tu selector */\n",
+    "javascript": ""
+  },
+  "targetCode": {
+    "html": "<section class=\"figura\">\n  <div>Bloque 1</div>\n  <p>Primer parrafo adyacente</p>\n  <p>Segundo parrafo</p>\n  <div>Bloque 2</div>\n  <span>Separador</span>\n  <p>No adyacente</p>\n  <div>Bloque 3</div>\n  <p>Ultimo adyacente</p>\n</section>",
+    "css": "body {\n  margin: 0;\n  padding: 24px;\n  background: #fbf8f2;\n  font-family: 'Trebuchet MS', sans-serif;\n  color: #1f2937;\n}\n\n.figura {\n  max-width: 420px;\n}\n\ndiv {\n  margin-top: 12px;\n  padding: 10px 12px;\n  background: #e2e8f0;\n  border-radius: 10px;\n  font-weight: 700;\n}\n\np,\nspan {\n  margin: 8px 0;\n}\n\ndiv + p {\n  color: #b42318;\n  font-weight: 700;\n}\n",
+    "javascript": ""
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "Has aplicado correctamente div + p.",
+    "rules": [
+      {
+        "type": "regex",
+        "field": "css",
+        "pattern": "div\\s*\\+\\s*p\\s*\\{",
+        "message": "Usa exactamente el selector div + p."
+      },
+      {
+        "type": "regex",
+        "field": "css",
+        "pattern": "color\\s*:\\s*(red|#b42318|rgb\\()",
+        "flags": "i",
+        "message": "Cambia el color de los parrafos adyacentes."
+      }
+    ]
+  }
+}

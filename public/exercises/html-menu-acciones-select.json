@@ -1,0 +1,63 @@
+{
+  "id": "html-menu-acciones-select",
+  "topic": "html",
+  "type": "build",
+  "title": "Menu de acciones con select",
+  "difficulty": "base",
+  "estimatedMinutes": 8,
+  "prompt": "Construye un formulario como el del anexo del examen. Debe incluir un select con name=\"opt\" y cuatro opciones: Ver listado general, Ver usuarios, Cambiar preferencias y Registrarse. Anade tambien un boton o input de envio.",
+  "notes": [
+    "Respeta los valores de cada option para practicar formularios reales.",
+    "No necesitas anadir estilos para validar el ejercicio."
+  ],
+  "starterCode": {
+    "html": "<main>\n  <!-- Crea aqui el formulario de entrada -->\n</main>",
+    "css": "body {\n  font-family: 'Trebuchet MS', sans-serif;\n  padding: 24px;\n}\n",
+    "javascript": ""
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "El menu de acciones esta listo.",
+    "rules": [
+      {
+        "type": "domSelector",
+        "selector": "form",
+        "message": "Incluye un formulario."
+      },
+      {
+        "type": "domSelector",
+        "selector": "select[name='opt']",
+        "message": "Incluye un select con name='opt'."
+      },
+      {
+        "type": "contains",
+        "field": "html",
+        "value": "value=\"verDatos\"",
+        "message": "Anade la opcion Ver listado general con value='verDatos'."
+      },
+      {
+        "type": "contains",
+        "field": "html",
+        "value": "value=\"verUsuarios\"",
+        "message": "Anade la opcion Ver usuarios con value='verUsuarios'."
+      },
+      {
+        "type": "contains",
+        "field": "html",
+        "value": "value=\"cambiarPreferencias\"",
+        "message": "Anade la opcion Cambiar preferencias."
+      },
+      {
+        "type": "contains",
+        "field": "html",
+        "value": "value=\"registro\"",
+        "message": "Anade la opcion Registrarse."
+      },
+      {
+        "type": "domSelector",
+        "selector": "button[type='submit'], input[type='submit']",
+        "message": "Incluye un control de envio."
+      }
+    ]
+  }
+}

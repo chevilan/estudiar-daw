@@ -1,0 +1,74 @@
+{
+  "id": "html-registro-usuario-examen",
+  "topic": "html",
+  "type": "build",
+  "title": "Formulario de registro del examen",
+  "difficulty": "media",
+  "estimatedMinutes": 10,
+  "prompt": "Crea un formulario de registro inspirado en la figura 11.5. Debe tener cuatro campos con sus labels asociados: Nombre, Apellido, ID y Password. Usa los names nombre, apellido, id y pwd.",
+  "notes": [
+    "Asocia cada label con su campo mediante el atributo for.",
+    "El boton final debe enviar el formulario."
+  ],
+  "starterCode": {
+    "html": "<main>\n  <h1>Registro de usuarios</h1>\n  <!-- Crea aqui el formulario -->\n</main>",
+    "css": "body {\n  font-family: Georgia, serif;\n  padding: 24px;\n}\n",
+    "javascript": ""
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "El formulario de registro esta montado.",
+    "rules": [
+      {
+        "type": "domSelector",
+        "selector": "form",
+        "message": "Incluye un formulario."
+      },
+      {
+        "type": "domSelector",
+        "selector": "label[for='name']",
+        "message": "Asocia una label al campo Nombre."
+      },
+      {
+        "type": "domSelector",
+        "selector": "input#name[name='nombre']",
+        "message": "Crea el input de nombre con id='name' y name='nombre'."
+      },
+      {
+        "type": "domSelector",
+        "selector": "label[for='apell']",
+        "message": "Asocia una label al campo Apellido."
+      },
+      {
+        "type": "domSelector",
+        "selector": "input#apell[name='apellido']",
+        "message": "Crea el input de apellido."
+      },
+      {
+        "type": "domSelector",
+        "selector": "label[for='id']",
+        "message": "Asocia una label al campo ID."
+      },
+      {
+        "type": "domSelector",
+        "selector": "input#id[name='id']",
+        "message": "Crea el input del ID."
+      },
+      {
+        "type": "domSelector",
+        "selector": "label[for='pwd']",
+        "message": "Asocia una label al campo Password."
+      },
+      {
+        "type": "domSelector",
+        "selector": "input#pwd[name='pwd']",
+        "message": "Crea el input de password."
+      },
+      {
+        "type": "domSelector",
+        "selector": "button[type='submit'], input[type='submit']",
+        "message": "Incluye un boton de envio."
+      }
+    ]
+  }
+}

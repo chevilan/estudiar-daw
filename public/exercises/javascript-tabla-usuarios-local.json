@@ -1,0 +1,48 @@
+{
+  "id": "javascript-tabla-usuarios-local",
+  "topic": "javascript",
+  "type": "build",
+  "title": "Pintar una tabla de usuarios en el DOM",
+  "difficulty": "media",
+  "estimatedMinutes": 16,
+  "prompt": "Tienes un array local de usuarios con nombre y apellidos. Renderiza dentro de tbody una fila por usuario con dos celdas: nombre y apellidos. La idea esta inspirada en la vista de usuarios de uno de los examenes.",
+  "notes": [
+    "Puedes crear nodos con createElement o montar el HTML como cadena.",
+    "No hace falta usar fetch para este ejercicio."
+  ],
+  "starterCode": {
+    "html": "<main>\n  <h1>Lista de usuarios</h1>\n  <table>\n    <thead>\n      <tr><th>Nombre</th><th>Apellidos</th></tr>\n    </thead>\n    <tbody id=\"usuarios\"></tbody>\n  </table>\n</main>",
+    "css": "body {\n  font-family: 'Trebuchet MS', sans-serif;\n  padding: 24px;\n  background: #f8f4eb;\n}\n\ntable {\n  border-collapse: collapse;\n}\n\nth,\ntd {\n  border: 1px solid #94a3b8;\n  padding: 8px 12px;\n}\n",
+    "javascript": "const datos = [\n  { nombre: 'Ana', apellidos: 'Valbuena' },\n  { nombre: 'Pedro', apellidos: 'Suarez' },\n  { nombre: 'Pablo', apellidos: 'Gomez' }\n];\nconst tbody = document.querySelector('#usuarios');\n\n// Renderiza una fila por usuario.\n"
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "La tabla de usuarios ya se genera desde JavaScript.",
+    "rules": [
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "forEach\\s*\\(|map\\s*\\(|for\\s*\\(",
+        "message": "Recorre el array de usuarios."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "createElement\\s*\\(\\s*['\\\"]tr['\\\"]\\s*\\)|innerHTML\\s*\\+?=",
+        "message": "Crea filas para la tabla."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "createElement\\s*\\(\\s*['\\\"]td['\\\"]\\s*\\)|<td>",
+        "message": "Crea celdas para nombre y apellidos."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "appendChild|insertAdjacentHTML|innerHTML",
+        "message": "Inserta las filas en el tbody."
+      }
+    ]
+  }
+}

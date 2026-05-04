@@ -1,0 +1,66 @@
+{
+  "id": "javascript-xhr-usuarios-lista",
+  "topic": "javascript",
+  "type": "build",
+  "title": "Cargar usuarios con XMLHttpRequest",
+  "difficulty": "reto",
+  "estimatedMinutes": 18,
+  "prompt": "Resuelve el ejercicio en estilo examen AJAX clasico. Usa XMLHttpRequest para pedir https://jsonplaceholder.typicode.com/users. Cuando onload detecte status 200, parsea la respuesta y pinta en #lista un li por usuario con su nombre.",
+  "notes": [
+    "No uses fetch en este ejercicio.",
+    "Puedes usar JSON.parse(xhr.responseText) para convertir la respuesta."
+  ],
+  "starterCode": {
+    "html": "<main>\n  <h1>Usuarios cargados con XHR</h1>\n  <ul id=\"lista\"></ul>\n</main>",
+    "css": "body {\n  font-family: 'Trebuchet MS', sans-serif;\n  padding: 24px;\n  max-width: 520px;\n  margin: 0 auto;\n  background: #f7f4ed;\n}\n\nul {\n  padding-left: 20px;\n}\n\nli {\n  margin-bottom: 8px;\n}\n",
+    "javascript": "const lista = document.querySelector('#lista');\n\n// Pide los datos con XMLHttpRequest y pinta los nombres.\n"
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "La carga con XMLHttpRequest tiene la estructura correcta.",
+    "rules": [
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "new\\s+XMLHttpRequest\\s*\\(",
+        "message": "Crea una instancia de XMLHttpRequest."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "\\.open\\s*\\(",
+        "message": "Abre la peticion con xhr.open(...)."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "\\.send\\s*\\(",
+        "message": "Envia la peticion con xhr.send()."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "onload\\s*=|addEventListener\\s*\\(\\s*['\\\"]load['\\\"]",
+        "message": "Gestiona la respuesta en onload o load."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "status\\s*={1,3}\\s*200",
+        "message": "Comprueba que el status sea 200."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "JSON\\.parse\\s*\\(",
+        "message": "Convierte la respuesta con JSON.parse."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "createElement\\s*\\(\\s*['\\\"]li['\\\"]\\s*\\)|innerHTML\\s*\\+?=",
+        "message": "Crea elementos li para la lista."
+      }
+    ]
+  }
+}

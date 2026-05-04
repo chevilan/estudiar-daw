@@ -1,0 +1,60 @@
+{
+  "id": "javascript-json-universidades",
+  "topic": "javascript",
+  "type": "build",
+  "title": "Renderizar universidades desde JSON",
+  "difficulty": "media",
+  "estimatedMinutes": 16,
+  "prompt": "Parte del JSON del examen y genera dentro de #datos un <li> por universidad con el formato Nombre: Pais. Debe verse como una lista simple bajo el h3.",
+  "notes": [
+    "Puedes parsear la cadena con JSON.parse y recorrer el array resultante.",
+    "No hace falta hacer peticiones de red para completar el ejercicio."
+  ],
+  "starterCode": {
+    "html": "<main>\n  <h3>Escuela Tecnica Superior de Ingenieria</h3>\n  <ul id=\"datos\"></ul>\n</main>",
+    "css": "body {\n  font-family: Georgia, serif;\n  padding: 24px;\n  background: #f8f4ec;\n}\n\nul {\n  padding-left: 20px;\n}\n",
+    "javascript": "const datosJson = '{\"universidades\":[{\"Nombre\":\"USC\",\"Ciudad\":\"Santiago de Compostela\",\"Pais\":\"Espana\"},{\"Nombre\":\"UChicago\",\"Ciudad\":\"Chicago\",\"Pais\":\"EE.UU.\"},{\"Nombre\":\"USI\",\"Ciudad\":\"Lugano\",\"Pais\":\"Suiza\"},{\"Nombre\":\"UDC\",\"Ciudad\":\"La Coruna\",\"Pais\":\"Espana\"}]}';\nconst lista = document.querySelector('#datos');\n\n// Parsea el JSON y crea un <li> por universidad con el formato Nombre: Pais.\n"
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "Las universidades ya se renderizan desde JSON.",
+    "rules": [
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "JSON\\.parse\\s*\\(",
+        "message": "Convierte la cadena con JSON.parse."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "forEach\\s*\\(|map\\s*\\(|for\\s*\\(",
+        "message": "Recorre el array de universidades."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "createElement\\s*\\(\\s*['\\\"]li['\\\"]\\s*\\)|insertAdjacentHTML|innerHTML\\s*\\+?=",
+        "message": "Crea elementos li para la lista."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "appendChild|insertAdjacentHTML|innerHTML",
+        "message": "Anade el contenido al ul."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "Nombre|nombre",
+        "message": "Lee el nombre de cada universidad."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "Pais|pais",
+        "message": "Lee el pais de cada universidad."
+      }
+    ]
+  }
+}

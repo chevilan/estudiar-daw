@@ -1,0 +1,60 @@
+{
+  "id": "javascript-h2-color-click",
+  "topic": "javascript",
+  "type": "build",
+  "title": "Leer un estilo al hacer click",
+  "difficulty": "media",
+  "estimatedMinutes": 14,
+  "prompt": "Crea dos funciones arrow llamadas getEstilo(elemento, nombreEstilo) y verEstilo(). Al hacer click sobre el h2, muestra en #salida el color de fondo actual de la caja verde.",
+  "notes": [
+    "Puedes usar getComputedStyle para leer estilos ya calculados.",
+    "La solucion esta inspirada en el parcial de 2026."
+  ],
+  "starterCode": {
+    "html": "<main>\n  <h2>USC. ETSE.</h2>\n  <p class=\"caja\"></p>\n  <p id=\"salida\">Pulsa el titulo para ver el color.</p>\n</main>",
+    "css": "body {\n  margin: 0;\n  min-height: 100vh;\n  display: grid;\n  place-items: center;\n  font-family: Georgia, serif;\n  background: #f5efe3;\n}\n\nmain {\n  text-align: center;\n}\n\nh2 {\n  margin: 0 0 18px;\n  cursor: pointer;\n}\n\n.caja {\n  width: 120px;\n  height: 120px;\n  margin: 0 auto 16px;\n  background: #2f9e44;\n  border: 4px solid #1b5e20;\n}\n",
+    "javascript": "const titulo = document.querySelector('h2');\nconst caja = document.querySelector('.caja');\nconst salida = document.querySelector('#salida');\n\n// Define getEstilo y verEstilo.\n"
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "El click sobre el h2 ya muestra el estilo de la caja.",
+    "rules": [
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "getEstilo\\s*=\\s*\\(",
+        "message": "Define getEstilo como funcion arrow."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "verEstilo\\s*=\\s*\\(",
+        "message": "Define verEstilo como funcion arrow."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "getComputedStyle\\s*\\(",
+        "message": "Usa getComputedStyle para leer el estilo."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "addEventListener\\s*\\(\\s*['\\\"]click['\\\"]",
+        "message": "Escucha el click sobre el h2."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "(backgroundColor|background-color)",
+        "message": "Consulta la propiedad backgroundColor."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "(innerHTML|textContent)\\s*=",
+        "message": "Escribe el resultado en #salida."
+      }
+    ]
+  }
+}

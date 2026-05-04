@@ -1,0 +1,53 @@
+{
+  "id": "javascript-regex-lookahead-digito",
+  "topic": "javascript",
+  "type": "build",
+  "title": "Lookahead sobre un codigo mixto",
+  "difficulty": "media",
+  "estimatedMinutes": 10,
+  "prompt": "Aplica la expresion regular [5-9](?=[l-r]+) sobre la cadena f648r4q1m2h5. Guarda el resultado, escribelo en #salida y muestralo tambien por consola.",
+  "notes": [
+    "El examen pedía analizar la captura de la expresion.",
+    "Puedes usar match para obtener el primer resultado."
+  ],
+  "starterCode": {
+    "html": "<main>\n  <h1>Resultado regex</h1>\n  <p id=\"salida\">Pendiente</p>\n</main>",
+    "css": "body {\n  font-family: Georgia, serif;\n  padding: 24px;\n  background: #fbf8f2;\n}\n",
+    "javascript": "const texto = 'f648r4q1m2h5';\nconst salida = document.querySelector('#salida');\n\n// Aplica la expresion regular y muestra la captura.\n"
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "La captura de la expresion regular es correcta.",
+    "rules": [
+      {
+        "type": "contains",
+        "field": "javascript",
+        "value": "[5-9]",
+        "message": "Usa el rango [5-9] en tu expresion."
+      },
+      {
+        "type": "contains",
+        "field": "javascript",
+        "value": "(?=[l-r]+)",
+        "message": "Usa el lookahead (?=[l-r]+)."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "match\\s*\\(",
+        "message": "Aplica la expresion con match."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "console\\.log",
+        "message": "Muestra el resultado por consola."
+      },
+      {
+        "type": "consoleIncludes",
+        "value": "8",
+        "message": "La consola debe incluir la captura correcta."
+      }
+    ]
+  }
+}

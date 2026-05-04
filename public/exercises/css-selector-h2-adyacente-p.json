@@ -1,0 +1,42 @@
+{
+  "id": "css-selector-h2-adyacente-p",
+  "topic": "css",
+  "type": "visual-match",
+  "title": "Selector h2 + p de examen",
+  "difficulty": "base",
+  "estimatedMinutes": 8,
+  "prompt": "Usa exactamente el selector h2 + p para resaltar solo el primer parrafo que aparece justo despues de cada h2. No modifiques el HTML ni anadas clases nuevas.",
+  "notes": [
+    "Este combinador aparece con frecuencia en preguntas de selectores de examen.",
+    "El segundo parrafo seguido no debe quedar afectado por h2 + p."
+  ],
+  "starterCode": {
+    "html": "<section class=\"figura\">\n  <h2>USC</h2>\n  <p>ETSE</p>\n  <p>DAW</p>\n  <h2>Santiago</h2>\n  <p>3er Curso</p>\n  <div>\n    <p>II</p>\n  </div>\n</section>",
+    "css": "body {\n  margin: 0;\n  padding: 24px;\n  background: #f8f4eb;\n  font-family: Georgia, serif;\n  color: #1f2937;\n}\n\n.figura {\n  max-width: 320px;\n}\n\nh2,\np {\n  margin: 0 0 10px;\n}\n\n.figura div {\n  margin-top: 10px;\n  padding-left: 14px;\n  border-left: 3px solid #cbd5e1;\n}\n\n/* Escribe aqui tu selector */\n",
+    "javascript": ""
+  },
+  "targetCode": {
+    "html": "<section class=\"figura\">\n  <h2>USC</h2>\n  <p>ETSE</p>\n  <p>DAW</p>\n  <h2>Santiago</h2>\n  <p>3er Curso</p>\n  <div>\n    <p>II</p>\n  </div>\n</section>",
+    "css": "body {\n  margin: 0;\n  padding: 24px;\n  background: #f8f4eb;\n  font-family: Georgia, serif;\n  color: #1f2937;\n}\n\n.figura {\n  max-width: 320px;\n}\n\nh2,\np {\n  margin: 0 0 10px;\n}\n\n.figura div {\n  margin-top: 10px;\n  padding-left: 14px;\n  border-left: 3px solid #cbd5e1;\n}\n\nh2 + p {\n  color: #c1121f;\n  font-weight: 700;\n}\n",
+    "javascript": ""
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "Has aplicado correctamente h2 + p.",
+    "rules": [
+      {
+        "type": "regex",
+        "field": "css",
+        "pattern": "h2\\s*\\+\\s*p\\s*\\{",
+        "message": "Usa exactamente el selector h2 + p."
+      },
+      {
+        "type": "regex",
+        "field": "css",
+        "pattern": "color\\s*:\\s*(red|#c1121f|rgb\\()",
+        "flags": "i",
+        "message": "Cambia el color del parrafo resaltado."
+      }
+    ]
+  }
+}

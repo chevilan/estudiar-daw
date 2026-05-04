@@ -1,0 +1,72 @@
+{
+  "id": "javascript-cuadrado-interacciones",
+  "topic": "javascript",
+  "type": "build",
+  "title": "Cadena de eventos sobre un cuadrado",
+  "difficulty": "reto",
+  "estimatedMinutes": 22,
+  "prompt": "Completa un ejercicio de estilo examen. Crea las funciones miFuncion_1(), miFuncion_2() y miFuncion_3(). Cuando el raton entre en el cuadrado, el texto inferior debe alternar entre DAW y Compostela. Cuando hagas doble click sobre ese texto, el cuadrado debe pasar al modo pequeno rojo con borde punteado mediante una clase miClase, y volver a su estado original si repites el doble click. Cuando hagas click sobre el h2, el color del cuadrado debe alternar entre azul y verde si mide 100x100, o entre rojo y verde si esta en el modo pequeno.",
+  "notes": [
+    "Este ejercicio adapta la secuencia visual del examen fotografiado de 2025.",
+    "Define tambien la regla CSS de .miClase."
+  ],
+  "starterCode": {
+    "html": "<main>\n  <h2>USC. ETSE.</h2>\n  <p class=\"cuadrado\"></p>\n  <p id=\"texto\">DAW</p>\n</main>",
+    "css": "body {\n  margin: 0;\n  min-height: 100vh;\n  display: grid;\n  place-items: center;\n  background: #f5f1e8;\n  font-family: Georgia, serif;\n}\n\nmain {\n  text-align: center;\n}\n\nh2,\n#texto {\n  cursor: pointer;\n}\n\n.cuadrado {\n  width: 100px;\n  height: 100px;\n  margin: 12px auto;\n  background: #2f9e44;\n  border: 4px solid #1b5e20;\n  transition: all 0.2s ease;\n}\n\n/* Crea aqui la clase miClase para el estado pequeno rojo. */\n",
+    "javascript": "const titulo = document.querySelector('h2');\nconst cuadrado = document.querySelector('.cuadrado');\nconst texto = document.querySelector('#texto');\n\n// Define miFuncion_1, miFuncion_2 y miFuncion_3.\n"
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "La cadena de eventos del cuadrado esta resuelta.",
+    "rules": [
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "miFuncion_1\\s*=\\s*\\(",
+        "message": "Define miFuncion_1 como funcion arrow."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "miFuncion_2\\s*=\\s*\\(",
+        "message": "Define miFuncion_2 como funcion arrow."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "miFuncion_3\\s*=\\s*\\(",
+        "message": "Define miFuncion_3 como funcion arrow."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "addEventListener\\s*\\(\\s*['\\\"](mouseenter|mouseover|mouseleave)['\\\"]",
+        "message": "Gestiona la interaccion del raton con el cuadrado."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "addEventListener\\s*\\(\\s*['\\\"]dblclick['\\\"]",
+        "message": "Gestiona el doble click sobre el texto."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "addEventListener\\s*\\(\\s*['\\\"]click['\\\"]",
+        "message": "Gestiona el click sobre el h2."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "classList\\.(add|remove|toggle)|style\\.(width|height|backgroundColor|borderStyle)",
+        "message": "Modifica clases o estilos para cambiar el estado del cuadrado."
+      },
+      {
+        "type": "contains",
+        "field": "css",
+        "value": ".miClase",
+        "message": "Define la clase CSS miClase."
+      }
+    ]
+  }
+}

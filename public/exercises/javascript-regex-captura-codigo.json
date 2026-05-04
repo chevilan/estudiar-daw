@@ -1,0 +1,53 @@
+{
+  "id": "javascript-regex-captura-codigo",
+  "topic": "javascript",
+  "type": "build",
+  "title": "Captura con lookahead en una expresion regular",
+  "difficulty": "media",
+  "estimatedMinutes": 10,
+  "prompt": "Usa la expresion regular [f-t](?=[6-9]) sobre la cadena c648r7hlm2h5. Guarda el resultado en una variable, muestralo por consola y escribe tambien el primer match dentro de #salida.",
+  "notes": [
+    "La parte (?=[6-9]) es un lookahead positivo.",
+    "Si usas match, el resultado sera un array o null."
+  ],
+  "starterCode": {
+    "html": "<main>\n  <h1>Regex</h1>\n  <p id=\"salida\">Pendiente</p>\n</main>",
+    "css": "body {\n  font-family: 'Trebuchet MS', sans-serif;\n  padding: 24px;\n  background: #f8f5ee;\n}\n",
+    "javascript": "const texto = 'c648r7hlm2h5';\nconst salida = document.querySelector('#salida');\n\n// Aplica la expresion regular y muestra el resultado.\n"
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "La captura con lookahead esta resuelta.",
+    "rules": [
+      {
+        "type": "contains",
+        "field": "javascript",
+        "value": "[f-t]",
+        "message": "Usa el rango [f-t] en tu expresion regular."
+      },
+      {
+        "type": "contains",
+        "field": "javascript",
+        "value": "(?=[6-9])",
+        "message": "Usa el lookahead positivo (?=[6-9])."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "match\\s*\\(",
+        "message": "Aplica la expresion con match."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "console\\.log",
+        "message": "Muestra el resultado por consola."
+      },
+      {
+        "type": "consoleIncludes",
+        "value": "r",
+        "message": "La consola debe incluir el match correcto."
+      }
+    ]
+  }
+}

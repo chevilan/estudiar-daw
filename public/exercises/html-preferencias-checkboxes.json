@@ -1,0 +1,64 @@
+{
+  "id": "html-preferencias-checkboxes",
+  "topic": "html",
+  "type": "build",
+  "title": "Formulario de preferencias con checkboxes",
+  "difficulty": "base",
+  "estimatedMinutes": 9,
+  "prompt": "Construye un formulario de preferencias como el del anexo. Debe tener cuatro checkboxes con el mismo name=\"prf\" y las opciones Champinones, Mozzarella, Aceitunas y Albahaca fresca.",
+  "notes": [
+    "Cada checkbox debe tener su label correspondiente.",
+    "Anade tambien un boton o input de envio."
+  ],
+  "starterCode": {
+    "html": "<main>\n  <h1>Indique sus preferencias</h1>\n  <!-- Crea aqui el formulario -->\n</main>",
+    "css": "body {\n  font-family: 'Trebuchet MS', sans-serif;\n  padding: 24px;\n}\n",
+    "javascript": ""
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "El formulario de preferencias esta listo.",
+    "rules": [
+      {
+        "type": "domSelector",
+        "selector": "form",
+        "message": "Incluye un formulario."
+      },
+      {
+        "type": "domSelector",
+        "selector": "input[type='checkbox'][name='prf']",
+        "minCount": 4,
+        "message": "Crea cuatro checkboxes con name='prf'."
+      },
+      {
+        "type": "contains",
+        "field": "html",
+        "value": "Champinones",
+        "message": "Incluye la opcion Champinones."
+      },
+      {
+        "type": "contains",
+        "field": "html",
+        "value": "Mozzarella",
+        "message": "Incluye la opcion Mozzarella."
+      },
+      {
+        "type": "contains",
+        "field": "html",
+        "value": "Aceitunas",
+        "message": "Incluye la opcion Aceitunas."
+      },
+      {
+        "type": "contains",
+        "field": "html",
+        "value": "Albahaca fresca",
+        "message": "Incluye la opcion Albahaca fresca."
+      },
+      {
+        "type": "domSelector",
+        "selector": "button[type='submit'], input[type='submit']",
+        "message": "Incluye un control de envio."
+      }
+    ]
+  }
+}

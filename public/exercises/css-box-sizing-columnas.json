@@ -1,0 +1,45 @@
+{
+  "id": "css-box-sizing-columnas",
+  "topic": "css",
+  "type": "build",
+  "title": "Dos columnas con box-sizing",
+  "difficulty": "media",
+  "estimatedMinutes": 12,
+  "prompt": "Haz que las dos tarjetas ocupen la misma fila al 50% cada una, manteniendo padding y borde sin desbordar el contenedor. Resuelvelo usando box-sizing: border-box en las columnas.",
+  "notes": [
+    "Este ejercicio te obliga a usar box-sizing de forma practica.",
+    "Puedes apoyar la composicion con float o con display inline-block."
+  ],
+  "starterCode": {
+    "html": "<section class=\"layout\">\n  <article class=\"columna\">\n    <h2>HTML</h2>\n    <p>Estructura del contenido.</p>\n  </article>\n  <article class=\"columna\">\n    <h2>CSS</h2>\n    <p>Presentacion visual.</p>\n  </article>\n</section>",
+    "css": "body {\n  margin: 0;\n  min-height: 100vh;\n  display: grid;\n  place-items: center;\n  background: #f7f2ea;\n  font-family: Georgia, serif;\n}\n\n.layout {\n  width: 520px;\n  border: 2px dashed #cbd5e1;\n  padding: 12px;\n}\n\n.columna {\n  padding: 20px;\n  border: 6px solid #243b53;\n  background: white;\n}\n",
+    "javascript": ""
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "Las dos columnas ya caben gracias a box-sizing.",
+    "rules": [
+      {
+        "type": "regex",
+        "field": "css",
+        "pattern": "\\.columna[^}]*box-sizing\\s*:\\s*border-box",
+        "flags": "is",
+        "message": "Usa box-sizing: border-box en .columna."
+      },
+      {
+        "type": "regex",
+        "field": "css",
+        "pattern": "\\.columna[^}]*width\\s*:\\s*50%",
+        "flags": "is",
+        "message": "Haz que cada columna mida el 50%."
+      },
+      {
+        "type": "regex",
+        "field": "css",
+        "pattern": "float\\s*:\\s*left|display\\s*:\\s*inline-block",
+        "flags": "i",
+        "message": "Usa una tecnica de layout para colocarlas en la misma fila."
+      }
+    ]
+  }
+}

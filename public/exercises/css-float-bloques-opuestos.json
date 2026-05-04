@@ -1,0 +1,49 @@
+{
+  "id": "css-float-bloques-opuestos",
+  "topic": "css",
+  "type": "visual-match",
+  "title": "Dos bloques enfrentados con float",
+  "difficulty": "base",
+  "estimatedMinutes": 10,
+  "prompt": "Consigue una composicion de examen usando solo float: el bloque rojo debe quedar a la izquierda y el bloque azul a la derecha dentro del contenedor. No cambies el HTML.",
+  "notes": [
+    "El ejercicio esta inspirado en la pregunta de posicionamiento con float del parcial 1.",
+    "Define tamano y color en cada bloque."
+  ],
+  "starterCode": {
+    "html": "<section class=\"escena\">\n  <div id=\"p1\"></div>\n  <div id=\"p2\"></div>\n</section>",
+    "css": "body {\n  margin: 0;\n  min-height: 100vh;\n  display: grid;\n  place-items: center;\n  background: #f7f3ea;\n}\n\n.escena {\n  width: 360px;\n  padding: 20px;\n  border: 2px dashed #cbd5e1;\n}\n\n#p1,\n#p2 {\n  border: 2px solid #111827;\n}\n",
+    "javascript": ""
+  },
+  "targetCode": {
+    "html": "<section class=\"escena\">\n  <div id=\"p1\"></div>\n  <div id=\"p2\"></div>\n</section>",
+    "css": "body {\n  margin: 0;\n  min-height: 100vh;\n  display: grid;\n  place-items: center;\n  background: #f7f3ea;\n}\n\n.escena {\n  width: 360px;\n  padding: 20px;\n  border: 2px dashed #cbd5e1;\n  overflow: auto;\n}\n\n#p1,\n#p2 {\n  width: 100px;\n  height: 100px;\n  border: 2px solid #111827;\n}\n\n#p1 {\n  background: #d62828;\n  float: left;\n}\n\n#p2 {\n  background: #2563eb;\n  float: right;\n}\n",
+    "javascript": ""
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "La composicion con float esta resuelta.",
+    "rules": [
+      {
+        "type": "regex",
+        "field": "css",
+        "pattern": "#p1[^}]*float\\s*:\\s*left",
+        "flags": "is",
+        "message": "Haz que #p1 flote a la izquierda."
+      },
+      {
+        "type": "regex",
+        "field": "css",
+        "pattern": "#p2[^}]*float\\s*:\\s*right",
+        "flags": "is",
+        "message": "Haz que #p2 flote a la derecha."
+      },
+      {
+        "type": "regex",
+        "field": "css",
+        "pattern": "(width\\s*:\\s*100px)[\\s\\S]*(height\\s*:\\s*100px)|(height\\s*:\\s*100px)[\\s\\S]*(width\\s*:\\s*100px)",
+        "message": "Define un tamano de 100x100 para los bloques."
+      }
+    ]
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "id": "javascript-media-callback",
+  "topic": "javascript",
+  "type": "build",
+  "title": "Calcular la media con callback",
+  "difficulty": "media",
+  "estimatedMinutes": 12,
+  "prompt": "Crea dos funciones arrow llamadas visualizador y miF. miF debe recibir dos numeros y un callback, calcular la media y llamar a visualizador para mostrar en #salida el mensaje: El valor medio de 3 y 5 es: 4.",
+  "notes": [
+    "Este ejercicio esta adaptado del parcial 1 de 2023.",
+    "Puedes usar innerHTML si quieres destacar el resultado."
+  ],
+  "starterCode": {
+    "html": "<main>\n  <h1>Valor medio</h1>\n  <p id=\"salida\">Pendiente de calcular.</p>\n</main>",
+    "css": "body {\n  font-family: 'Trebuchet MS', sans-serif;\n  padding: 24px;\n  background: #f7f3ea;\n}\n\n#salida {\n  padding: 14px 16px;\n  border-radius: 12px;\n  background: #fff;\n  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.06);\n}\n",
+    "javascript": "const salida = document.querySelector('#salida');\n\n// Crea visualizador y miF como funciones arrow.\n"
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "La media se calcula y se muestra con callback.",
+    "rules": [
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "visualizador\\s*=\\s*\\(",
+        "message": "Define la funcion visualizador como arrow."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "miF\\s*=\\s*\\(",
+        "message": "Define la funcion miF como arrow."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "\\(\\s*num1\\s*\\+\\s*num2\\s*\\)\\s*\\/\\s*2|num1\\s*\\+\\s*num2\\s*\\/\\s*2",
+        "message": "Calcula la media a partir de num1 y num2."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "callback\\s*\\(|visualizador\\s*\\(",
+        "message": "Llama al callback con el resultado."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "(innerHTML|textContent)\\s*=",
+        "message": "Escribe el resultado en el DOM."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "miF\\s*\\(\\s*3\\s*,\\s*5\\s*,",
+        "message": "Ejecuta miF con los valores 3 y 5."
+      }
+    ]
+  }
+}

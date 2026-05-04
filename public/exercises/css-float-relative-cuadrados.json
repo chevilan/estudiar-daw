@@ -1,0 +1,59 @@
+{
+  "id": "css-float-relative-cuadrados",
+  "topic": "css",
+  "type": "visual-match",
+  "title": "Cuadrados con float, relative y media query",
+  "difficulty": "reto",
+  "estimatedMinutes": 18,
+  "prompt": "Recrea una adaptacion del examen fotografiado de 2025. Para pantallas pequenas, los dos cuadrados deben quedar uno al lado del otro. A partir de 451px, deben apilarse en vertical a la derecha del contenedor. Resuelvelo usando float, position: relative y una media query.",
+  "notes": [
+    "Este ejercicio fuerza a combinar tecnicas clasicas de CSS.",
+    "No uses grid ni flex en la solucion."
+  ],
+  "starterCode": {
+    "html": "<section class=\"escena\">\n  <em id=\"p1\"></em>\n  <em id=\"p2\"></em>\n</section>",
+    "css": "body {\n  margin: 0;\n  min-height: 100vh;\n  display: grid;\n  place-items: center;\n  background: #f6f1e7;\n}\n\n.escena {\n  width: 420px;\n  min-height: 240px;\n  padding: 20px;\n  border: 2px dashed #cbd5e1;\n}\n\n#p1,\n#p2 {\n  display: block;\n  width: 100px;\n  height: 100px;\n  border: 2px solid #0f172a;\n}\n\n#p1 {\n  background: #2563eb;\n}\n\n#p2 {\n  background: #dc2626;\n}\n",
+    "javascript": ""
+  },
+  "targetCode": {
+    "html": "<section class=\"escena\">\n  <em id=\"p1\"></em>\n  <em id=\"p2\"></em>\n</section>",
+    "css": "body {\n  margin: 0;\n  min-height: 100vh;\n  display: grid;\n  place-items: center;\n  background: #f6f1e7;\n}\n\n.escena {\n  width: 420px;\n  min-height: 240px;\n  padding: 20px;\n  border: 2px dashed #cbd5e1;\n  overflow: auto;\n}\n\n#p1,\n#p2 {\n  display: block;\n  width: 100px;\n  height: 100px;\n  border: 2px solid #0f172a;\n  position: relative;\n}\n\n#p1 {\n  background: #2563eb;\n  float: left;\n}\n\n#p2 {\n  background: #dc2626;\n  float: left;\n}\n\n@media (min-width: 451px) {\n  #p1,\n  #p2 {\n    float: right;\n    clear: right;\n  }\n\n  #p1 {\n    right: 0;\n  }\n\n  #p2 {\n    right: 0;\n    top: 6px;\n  }\n}\n",
+    "javascript": ""
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "La composicion responsive con float y relative esta lista.",
+    "rules": [
+      {
+        "type": "regex",
+        "field": "css",
+        "pattern": "float\\s*:",
+        "message": "Usa float en la solucion."
+      },
+      {
+        "type": "regex",
+        "field": "css",
+        "pattern": "position\\s*:\\s*relative",
+        "message": "Usa position: relative."
+      },
+      {
+        "type": "regex",
+        "field": "css",
+        "pattern": "@media[^{]*451",
+        "message": "Anade una media query a partir de 451px."
+      },
+      {
+        "type": "notContains",
+        "field": "css",
+        "value": "display: grid",
+        "message": "No resuelvas la figura principal con grid."
+      },
+      {
+        "type": "notContains",
+        "field": "css",
+        "value": "display: flex",
+        "message": "No resuelvas la figura principal con flex."
+      }
+    ]
+  }
+}

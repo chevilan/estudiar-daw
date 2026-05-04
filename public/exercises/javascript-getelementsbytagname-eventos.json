@@ -1,0 +1,66 @@
+{
+  "id": "javascript-getelementsbytagname-eventos",
+  "topic": "javascript",
+  "type": "build",
+  "title": "Interacciones clasicas con getElementsByTagName",
+  "difficulty": "reto",
+  "estimatedMinutes": 18,
+  "prompt": "Usa getElementsByTagName para resolver un ejercicio clasico de examen. Al pasar el raton por el primer parrafo, el segundo debe mostrar ETSE. Al salir, debe volver a DAW. Al hacer click en el segundo parrafo, el primero debe pasar a rojo, con borde punteado, y tamano 50x50.",
+  "notes": [
+    "La idea reproduce un estilo de pregunta muy tipico de DOM clasico.",
+    "No hace falta anadir clases; puedes modificar style directamente."
+  ],
+  "starterCode": {
+    "html": "<main>\n  <h1>Texto sin importancia</h1>\n  <p class=\"caja\"></p>\n  <p>DAW</p>\n</main>",
+    "css": "body {\n  margin: 0;\n  min-height: 100vh;\n  display: grid;\n  place-items: center;\n  background: #f6f1e7;\n  font-family: Georgia, serif;\n}\n\nmain {\n  text-align: center;\n}\n\n.caja {\n  width: 100px;\n  height: 100px;\n  margin: 14px auto;\n  background: #2f9e44;\n  border: 2px solid #111827;\n}\n",
+    "javascript": "// Usa getElementsByTagName('p') para resolver el ejercicio.\n"
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "Las interacciones con getElementsByTagName estan montadas.",
+    "rules": [
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "getElementsByTagName\\s*\\(\\s*['\\\"]p['\\\"]\\s*\\)",
+        "message": "Selecciona los parrafos con getElementsByTagName('p')."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "addEventListener\\s*\\(\\s*['\\\"](mouseenter|mouseover)['\\\"]",
+        "message": "Escucha la entrada del raton sobre el primer parrafo."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "addEventListener\\s*\\(\\s*['\\\"]mouseleave['\\\"]",
+        "message": "Escucha la salida del raton para restaurar el texto."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "addEventListener\\s*\\(\\s*['\\\"]click['\\\"]",
+        "message": "Escucha el click sobre el segundo parrafo."
+      },
+      {
+        "type": "contains",
+        "field": "javascript",
+        "value": "ETSE",
+        "message": "Muestra ETSE al pasar el raton."
+      },
+      {
+        "type": "contains",
+        "field": "javascript",
+        "value": "DAW",
+        "message": "Restaura DAW al salir."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "style\\.(backgroundColor|border|borderStyle|width|height)",
+        "message": "Modifica estilos del primer parrafo al hacer click."
+      }
+    ]
+  }
+}

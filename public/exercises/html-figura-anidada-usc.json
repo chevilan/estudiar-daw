@@ -1,0 +1,75 @@
+{
+  "id": "html-figura-anidada-usc",
+  "topic": "html",
+  "type": "build",
+  "title": "Reconstruye la figura anidada de campus",
+  "difficulty": "media",
+  "estimatedMinutes": 12,
+  "prompt": "A partir de la figura 3.1 de los examenes, crea la estructura HTML con estos textos: Santiago, USC, ETSE, DAW, II y 3er Curso. Debe existir un bloque principal con un h2, un div interno para DAW y otro div hermano final para 3er Curso.",
+  "notes": [
+    "No necesitas CSS para completar la validacion.",
+    "Piensa en la anidacion antes de escribir etiquetas."
+  ],
+  "starterCode": {
+    "html": "",
+    "css": "",
+    "javascript": ""
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "La estructura de la figura esta montada.",
+    "rules": [
+      {
+        "type": "domSelector",
+        "selector": "h2 + p",
+        "message": "Despues del h2 debe aparecer un parrafo hermano."
+      },
+      {
+        "type": "domSelector",
+        "selector": "div div p",
+        "message": "Incluye un div interno con un parrafo."
+      },
+      {
+        "type": "domSelector",
+        "selector": "div + div p",
+        "message": "Incluye un segundo div hermano con su parrafo."
+      },
+      {
+        "type": "contains",
+        "field": "html",
+        "value": "Santiago",
+        "message": "Incluye el texto Santiago."
+      },
+      {
+        "type": "contains",
+        "field": "html",
+        "value": "USC",
+        "message": "Incluye el texto USC."
+      },
+      {
+        "type": "contains",
+        "field": "html",
+        "value": "ETSE",
+        "message": "Incluye el texto ETSE."
+      },
+      {
+        "type": "contains",
+        "field": "html",
+        "value": "DAW",
+        "message": "Incluye el texto DAW."
+      },
+      {
+        "type": "contains",
+        "field": "html",
+        "value": "II",
+        "message": "Incluye el texto II."
+      },
+      {
+        "type": "contains",
+        "field": "html",
+        "value": "3er Curso",
+        "message": "Incluye el texto 3er Curso."
+      }
+    ]
+  }
+}

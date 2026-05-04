@@ -1,0 +1,66 @@
+{
+  "id": "css-grid-column-row-layout",
+  "topic": "css",
+  "type": "visual-match",
+  "title": "Grid con grid-column y grid-row",
+  "difficulty": "reto",
+  "estimatedMinutes": 18,
+  "prompt": "Reproduce el layout objetivo usando CSS Grid sin grid-template-areas. Debes definir filas y columnas y colocar cada bloque con grid-column y grid-row, como en los ejercicios de grid de los examenes.",
+  "notes": [
+    "Header y footer ocupan todo el ancho.",
+    "Nav, main y aside comparten la fila central."
+  ],
+  "starterCode": {
+    "html": "<div class=\"layout\">\n  <header>Header</header>\n  <nav>Nav</nav>\n  <main>Main</main>\n  <aside>Aside</aside>\n  <footer>Footer</footer>\n</div>",
+    "css": "body {\n  margin: 0;\n  min-height: 100vh;\n  display: grid;\n  place-items: center;\n  background: #efe9dc;\n  font-family: 'Trebuchet MS', sans-serif;\n}\n\n.layout {\n  width: min(920px, calc(100vw - 32px));\n  min-height: 520px;\n  padding: 18px;\n  border-radius: 24px;\n  background: #fffdf8;\n  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.08);\n}\n\nheader,\nnav,\nmain,\naside,\nfooter {\n  border-radius: 18px;\n  padding: 20px;\n  color: #fffdf8;\n  font-weight: 700;\n}\n\nheader { background: #355070; }\nnav { background: #b56576; }\nmain { background: #6d597a; }\naside { background: #e56b6f; }\nfooter { background: #eaac8b; color: #3a2416; }\n",
+    "javascript": ""
+  },
+  "targetCode": {
+    "html": "<div class=\"layout\">\n  <header>Header</header>\n  <nav>Nav</nav>\n  <main>Main</main>\n  <aside>Aside</aside>\n  <footer>Footer</footer>\n</div>",
+    "css": "body {\n  margin: 0;\n  min-height: 100vh;\n  display: grid;\n  place-items: center;\n  background: #efe9dc;\n  font-family: 'Trebuchet MS', sans-serif;\n}\n\n.layout {\n  display: grid;\n  grid-template-columns: 180px 1fr 220px;\n  grid-template-rows: auto 1fr auto;\n  gap: 18px;\n  width: min(920px, calc(100vw - 32px));\n  min-height: 520px;\n  padding: 18px;\n  border-radius: 24px;\n  background: #fffdf8;\n  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.08);\n}\n\nheader,\nnav,\nmain,\naside,\nfooter {\n  border-radius: 18px;\n  padding: 20px;\n  color: #fffdf8;\n  font-weight: 700;\n}\n\nheader {\n  background: #355070;\n  grid-column: 1 / 4;\n  grid-row: 1;\n}\n\nnav {\n  background: #b56576;\n  grid-column: 1;\n  grid-row: 2;\n}\n\nmain {\n  background: #6d597a;\n  grid-column: 2;\n  grid-row: 2;\n}\n\naside {\n  background: #e56b6f;\n  grid-column: 3;\n  grid-row: 2;\n}\n\nfooter {\n  background: #eaac8b;\n  color: #3a2416;\n  grid-column: 1 / 4;\n  grid-row: 3;\n}\n",
+    "javascript": ""
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "Layout montado con grid-column y grid-row.",
+    "rules": [
+      {
+        "type": "regex",
+        "field": "css",
+        "pattern": "\\.layout[^}]*display\\s*:\\s*grid",
+        "flags": "is",
+        "message": "Convierte .layout en un contenedor grid."
+      },
+      {
+        "type": "regex",
+        "field": "css",
+        "pattern": "grid-template-columns\\s*:",
+        "message": "Define las columnas del grid."
+      },
+      {
+        "type": "regex",
+        "field": "css",
+        "pattern": "grid-template-rows\\s*:",
+        "message": "Define las filas del grid."
+      },
+      {
+        "type": "regex",
+        "field": "css",
+        "pattern": "grid-column\\s*:",
+        "message": "Usa grid-column para colocar elementos."
+      },
+      {
+        "type": "regex",
+        "field": "css",
+        "pattern": "grid-row\\s*:",
+        "message": "Usa grid-row para colocar elementos."
+      },
+      {
+        "type": "notContains",
+        "field": "css",
+        "value": "grid-template-areas",
+        "message": "No uses grid-template-areas en este ejercicio."
+      }
+    ]
+  }
+}

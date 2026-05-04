@@ -1,0 +1,47 @@
+{
+  "id": "css-multicol-articulo",
+  "topic": "css",
+  "type": "visual-match",
+  "title": "Texto en varias columnas con multicol",
+  "difficulty": "media",
+  "estimatedMinutes": 12,
+  "prompt": "Convierte el bloque de texto en un layout multicolumna de tres columnas usando las propiedades de CSS multicol. Mantén una separacion visible entre columnas.",
+  "notes": [
+    "Practicas column-count y column-gap, que aparecian en uno de los examenes.",
+    "No uses grid para partir el texto."
+  ],
+  "starterCode": {
+    "html": "<article class=\"texto\">\n  <p>HTML estructura el contenido de una pagina.</p>\n  <p>CSS controla la presentacion visual de los elementos.</p>\n  <p>JavaScript anade comportamiento e interactividad.</p>\n  <p>El DOM permite acceder a la pagina desde codigo.</p>\n  <p>Las media queries adaptan el diseno al dispositivo.</p>\n  <p>Las expresiones regulares ayudan a validar cadenas.</p>\n</article>",
+    "css": "body {\n  margin: 0;\n  min-height: 100vh;\n  display: grid;\n  place-items: center;\n  background: #f7f2ea;\n  font-family: Georgia, serif;\n}\n\n.texto {\n  width: min(760px, calc(100vw - 32px));\n  padding: 24px;\n  border-radius: 18px;\n  background: white;\n  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.08);\n}\n",
+    "javascript": ""
+  },
+  "targetCode": {
+    "html": "<article class=\"texto\">\n  <p>HTML estructura el contenido de una pagina.</p>\n  <p>CSS controla la presentacion visual de los elementos.</p>\n  <p>JavaScript anade comportamiento e interactividad.</p>\n  <p>El DOM permite acceder a la pagina desde codigo.</p>\n  <p>Las media queries adaptan el diseno al dispositivo.</p>\n  <p>Las expresiones regulares ayudan a validar cadenas.</p>\n</article>",
+    "css": "body {\n  margin: 0;\n  min-height: 100vh;\n  display: grid;\n  place-items: center;\n  background: #f7f2ea;\n  font-family: Georgia, serif;\n}\n\n.texto {\n  width: min(760px, calc(100vw - 32px));\n  padding: 24px;\n  border-radius: 18px;\n  background: white;\n  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.08);\n  column-count: 3;\n  column-gap: 24px;\n  column-rule: 1px solid #d6d3d1;\n}\n",
+    "javascript": ""
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "El texto ya usa varias columnas.",
+    "rules": [
+      {
+        "type": "regex",
+        "field": "css",
+        "pattern": "column-count\\s*:\\s*3",
+        "message": "Usa column-count: 3."
+      },
+      {
+        "type": "regex",
+        "field": "css",
+        "pattern": "column-gap\\s*:",
+        "message": "Define un column-gap."
+      },
+      {
+        "type": "notContains",
+        "field": "css",
+        "value": "grid-template-columns",
+        "message": "No resuelvas este ejercicio con grid-template-columns."
+      }
+    ]
+  }
+}

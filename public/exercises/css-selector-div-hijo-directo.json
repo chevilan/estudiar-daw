@@ -1,0 +1,42 @@
+{
+  "id": "css-selector-div-hijo-directo",
+  "topic": "css",
+  "type": "visual-match",
+  "title": "Selector div > p del examen",
+  "difficulty": "base",
+  "estimatedMinutes": 8,
+  "prompt": "Usa exactamente el selector div > p para poner en rojo todos los parrafos que sean hijos directos de cualquier div de la figura. No modifiques el HTML.",
+  "notes": [
+    "Este ejercicio reproduce el tipo de pregunta de selectores de los PDF.",
+    "No uses clases ni ids en el selector."
+  ],
+  "starterCode": {
+    "html": "<div class=\"figura\">\n  <div>\n    <h2>Santiago</h2>\n    <p>USC</p>\n    <p>ETSE</p>\n    <div>\n      <p>DAW</p>\n    </div>\n    <p>II</p>\n  </div>\n  <div>\n    <p>3er Curso</p>\n  </div>\n</div>",
+    "css": "body {\n  margin: 0;\n  padding: 24px;\n  font-family: Georgia, serif;\n  background: #f4f1ea;\n  color: #1f2937;\n}\n\n.figura {\n  max-width: 320px;\n}\n\n.figura > div {\n  margin-bottom: 18px;\n}\n\n.figura div div {\n  margin: 8px 0 8px 18px;\n  padding-left: 12px;\n  border-left: 3px solid #cbd5e1;\n}\n\nh2,\np {\n  margin: 0 0 8px;\n}\n\n/* Escribe aqui tu selector */\n",
+    "javascript": ""
+  },
+  "targetCode": {
+    "html": "<div class=\"figura\">\n  <div>\n    <h2>Santiago</h2>\n    <p>USC</p>\n    <p>ETSE</p>\n    <div>\n      <p>DAW</p>\n    </div>\n    <p>II</p>\n  </div>\n  <div>\n    <p>3er Curso</p>\n  </div>\n</div>",
+    "css": "body {\n  margin: 0;\n  padding: 24px;\n  font-family: Georgia, serif;\n  background: #f4f1ea;\n  color: #1f2937;\n}\n\n.figura {\n  max-width: 320px;\n}\n\n.figura > div {\n  margin-bottom: 18px;\n}\n\n.figura div div {\n  margin: 8px 0 8px 18px;\n  padding-left: 12px;\n  border-left: 3px solid #cbd5e1;\n}\n\nh2,\np {\n  margin: 0 0 8px;\n}\n\ndiv > p {\n  color: #c1121f;\n  font-weight: 700;\n}\n",
+    "javascript": ""
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "Has aplicado correctamente div > p.",
+    "rules": [
+      {
+        "type": "regex",
+        "field": "css",
+        "pattern": "div\\s*>\\s*p\\s*\\{",
+        "message": "Usa exactamente el selector div > p."
+      },
+      {
+        "type": "regex",
+        "field": "css",
+        "pattern": "color\\s*:\\s*(red|#c1121f|rgb\\()",
+        "flags": "i",
+        "message": "Cambia el color del texto a rojo."
+      }
+    ]
+  }
+}

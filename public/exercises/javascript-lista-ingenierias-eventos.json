@@ -1,0 +1,54 @@
+{
+  "id": "javascript-lista-ingenierias-eventos",
+  "topic": "javascript",
+  "type": "build",
+  "title": "Eventos sobre una lista de ingenierias",
+  "difficulty": "media",
+  "estimatedMinutes": 16,
+  "prompt": "Sin librerias externas, consigue tres cosas con JavaScript: 1) Ingenieria Ambiental debe verse azul por defecto. 2) Al pasar el raton por el h2, Ingenieria Informatica debe ponerse verde. 3) Al hacer click en Ingenieria Quimica, el h2 debe cambiar a Facultad de Fisica.",
+  "notes": [
+    "El examen original planteaba una solucion con jQuery; aqui la adaptamos a JavaScript puro.",
+    "Puedes resolverlo con querySelector y addEventListener."
+  ],
+  "starterCode": {
+    "html": "<main>\n  <h2>Escuela Tecnica de Ingenieria</h2>\n  <ul>\n    <li>Ingenieria Quimica</li>\n    <li>Ingenieria Ambiental</li>\n    <li>Ingenieria Informatica</li>\n  </ul>\n</main>",
+    "css": "body {\n  font-family: Georgia, serif;\n  padding: 24px;\n  background: #faf6ef;\n}\n\nmain {\n  max-width: 480px;\n  margin: 0 auto;\n}\n\nli {\n  margin-bottom: 8px;\n  cursor: pointer;\n}\n",
+    "javascript": "const titulo = document.querySelector('h2');\nconst items = document.querySelectorAll('li');\n\n// Aplica aqui los tres comportamientos pedidos.\n"
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "Los eventos sobre la lista funcionan.",
+    "rules": [
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "querySelector(All)?\\s*\\(|getElementsBy",
+        "message": "Selecciona los elementos del DOM."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "style\\.color|classList\\.add",
+        "message": "Modifica el color de al menos uno de los elementos."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "addEventListener\\s*\\(\\s*['\\\"](mouseenter|mouseover)['\\\"]",
+        "message": "Escucha el paso del raton por el h2."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "addEventListener\\s*\\(\\s*['\\\"]click['\\\"]",
+        "message": "Escucha el click sobre Ingenieria Quimica."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "(textContent|innerHTML)\\s*=\\s*['\\\"]Facultad de Fisica['\\\"]",
+        "message": "Cambia el titulo a Facultad de Fisica."
+      }
+    ]
+  }
+}

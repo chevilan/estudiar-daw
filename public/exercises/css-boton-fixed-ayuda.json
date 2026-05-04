@@ -1,0 +1,45 @@
+{
+  "id": "css-boton-fixed-ayuda",
+  "topic": "css",
+  "type": "build",
+  "title": "Boton fijo en esquina",
+  "difficulty": "base",
+  "estimatedMinutes": 8,
+  "prompt": "Fija el boton .ayuda en la esquina inferior derecha de la ventana usando position: fixed. Debe mantenerse visible aunque se haga scroll.",
+  "notes": [
+    "Practicas el posicionamiento fixed, muy habitual en teoria de examen.",
+    "Usa bottom y right para colocarlo."
+  ],
+  "starterCode": {
+    "html": "<main>\n  <h1>Manual rapido</h1>\n  <p>Desplazate por el contenido para comprobar el boton flotante.</p>\n  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>\n  <p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>\n  <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>\n  <p>Duis aute irure dolor in reprehenderit in voluptate velit esse.</p>\n  <p>Excepteur sint occaecat cupidatat non proident.</p>\n  <button class=\"ayuda\">Ayuda</button>\n</main>",
+    "css": "body {\n  margin: 0;\n  min-height: 100vh;\n  padding: 24px;\n  background: #f8f5ef;\n  font-family: 'Trebuchet MS', sans-serif;\n}\n\nmain {\n  max-width: 640px;\n  margin: 0 auto;\n}\n\n.ayuda {\n  padding: 12px 18px;\n  border: 0;\n  border-radius: 999px;\n  background: #1d3557;\n  color: white;\n  font-weight: 700;\n  cursor: pointer;\n}\n",
+    "javascript": ""
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "El boton ya queda fijo en la esquina.",
+    "rules": [
+      {
+        "type": "regex",
+        "field": "css",
+        "pattern": "\\.ayuda[^}]*position\\s*:\\s*fixed",
+        "flags": "is",
+        "message": "Aplica position: fixed a .ayuda."
+      },
+      {
+        "type": "regex",
+        "field": "css",
+        "pattern": "\\.ayuda[^}]*bottom\\s*:",
+        "flags": "is",
+        "message": "Define la posicion inferior con bottom."
+      },
+      {
+        "type": "regex",
+        "field": "css",
+        "pattern": "\\.ayuda[^}]*right\\s*:",
+        "flags": "is",
+        "message": "Define la posicion a la derecha con right."
+      }
+    ]
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "id": "html-formulario-boton-imagen",
+  "topic": "html",
+  "type": "build",
+  "title": "Boton de envio con imagen",
+  "difficulty": "media",
+  "estimatedMinutes": 12,
+  "prompt": "Crea un formulario breve donde el envio se haga con una imagen. Debe enviar coordenadas del clic bajo un nombre concreto, mantener un campo oculto de campana y ofrecer texto alternativo.",
+  "starterCode": {
+    "html": "<main>\n  <h1>Votacion</h1>\n</main>",
+    "css": "body {\n  font-family: system-ui, sans-serif;\n  display: grid;\n  place-items: center;\n  min-height: 100vh;\n  background: #f8f7f4;\n}\n\nform {\n  display: grid;\n  gap: 12px;\n  width: min(360px, 92vw);\n}\n\ninput[type='image'] {\n  max-width: 180px;\n}\n",
+    "javascript": ""
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "Envio con imagen configurado.",
+    "rules": [
+      {
+        "type": "domSelector",
+        "selector": "form[action='/votar'][method='post']",
+        "message": "Revisa la configuracion del formulario."
+      },
+      {
+        "type": "domSelector",
+        "selector": "input[type='text'][name='nombre']",
+        "message": "Revisa los datos visibles."
+      },
+      {
+        "type": "domSelector",
+        "selector": "input[type='hidden'][name='campania'][value]",
+        "message": "Revisa los datos ocultos."
+      },
+      {
+        "type": "domSelector",
+        "selector": "input[type='image'][name='coord'][src][alt]",
+        "message": "Revisa el control de envio con imagen."
+      }
+    ]
+  }
+}

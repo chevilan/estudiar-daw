@@ -1,0 +1,62 @@
+{
+  "id": "html-formulario-registro-post",
+  "topic": "html",
+  "type": "build",
+  "title": "Registro con POST",
+  "difficulty": "media",
+  "estimatedMinutes": 18,
+  "prompt": "Construye un formulario de registro para /registro usando POST. Debe pedir usuario, email, contrasena y curso. Agrupa los campos, asocia etiquetas, activa autocompletado y aplica validacion nativa donde corresponda.",
+  "starterCode": {
+    "html": "<main>\n  <h1>Registro</h1>\n  <form>\n  </form>\n</main>",
+    "css": "body {\n  font-family: system-ui, sans-serif;\n  display: grid;\n  place-items: center;\n  min-height: 100vh;\n  background: #f5f7f8;\n}\n\nform,\nfieldset {\n  display: grid;\n  gap: 12px;\n}\n\nform {\n  width: min(420px, 92vw);\n}\n",
+    "javascript": ""
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "Formulario de registro preparado.",
+    "rules": [
+      {
+        "type": "domSelector",
+        "selector": "form[action='/registro'][method='post'][autocomplete='on']",
+        "message": "Revisa la configuracion del formulario."
+      },
+      {
+        "type": "domSelector",
+        "selector": "fieldset legend",
+        "message": "Revisa la agrupacion de campos."
+      },
+      {
+        "type": "domSelector",
+        "selector": "label[for]",
+        "minCount": 4,
+        "message": "Revisa las etiquetas de los campos."
+      },
+      {
+        "type": "domSelector",
+        "selector": "input[name='usuario'][minlength][maxlength][required]",
+        "message": "Revisa el campo de usuario."
+      },
+      {
+        "type": "domSelector",
+        "selector": "input[type='email'][name='email'][required]",
+        "message": "Revisa el campo de email."
+      },
+      {
+        "type": "domSelector",
+        "selector": "input[type='password'][name='password'][pattern][required]",
+        "message": "Revisa el campo de contrasena."
+      },
+      {
+        "type": "domSelector",
+        "selector": "input[type='radio'][name='curso'][value]",
+        "minCount": 2,
+        "message": "Revisa la seleccion de curso."
+      },
+      {
+        "type": "domSelector",
+        "selector": "button[type='submit'], input[type='submit']",
+        "message": "Revisa el control de envio."
+      }
+    ]
+  }
+}

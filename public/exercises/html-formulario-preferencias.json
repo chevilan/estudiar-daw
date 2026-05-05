@@ -1,0 +1,59 @@
+{
+  "id": "html-formulario-preferencias",
+  "topic": "html",
+  "type": "build",
+  "title": "Preferencias de estudio",
+  "difficulty": "media",
+  "estimatedMinutes": 16,
+  "prompt": "Crea un formulario de preferencias de estudio. Agrupa datos personales y preferencias, permite elegir varios lenguajes, un unico nivel, un color de tema y una intensidad con rango entre 1 y 10.",
+  "starterCode": {
+    "html": "<main>\n  <h1>Preferencias</h1>\n  <form action=\"/preferencias\" method=\"post\">\n  </form>\n</main>",
+    "css": "body {\n  font-family: system-ui, sans-serif;\n  display: grid;\n  place-items: center;\n  min-height: 100vh;\n  background: #f7f6fb;\n}\n\nform,\nfieldset {\n  display: grid;\n  gap: 12px;\n}\n\nform {\n  width: min(480px, 92vw);\n}\n",
+    "javascript": ""
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "Preferencias listas para enviarse.",
+    "rules": [
+      {
+        "type": "domSelector",
+        "selector": "fieldset",
+        "minCount": 2,
+        "message": "Revisa la agrupacion del formulario."
+      },
+      {
+        "type": "domSelector",
+        "selector": "fieldset legend",
+        "minCount": 2,
+        "message": "Revisa los titulos de los grupos."
+      },
+      {
+        "type": "domSelector",
+        "selector": "input[type='checkbox'][name='lenguajes'][value]",
+        "minCount": 3,
+        "message": "Revisa la seleccion multiple."
+      },
+      {
+        "type": "domSelector",
+        "selector": "input[type='radio'][name='nivel'][value]",
+        "minCount": 3,
+        "message": "Revisa la seleccion exclusiva."
+      },
+      {
+        "type": "domSelector",
+        "selector": "input[type='color'][name='colorTema']",
+        "message": "Revisa la seleccion de color."
+      },
+      {
+        "type": "domSelector",
+        "selector": "input[type='range'][name='intensidad'][min='1'][max='10']",
+        "message": "Revisa el rango de intensidad."
+      },
+      {
+        "type": "domSelector",
+        "selector": "button[type='submit'], input[type='submit']",
+        "message": "Revisa el control de envio."
+      }
+    ]
+  }
+}

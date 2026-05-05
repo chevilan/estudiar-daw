@@ -1,0 +1,60 @@
+{
+  "id": "html-enlaces-target-inline",
+  "topic": "html",
+  "type": "build",
+  "title": "Enlaces target y elementos de linea",
+  "difficulty": "base",
+  "estimatedMinutes": 12,
+  "prompt": "Redacta un bloque de recursos HTML con enlaces que abran en la misma pagina, nueva pestana, marco padre y ventana completa. Incluye abreviatura, cita breve y enfasis dentro del contenido.",
+  "starterCode": {
+    "html": "<main>\n  <h1>Recursos HTML</h1>\n  <p></p>\n</main>",
+    "css": "body {\n  font-family: system-ui, sans-serif;\n  max-width: 760px;\n  margin: 0 auto;\n  padding: 32px;\n  background: #fbfaf7;\n}\n\na {\n  color: #164e63;\n}\n",
+    "javascript": ""
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "Bloque de enlaces y texto en linea completado.",
+    "rules": [
+      {
+        "type": "domSelector",
+        "selector": "a[target='_self']",
+        "message": "Revisa los destinos de navegacion."
+      },
+      {
+        "type": "domSelector",
+        "selector": "a[target='_blank']",
+        "message": "Revisa los destinos de navegacion."
+      },
+      {
+        "type": "domSelector",
+        "selector": "a[target='_parent']",
+        "message": "Revisa los destinos de navegacion."
+      },
+      {
+        "type": "domSelector",
+        "selector": "a[target='_top']",
+        "message": "Revisa los destinos de navegacion."
+      },
+      {
+        "type": "domSelector",
+        "selector": "abbr[title]",
+        "message": "Revisa las abreviaturas."
+      },
+      {
+        "type": "domSelector",
+        "selector": "q",
+        "message": "Revisa las citas breves."
+      },
+      {
+        "type": "domSelector",
+        "selector": "strong",
+        "message": "Revisa el marcado de importancia."
+      },
+      {
+        "type": "domSelector",
+        "selector": "em",
+        "message": "Revisa el marcado de enfasis."
+      }
+    ]
+  }
+}

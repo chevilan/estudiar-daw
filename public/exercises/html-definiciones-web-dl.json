@@ -1,0 +1,56 @@
+{
+  "id": "html-definiciones-web-dl",
+  "topic": "html",
+  "type": "build",
+  "title": "Definiciones de la web",
+  "difficulty": "base",
+  "estimatedMinutes": 10,
+  "prompt": "Representa conceptos de la web en una lista de definicion: web, frontend, backend, servidor web y motor HTTP. Cada termino debe tener su explicacion.",
+  "starterCode": {
+    "html": "<main>\n  <h1>Conceptos basicos</h1>\n</main>",
+    "css": "body {\n  font-family: system-ui, sans-serif;\n  max-width: 760px;\n  margin: 0 auto;\n  padding: 32px;\n  background: #f8faf9;\n}\n\ndt {\n  font-weight: 700;\n}\n\ndd {\n  margin-bottom: 12px;\n}\n",
+    "javascript": ""
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "Lista de definiciones completada.",
+    "rules": [
+      {
+        "type": "domSelector",
+        "selector": "dl",
+        "message": "Revisa el tipo de lista."
+      },
+      {
+        "type": "domSelector",
+        "selector": "dl dt",
+        "minCount": 5,
+        "message": "Revisa los terminos."
+      },
+      {
+        "type": "domSelector",
+        "selector": "dl dd",
+        "minCount": 5,
+        "message": "Revisa las definiciones."
+      },
+      {
+        "type": "contains",
+        "field": "html",
+        "value": "frontend",
+        "message": "Revisa los conceptos incluidos."
+      },
+      {
+        "type": "contains",
+        "field": "html",
+        "value": "backend",
+        "message": "Revisa los conceptos incluidos."
+      },
+      {
+        "type": "contains",
+        "field": "html",
+        "value": "HTTP",
+        "caseSensitive": false,
+        "message": "Revisa los conceptos incluidos."
+      }
+    ]
+  }
+}

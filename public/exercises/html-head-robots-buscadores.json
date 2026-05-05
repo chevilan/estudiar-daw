@@ -1,0 +1,47 @@
+{
+  "id": "html-head-robots-buscadores",
+  "topic": "html",
+  "type": "build",
+  "title": "Directivas para robots",
+  "difficulty": "media",
+  "estimatedMinutes": 10,
+  "prompt": "Prepara el head de una pagina privada de apuntes: no debe aparecer en resultados de busqueda ni seguir sus enlaces. Anade titulo, descripcion, palabras clave y autor.",
+  "starterCode": {
+    "html": "<!DOCTYPE html>\n<html lang=\"es\">\n<head>\n  <meta charset=\"UTF-8\">\n</head>\n<body>\n  <h1>Apuntes privados</h1>\n</body>\n</html>",
+    "css": "",
+    "javascript": ""
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "Head preparado con directivas para buscadores.",
+    "rules": [
+      {
+        "type": "domSelector",
+        "selector": "head title",
+        "message": "Revisa el titulo del documento."
+      },
+      {
+        "type": "domSelector",
+        "selector": "head meta[name='description'][content]",
+        "message": "Revisa los metadatos descriptivos."
+      },
+      {
+        "type": "domSelector",
+        "selector": "head meta[name='keywords'][content]",
+        "message": "Revisa las palabras clave."
+      },
+      {
+        "type": "domSelector",
+        "selector": "head meta[name='author'][content]",
+        "message": "Revisa la autoria."
+      },
+      {
+        "type": "regex",
+        "field": "html",
+        "pattern": "<meta(?=[^>]*name=[\"']robots[\"'])(?=[^>]*content=[\"'][^\"']*noindex)(?=[^>]*content=[\"'][^\"']*nofollow)[^>]*>",
+        "flags": "i",
+        "message": "Revisa las directivas de robots."
+      }
+    ]
+  }
+}

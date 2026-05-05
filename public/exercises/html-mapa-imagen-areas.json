@@ -1,0 +1,40 @@
+{
+  "id": "html-mapa-imagen-areas",
+  "topic": "html",
+  "type": "build",
+  "title": "Mapa de imagen con areas",
+  "difficulty": "media",
+  "estimatedMinutes": 12,
+  "prompt": "Crea un mapa de imagen para un plano con dos zonas navegables: una rectangular y una circular. La imagen debe conectar con el mapa por nombre y cada zona debe tener destino y texto alternativo.",
+  "starterCode": {
+    "html": "<main>\n  <h1>Plano interactivo</h1>\n</main>",
+    "css": "body {\n  font-family: system-ui, sans-serif;\n  display: grid;\n  place-items: center;\n  min-height: 100vh;\n  background: #f6f8f7;\n}\n\nimg {\n  max-width: 100%;\n}\n",
+    "javascript": ""
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "Mapa de imagen configurado.",
+    "rules": [
+      {
+        "type": "domSelector",
+        "selector": "img[usemap][alt]",
+        "message": "Revisa la imagen principal."
+      },
+      {
+        "type": "domSelector",
+        "selector": "map[name]",
+        "message": "Revisa la definicion del mapa."
+      },
+      {
+        "type": "domSelector",
+        "selector": "area[shape='rect'][coords][href][alt]",
+        "message": "Revisa la zona rectangular."
+      },
+      {
+        "type": "domSelector",
+        "selector": "area[shape='circle'][coords][href][alt]",
+        "message": "Revisa la zona circular."
+      }
+    ]
+  }
+}

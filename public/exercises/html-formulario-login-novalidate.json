@@ -1,0 +1,50 @@
+{
+  "id": "html-formulario-login-novalidate",
+  "topic": "html",
+  "type": "build",
+  "title": "Login sin validacion automatica",
+  "difficulty": "media",
+  "estimatedMinutes": 12,
+  "prompt": "Crea una pantalla de login para pruebas de backend. El formulario debe enviar por POST a /login, desactivar autocompletado y saltarse la validacion automatica. Pide usuario y contrasena, conserva oculto un token csrf y ofrece envio y reset.",
+  "starterCode": {
+    "html": "<main>\n  <h1>Acceso</h1>\n</main>",
+    "css": "body {\n  font-family: system-ui, sans-serif;\n  display: grid;\n  place-items: center;\n  min-height: 100vh;\n  background: #f6f5f2;\n}\n\nform {\n  display: grid;\n  gap: 12px;\n  width: min(360px, 92vw);\n}\n",
+    "javascript": ""
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "Login preparado para pruebas.",
+    "rules": [
+      {
+        "type": "domSelector",
+        "selector": "form[action='/login'][method='post'][autocomplete='off'][novalidate]",
+        "message": "Revisa la configuracion del formulario."
+      },
+      {
+        "type": "domSelector",
+        "selector": "input[type='text'][name='usuario'][required]",
+        "message": "Revisa el campo de usuario."
+      },
+      {
+        "type": "domSelector",
+        "selector": "input[type='password'][name='password'][required]",
+        "message": "Revisa el campo de contrasena."
+      },
+      {
+        "type": "domSelector",
+        "selector": "input[type='hidden'][name='csrf'][value]",
+        "message": "Revisa los datos ocultos."
+      },
+      {
+        "type": "domSelector",
+        "selector": "button[type='submit'], input[type='submit']",
+        "message": "Revisa el envio del formulario."
+      },
+      {
+        "type": "domSelector",
+        "selector": "button[type='reset'], input[type='reset']",
+        "message": "Revisa el reinicio del formulario."
+      }
+    ]
+  }
+}

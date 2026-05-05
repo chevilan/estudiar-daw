@@ -8,12 +8,14 @@ type ValidationPanelProps = {
   results: ValidationResult[];
   successMessage: string;
   hasRunValidation: boolean;
+  hideCriteria?: boolean;
 };
 
 export default function ValidationPanel({
   results,
   successMessage,
   hasRunValidation,
+  hideCriteria = false,
 }: ValidationPanelProps) {
   const passed = results.length > 0 && results.every((result) => result.passed);
 
@@ -45,38 +47,46 @@ export default function ValidationPanel({
         </div>
       )}
 
-      <ul className="m-0 grid list-none gap-1.5 p-0">
-        {results.map((result) => {
-          const state = !hasRunValidation
-            ? "pending"
-            : result.passed
-              ? "passed"
-              : "failed";
+      {hideCriteria ? (
+        <div className="rounded-md border border-border bg-secondary/60 px-3 py-2 text-sm text-muted-foreground">
+          {hasRunValidation ? "Corrección global." : "Criterios ocultos."}
+        </div>
+      ) : (
+        <ul className="m-0 grid list-none gap-1.5 p-0">
+          {results.map((result, index) => {
+            const state = !hasRunValidation
+              ? "pending"
+              : result.passed
+                ? "passed"
+                : "failed";
 
-          return (
-            <li
-              key={result.message}
-              className={cn(
-                "grid grid-cols-[16px_minmax(0,1fr)] items-start gap-2 rounded-md border px-3 py-2 text-sm leading-snug",
-                state === "pending" && "border-border bg-secondary/60 text-muted-foreground",
-                state === "passed" && "border-success/30 bg-success-soft text-success",
-                state === "failed" && "border-destructive/30 bg-destructive/5 text-destructive",
-              )}
-            >
-              <span className="mt-0.5">
-                {state === "pending" ? (
-                  <Circle size={14} aria-hidden />
-                ) : state === "passed" ? (
-                  <CheckCircle2 size={14} aria-hidden />
-                ) : (
-                  <XCircle size={14} aria-hidden />
+            return (
+              <li
+                key={`${index}-${result.message}`}
+                className={cn(
+                  "grid grid-cols-[16px_minmax(0,1fr)] items-start gap-2 rounded-md border px-3 py-2 text-sm leading-snug",
+                  state === "pending" &&
+                    "border-border bg-secondary/60 text-muted-foreground",
+                  state === "passed" && "border-success/30 bg-success-soft text-success",
+                  state === "failed" &&
+                    "border-destructive/30 bg-destructive/5 text-destructive",
                 )}
-              </span>
-              <span>{result.message}</span>
-            </li>
-          );
-        })}
-      </ul>
+              >
+                <span className="mt-0.5">
+                  {state === "pending" ? (
+                    <Circle size={14} aria-hidden />
+                  ) : state === "passed" ? (
+                    <CheckCircle2 size={14} aria-hidden />
+                  ) : (
+                    <XCircle size={14} aria-hidden />
+                  )}
+                </span>
+                <span>{result.message}</span>
+              </li>
+            );
+          })}
+        </ul>
+      )}
     </Card>
   );
 }

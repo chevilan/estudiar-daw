@@ -6,6 +6,7 @@ import {
   ListChecks,
   Play,
   Save,
+  ShieldQuestion,
   Sparkles,
   Target,
 } from "lucide-react";
@@ -50,6 +51,7 @@ const emptyFiles: CodeFiles = {
 };
 
 const codeThemeStorageKey = "daw-lab:code-theme";
+const hardModeStorageKey = "daw-lab:hard-mode";
 
 const topicLabels: Record<Topic, string> = {
   html: "HTML",
@@ -78,6 +80,10 @@ function loadCodeTheme(): CodeThemeId {
     : defaultCodeThemeId;
 }
 
+function loadHardMode(): boolean {
+  return localStorage.getItem(hardModeStorageKey) !== "off";
+}
+
 export default function App() {
   const [exercises, setExercises] = useState<Exercise[]>([]);
   const [loadError, setLoadError] = useState<string | null>(null);
@@ -92,6 +98,7 @@ export default function App() {
   const [previewNonce, setPreviewNonce] = useState(0);
   const [showTargetCode, setShowTargetCode] = useState(false);
   const [codeThemeId, setCodeThemeId] = useState<CodeThemeId>(loadCodeTheme);
+  const [hardMode, setHardMode] = useState(loadHardMode);
 
   useEffect(() => {
     let isMounted = true;
@@ -194,6 +201,19 @@ export default function App() {
   const handleCodeThemeChange = useCallback((themeId: CodeThemeId) => {
     setCodeThemeId(themeId);
     localStorage.setItem(codeThemeStorageKey, themeId);
+  }, []);
+
+  const handleHardModeChange = useCallback(() => {
+    setHardMode((current) => {
+      const next = !current;
+      localStorage.setItem(hardModeStorageKey, next ? "on" : "off");
+
+      if (next) {
+        setShowTargetCode(false);
+      }
+
+      return next;
+    });
   }, []);
 
   const handleReset = useCallback(() => {
@@ -305,6 +325,15 @@ export default function App() {
                 <Play size={14} aria-hidden />
                 Ejecutar
               </Button>
+              <Button
+                variant={hardMode ? "default" : "outline"}
+                onClick={handleHardModeChange}
+                aria-pressed={hardMode}
+                title="Modo difícil"
+              >
+                <ShieldQuestion size={14} aria-hidden />
+                {hardMode ? "Difícil" : "Normal"}
+              </Button>
               <Button onClick={handleValidate}>
                 <ListChecks size={14} aria-hidden />
                 Comprobar
@@ -325,7 +354,7 @@ export default function App() {
               ))}
             </div>
 
-            {selectedExercise.notes?.length ? (
+            {!hardMode && selectedExercise.notes?.length ? (
               <ul className="m-0 mt-3 grid list-disc gap-1.5 pl-5 text-sm text-muted-foreground">
                 {selectedExercise.notes.map((note) => (
                   <li key={note} className="leading-snug">
@@ -377,7 +406,7 @@ export default function App() {
                     {hasTarget ? "Preview y objetivo" : "Preview"}
                   </h2>
                 </div>
-                {hasTarget ? (
+                {hasTarget && !hardMode ? (
                   <Button
                     variant="outline"
                     size="sm"
@@ -422,7 +451,7 @@ export default function App() {
                 ) : null}
               </div>
 
-              {showTargetCode && selectedExercise.targetCode ? (
+              {!hardMode && showTargetCode && selectedExercise.targetCode ? (
                 <div className="overflow-hidden rounded-md border">
                   <div className="flex items-center gap-2 border-b bg-secondary/60 px-3 py-2 text-[0.72rem] font-semibold uppercase tracking-wider text-muted-foreground">
                     <Save size={13} aria-hidden />
@@ -459,6 +488,7 @@ export default function App() {
                 results={validationResults}
                 successMessage={selectedExercise.validation.successMessage}
                 hasRunValidation={hasRunValidation}
+                hideCriteria={hardMode}
               />
             </div>
           </div>

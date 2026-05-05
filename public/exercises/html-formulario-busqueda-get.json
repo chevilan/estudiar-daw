@@ -1,0 +1,47 @@
+{
+  "id": "html-formulario-busqueda-get",
+  "topic": "html",
+  "type": "build",
+  "title": "Buscador con GET",
+  "difficulty": "base",
+  "estimatedMinutes": 12,
+  "prompt": "Crea un formulario de busqueda para filtrar apuntes. Debe enviar a buscar.html con GET, incluir texto de busqueda, nivel, tema y boton de envio. Los datos deben tener nombres para viajar en la URL.",
+  "starterCode": {
+    "html": "<main>\n  <h1>Buscar apuntes</h1>\n  <!-- Crea aqui el formulario -->\n</main>",
+    "css": "body {\n  font-family: system-ui, sans-serif;\n  display: grid;\n  place-items: center;\n  min-height: 100vh;\n  background: #f7f8fb;\n}\n\nform {\n  display: grid;\n  gap: 12px;\n  width: min(440px, 92vw);\n}\n",
+    "javascript": ""
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "Buscador preparado para enviar parametros por URL.",
+    "rules": [
+      {
+        "type": "domSelector",
+        "selector": "form[action='buscar.html'][method='get']",
+        "message": "Revisa la configuracion del formulario."
+      },
+      {
+        "type": "domSelector",
+        "selector": "input[type='search'][name='q']",
+        "message": "Revisa el campo principal de busqueda."
+      },
+      {
+        "type": "domSelector",
+        "selector": "select[name='nivel'] option[value]",
+        "minCount": 3,
+        "message": "Revisa el selector de nivel."
+      },
+      {
+        "type": "domSelector",
+        "selector": "input[type='checkbox'][name='tema'][value]",
+        "minCount": 3,
+        "message": "Revisa las opciones de tema."
+      },
+      {
+        "type": "domSelector",
+        "selector": "button[type='submit'], input[type='submit']",
+        "message": "Revisa el control de envio."
+      }
+    ]
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "id": "html-tabla-horario-combinada",
+  "topic": "html",
+  "type": "build",
+  "title": "Horario con celdas combinadas",
+  "difficulty": "media",
+  "estimatedMinutes": 14,
+  "prompt": "Crea una tabla de horario de clase con titulo, cabecera, cuerpo y celdas combinadas horizontal y verticalmente.",
+  "starterCode": {
+    "html": "<main>\n  <h1>Horario</h1>\n</main>",
+    "css": "body {\n  font-family: system-ui, sans-serif;\n  padding: 32px;\n  background: #f7f8f9;\n}\n\ntable {\n  border-collapse: collapse;\n  width: min(760px, 100%);\n}\n\nth,\ntd {\n  border: 1px solid #cbd5e1;\n  padding: 10px;\n}\n",
+    "javascript": ""
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "Horario estructurado con tabla.",
+    "rules": [
+      {
+        "type": "domSelector",
+        "selector": "table caption",
+        "message": "Revisa el titulo de la tabla."
+      },
+      {
+        "type": "domSelector",
+        "selector": "table thead th",
+        "minCount": 3,
+        "message": "Revisa la cabecera."
+      },
+      {
+        "type": "domSelector",
+        "selector": "table tbody tr",
+        "minCount": 3,
+        "message": "Revisa el cuerpo de la tabla."
+      },
+      {
+        "type": "domSelector",
+        "selector": "td[colspan]",
+        "message": "Revisa las celdas combinadas."
+      },
+      {
+        "type": "domSelector",
+        "selector": "td[rowspan]",
+        "message": "Revisa las celdas combinadas."
+      }
+    ]
+  }
+}

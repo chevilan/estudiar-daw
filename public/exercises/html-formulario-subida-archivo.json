@@ -1,0 +1,51 @@
+{
+  "id": "html-formulario-subida-archivo",
+  "topic": "html",
+  "type": "build",
+  "title": "Subida de archivo",
+  "difficulty": "media",
+  "estimatedMinutes": 14,
+  "prompt": "Construye un formulario para subir una practica. Debe enviar archivos al servidor con POST y codificacion adecuada, pedir titulo, permitir elegir un archivo, incluir un identificador oculto y un boton de envio.",
+  "starterCode": {
+    "html": "<main>\n  <h1>Entrega de practica</h1>\n</main>",
+    "css": "body {\n  font-family: system-ui, sans-serif;\n  display: grid;\n  place-items: center;\n  min-height: 100vh;\n  background: #f4f7f6;\n}\n\nform {\n  display: grid;\n  gap: 12px;\n  width: min(420px, 92vw);\n}\n",
+    "javascript": ""
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "Formulario de subida preparado.",
+    "rules": [
+      {
+        "type": "domSelector",
+        "selector": "form[method='post'][enctype='multipart/form-data']",
+        "message": "Revisa la configuracion del formulario."
+      },
+      {
+        "type": "domSelector",
+        "selector": "label[for]",
+        "minCount": 2,
+        "message": "Revisa las etiquetas visibles."
+      },
+      {
+        "type": "domSelector",
+        "selector": "input[type='text'][name='titulo'][required]",
+        "message": "Revisa los datos de la practica."
+      },
+      {
+        "type": "domSelector",
+        "selector": "input[type='file'][name='archivo'][required]",
+        "message": "Revisa la seleccion de archivo."
+      },
+      {
+        "type": "domSelector",
+        "selector": "input[type='hidden'][name='practicaId'][value]",
+        "message": "Revisa los datos ocultos."
+      },
+      {
+        "type": "domSelector",
+        "selector": "button[type='submit'], input[type='submit']",
+        "message": "Revisa el control de envio."
+      }
+    ]
+  }
+}

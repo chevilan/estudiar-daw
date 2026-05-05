@@ -1,0 +1,51 @@
+{
+  "id": "html-formulario-estados-campos",
+  "topic": "html",
+  "type": "build",
+  "title": "Estados de campos",
+  "difficulty": "media",
+  "estimatedMinutes": 14,
+  "prompt": "Monta un formulario de edicion de perfil. Incluye un identificador visible que no se pueda cambiar, un campo desactivado que no se enviara, campos editables con limites de longitud y un boton para restaurar valores iniciales.",
+  "starterCode": {
+    "html": "<main>\n  <h1>Perfil</h1>\n</main>",
+    "css": "body {\n  font-family: system-ui, sans-serif;\n  display: grid;\n  place-items: center;\n  min-height: 100vh;\n  background: #f4f6f8;\n}\n\nform {\n  display: grid;\n  gap: 12px;\n  width: min(420px, 92vw);\n}\n",
+    "javascript": ""
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "Formulario de perfil con estados de campo.",
+    "rules": [
+      {
+        "type": "domSelector",
+        "selector": "form[name='perfil']",
+        "message": "Revisa la identidad del formulario."
+      },
+      {
+        "type": "domSelector",
+        "selector": "input[readonly][name='idUsuario']",
+        "message": "Revisa el campo de identificador."
+      },
+      {
+        "type": "domSelector",
+        "selector": "input[disabled]",
+        "message": "Revisa el campo desactivado."
+      },
+      {
+        "type": "domSelector",
+        "selector": "input[minlength][maxlength]",
+        "minCount": 2,
+        "message": "Revisa los limites de longitud."
+      },
+      {
+        "type": "domSelector",
+        "selector": "button[type='reset'], input[type='reset']",
+        "message": "Revisa el control de restauracion."
+      },
+      {
+        "type": "domSelector",
+        "selector": "button[type='submit'], input[type='submit']",
+        "message": "Revisa el control de envio."
+      }
+    ]
+  }
+}

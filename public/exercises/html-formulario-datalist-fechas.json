@@ -1,0 +1,56 @@
+{
+  "id": "html-formulario-datalist-fechas",
+  "topic": "html",
+  "type": "build",
+  "title": "Reserva con datalist y fechas",
+  "difficulty": "media",
+  "estimatedMinutes": 15,
+  "prompt": "Disena un formulario para reservar una sesion de estudio. Debe sugerir nombres mediante datalist y recoger fecha, semana, mes y horas estimadas con controles HTML apropiados.",
+  "starterCode": {
+    "html": "<main>\n  <h1>Reserva de estudio</h1>\n</main>",
+    "css": "body {\n  font-family: system-ui, sans-serif;\n  display: grid;\n  place-items: center;\n  min-height: 100vh;\n  background: #f5f8fb;\n}\n\nform {\n  display: grid;\n  gap: 12px;\n  width: min(420px, 92vw);\n}\n",
+    "javascript": ""
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "Reserva preparada con sugerencias y fechas.",
+    "rules": [
+      {
+        "type": "domSelector",
+        "selector": "input[list='nombres'][name='nombre']",
+        "message": "Revisa el campo con sugerencias."
+      },
+      {
+        "type": "domSelector",
+        "selector": "datalist#nombres option[value]",
+        "minCount": 4,
+        "message": "Revisa la lista de sugerencias."
+      },
+      {
+        "type": "domSelector",
+        "selector": "input[type='date'][name='fecha']",
+        "message": "Revisa el control de fecha."
+      },
+      {
+        "type": "domSelector",
+        "selector": "input[type='week'][name='semana']",
+        "message": "Revisa el control de semana."
+      },
+      {
+        "type": "domSelector",
+        "selector": "input[type='month'][name='mes']",
+        "message": "Revisa el control de mes."
+      },
+      {
+        "type": "domSelector",
+        "selector": "input[type='number'][name='horas'][min][max]",
+        "message": "Revisa las horas estimadas."
+      },
+      {
+        "type": "domSelector",
+        "selector": "button[type='submit'], input[type='submit']",
+        "message": "Revisa el control de envio."
+      }
+    ]
+  }
+}

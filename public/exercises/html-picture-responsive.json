@@ -1,0 +1,36 @@
+{
+  "id": "html-picture-responsive",
+  "topic": "html",
+  "type": "build",
+  "title": "Imagen adaptable con picture",
+  "difficulty": "base",
+  "estimatedMinutes": 10,
+  "prompt": "Construye una imagen adaptable con picture: una fuente para pantallas grandes, otra para pantallas medianas y una imagen final de respaldo con texto alternativo.",
+  "starterCode": {
+    "html": "<main>\n  <h1>Paisaje adaptable</h1>\n</main>",
+    "css": "body {\n  font-family: system-ui, sans-serif;\n  display: grid;\n  place-items: center;\n  min-height: 100vh;\n  background: #f4f7fb;\n}\n\nimg {\n  max-width: 100%;\n}\n",
+    "javascript": ""
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "Imagen adaptable preparada.",
+    "rules": [
+      {
+        "type": "domSelector",
+        "selector": "picture",
+        "message": "Revisa el contenedor de imagen adaptable."
+      },
+      {
+        "type": "domSelector",
+        "selector": "picture source[media][srcset]",
+        "minCount": 2,
+        "message": "Revisa las fuentes alternativas."
+      },
+      {
+        "type": "domSelector",
+        "selector": "picture img[src][alt]",
+        "message": "Revisa la imagen de respaldo."
+      }
+    ]
+  }
+}

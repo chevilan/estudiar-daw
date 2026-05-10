@@ -2,7 +2,9 @@ import {
   AlertCircle,
   BookOpen,
   CheckCircle2,
+  Database,
   Eye,
+  Github,
   ListChecks,
   Play,
   Save,
@@ -27,6 +29,11 @@ import {
   isCodeThemeId,
   type CodeThemeId,
 } from "@/lib/codeThemes";
+import {
+  loadCustomExercises,
+  parseExerciseDocuments,
+  saveCustomExercises,
+} from "@/lib/customExerciseStore";
 import { loadExercises } from "@/lib/exerciseLoader";
 import {
   loadProgress,
@@ -52,6 +59,7 @@ const emptyFiles: CodeFiles = {
 
 const codeThemeStorageKey = "daw-lab:code-theme";
 const hardModeStorageKey = "daw-lab:hard-mode";
+const repositoryUrl = "https://github.com/chevilan/estudiar-daw";
 
 const topicLabels: Record<Topic, string> = {
   html: "HTML",
@@ -86,6 +94,13 @@ function loadHardMode(): boolean {
 
 export default function App() {
   const [exercises, setExercises] = useState<Exercise[]>([]);
+  const [bundledExerciseIds, setBundledExerciseIds] = useState<Set<string>>(
+    () => new Set(),
+  );
+  const [customExerciseIds, setCustomExerciseIds] = useState<Set<string>>(
+    () => new Set(),
+  );
+  const [importStatus, setImportStatus] = useState<string | null>(null);
   const [loadError, setLoadError] = useState<string | null>(null);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [topic, setTopic] = useState<Topic | "todos">("todos");
@@ -103,17 +118,21 @@ export default function App() {
   useEffect(() => {
     let isMounted = true;
 
-    loadExercises()
-      .then((loadedExercises) => {
+    Promise.all([loadExercises(), loadCustomExercises()])
+      .then(([loadedExercises, customExercises]) => {
         if (!isMounted) {
           return;
         }
 
-        setExercises(loadedExercises);
-        setSelectedId(loadedExercises[0]?.id ?? null);
+        const allExercises = [...customExercises, ...loadedExercises];
+
+        setExercises(allExercises);
+        setBundledExerciseIds(new Set(loadedExercises.map((exercise) => exercise.id)));
+        setCustomExerciseIds(new Set(customExercises.map((exercise) => exercise.id)));
+        setSelectedId(allExercises[0]?.id ?? null);
         setProgressById(
           Object.fromEntries(
-            loadedExercises
+            allExercises
               .map((exercise) => [exercise.id, loadProgress(exercise.id)] as const)
               .filter((entry): entry is readonly [string, ExerciseProgress] => Boolean(entry[1])),
           ),
@@ -216,6 +235,74 @@ export default function App() {
     });
   }, []);
 
+  const handleImportExercises = useCallback(
+    async (fileList: FileList | null) => {
+      if (!fileList?.length) {
+        return;
+      }
+
+      try {
+        const parsedExercises = (
+          await Promise.all(
+            Array.from(fileList).map(async (file) => {
+              const content = await file.text();
+              return parseExerciseDocuments(JSON.parse(content));
+            }),
+          )
+        ).flat();
+        const uploadedIds = new Set<string>();
+
+        parsedExercises.forEach((exercise) => {
+          if (bundledExerciseIds.has(exercise.id)) {
+            throw new Error(
+              `El id "${exercise.id}" ya existe en los ejercicios incluidos.`,
+            );
+          }
+
+          if (uploadedIds.has(exercise.id)) {
+            throw new Error(`El id "${exercise.id}" esta repetido en la subida.`);
+          }
+
+          uploadedIds.add(exercise.id);
+        });
+
+        await saveCustomExercises(parsedExercises);
+
+        const customExercises = await loadCustomExercises();
+        const bundledExercises = exercises.filter(
+          (exercise) => !customExerciseIds.has(exercise.id),
+        );
+        const allExercises = [...customExercises, ...bundledExercises];
+
+        setExercises(allExercises);
+        setCustomExerciseIds(new Set(customExercises.map((exercise) => exercise.id)));
+        setSelectedId(parsedExercises[0]?.id ?? selectedId);
+        setProgressById((current) => ({
+          ...Object.fromEntries(
+            customExercises
+              .map((exercise) => [exercise.id, loadProgress(exercise.id)] as const)
+              .filter((entry): entry is readonly [string, ExerciseProgress] =>
+                Boolean(entry[1]),
+              ),
+          ),
+          ...current,
+        }));
+        setImportStatus(
+          `${parsedExercises.length} ejercicio${
+            parsedExercises.length === 1 ? "" : "s"
+          } subido${parsedExercises.length === 1 ? "" : "s"} a esta base local.`,
+        );
+      } catch (error) {
+        setImportStatus(
+          error instanceof Error
+            ? error.message
+            : "No se pudo subir el archivo de ejercicios.",
+        );
+      }
+    },
+    [bundledExerciseIds, customExerciseIds, exercises, selectedId],
+  );
+
   const handleReset = useCallback(() => {
     if (!selectedExercise) {
       return;
@@ -294,8 +381,11 @@ export default function App() {
           selectedId={selectedExercise.id}
           topic={topic}
           progressById={progressById}
+          repositoryUrl={repositoryUrl}
+          customExerciseCount={customExerciseIds.size}
           onTopicChange={setTopic}
           onSelect={handleSelectExercise}
+          onImportExercises={handleImportExercises}
         />
 
         <main className="flex min-w-0 flex-col gap-5 p-4 sm:p-6">
@@ -310,6 +400,12 @@ export default function App() {
             </div>
 
             <div className="flex flex-wrap items-center gap-2">
+              <Button variant="outline" asChild>
+                <a href={repositoryUrl} target="_blank" rel="noreferrer">
+                  <Github size={14} aria-hidden />
+                  Repo
+                </a>
+              </Button>
               <div
                 className="inline-flex h-9 items-center gap-1.5 rounded-md border bg-background px-3 text-xs font-medium tabular-nums text-muted-foreground"
                 title="Ejercicios completados"
@@ -367,6 +463,12 @@ export default function App() {
             <Separator className="my-4" />
 
             <div className="flex flex-wrap gap-1.5">
+              {customExerciseIds.has(selectedExercise.id) ? (
+                <Badge variant="muted">
+                  <Database size={12} aria-hidden />
+                  Subido
+                </Badge>
+              ) : null}
               <Badge variant="muted">
                 {selectedExercise.type === "visual-match"
                   ? "Clonar objetivo"
@@ -380,6 +482,11 @@ export default function App() {
                 <Badge variant="muted">{currentProgress.attempts} intentos</Badge>
               ) : null}
             </div>
+            {importStatus ? (
+              <p className="m-0 mt-3 text-xs text-muted-foreground">
+                {importStatus}
+              </p>
+            ) : null}
           </Card>
 
           <div className="grid items-start gap-4 xl:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] xl:[grid-template-areas:'editor_preview''checks_preview']">

@@ -1,6 +1,9 @@
 import type { Exercise, ExerciseManifest } from "./types";
 
-const EXERCISE_BASE_PATH = "/exercises";
+const appBasePath = import.meta.env.BASE_URL.endsWith("/")
+  ? import.meta.env.BASE_URL
+  : `${import.meta.env.BASE_URL}/`;
+const EXERCISE_BASE_PATH = `${appBasePath}exercises`;
 
 export async function loadExercises(): Promise<Exercise[]> {
   const manifestResponse = await fetch(`${EXERCISE_BASE_PATH}/manifest.json`);

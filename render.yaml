@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: estudiar-daw
+    runtime: static
+    buildCommand: npm ci && npm run build
+    staticPublishPath: ./dist
+    envVars:
+      - key: VITE_BASE_PATH
+        value: /estudiar-daw/
+    routes:
+      - type: rewrite
+        source: /estudiar-daw
+        destination: /index.html
+      - type: rewrite
+        source: /estudiar-daw/*
+        destination: /*

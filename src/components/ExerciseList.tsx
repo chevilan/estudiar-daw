@@ -1,6 +1,8 @@
-import { CheckCircle2, Clock3 } from "lucide-react";
+import { CheckCircle2, Clock3, Database, Github, Upload } from "lucide-react";
+import { useRef } from "react";
 
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { cn } from "@/lib/utils";
@@ -11,8 +13,11 @@ type ExerciseListProps = {
   selectedId: string | null;
   topic: Topic | "todos";
   progressById: Record<string, ExerciseProgress>;
+  repositoryUrl: string;
+  customExerciseCount: number;
   onTopicChange: (topic: Topic | "todos") => void;
   onSelect: (exercise: Exercise) => void;
+  onImportExercises: (files: FileList | null) => void;
 };
 
 const topicOptions: Array<{ value: Topic | "todos"; label: string }> = [
@@ -33,9 +38,13 @@ export default function ExerciseList({
   selectedId,
   topic,
   progressById,
+  repositoryUrl,
+  customExerciseCount,
   onTopicChange,
   onSelect,
+  onImportExercises,
 }: ExerciseListProps) {
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const filteredExercises =
     topic === "todos"
       ? exercises
@@ -56,6 +65,45 @@ export default function ExerciseList({
           </p>
         </div>
       </div>
+
+      <div className="grid grid-cols-2 gap-2">
+        <Button variant="outline" size="sm" asChild>
+          <a href={repositoryUrl} target="_blank" rel="noreferrer">
+            <Github size={13} aria-hidden />
+            Repo
+          </a>
+        </Button>
+        <Button
+          variant="outline"
+          size="sm"
+          type="button"
+          onClick={() => fileInputRef.current?.click()}
+        >
+          <Upload size={13} aria-hidden />
+          Subir
+        </Button>
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept="application/json,.json"
+          multiple
+          className="sr-only"
+          onChange={(event) => {
+            onImportExercises(event.currentTarget.files);
+            event.currentTarget.value = "";
+          }}
+        />
+      </div>
+
+      {customExerciseCount > 0 ? (
+        <div className="flex items-center gap-2 rounded-md border bg-background px-3 py-2 text-xs text-muted-foreground">
+          <Database size={13} aria-hidden />
+          <span>
+            {customExerciseCount} ejercicio
+            {customExerciseCount === 1 ? "" : "s"} en base local
+          </span>
+        </div>
+      ) : null}
 
       <ToggleGroup
         type="single"

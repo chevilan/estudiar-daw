@@ -15,6 +15,31 @@ npm run dev
 
 Vite abrira la app en `http://127.0.0.1:5173`.
 
+## Desplegar en Render
+
+El repositorio incluye `render.yaml` para desplegar la app como Static Site.
+
+Configuracion esperada en Render:
+
+- Build Command: `npm ci && npm run build`
+- Publish Directory: `dist`
+- Variable de entorno: `VITE_BASE_PATH=/estudiar-daw/`
+
+La app esta preparada para publicarse bajo `/estudiar-daw`, por ejemplo:
+
+```txt
+https://jaime-romero.com/estudiar-daw
+```
+
+Si se configura manualmente desde el dashboard de Render, anade tambien estas rewrites:
+
+```txt
+/estudiar-daw    -> /index.html
+/estudiar-daw/*  -> /*
+```
+
+Para servirla desde `jaime-romero.com/estudiar-daw` manteniendo el dominio principal en Cloudflare, usa una regla/Worker en Cloudflare que envie ese path al dominio `.onrender.com` de Render.
+
 ## Donde van los ejercicios
 
 Los ejercicios viven en `public/exercises`.
@@ -29,6 +54,11 @@ La app soporta estos tipos:
 
 - `build`: ejercicio por enunciado, sin objetivo visual obligatorio.
 - `visual-match`: ejercicio con preview de tu codigo y preview objetivo lado a lado.
+
+Tambien se pueden subir ejercicios desde la interfaz con el boton `Subir`.
+Esos ejercicios se guardan como documentos en IndexedDB, en una base local
+del navegador llamada `daw-practice-lab`. No se comparten entre usuarios ni
+dispositivos porque la app no tiene backend.
 
 ## Validaciones disponibles
 

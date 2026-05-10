@@ -1,6 +1,20 @@
 # DAW Practice Lab
 
-Aplicacion local para practicar HTML, CSS y JavaScript con ejercicios declarados en JSON.
+Aplicacion web para practicar HTML, CSS y JavaScript con ejercicios interactivos.
+
+Puedes usarla online aqui:
+
+https://estudiar-daw.onrender.com/
+
+## Que incluye
+
+- Filtro de ejercicios por HTML, CSS y JavaScript.
+- Editor separado para HTML, CSS y JavaScript.
+- Preview en vivo dentro de un iframe aislado.
+- Ejercicios de construccion y de comparacion visual.
+- Validaciones automaticas declaradas en JSON.
+- Persistencia local del codigo y progreso con `localStorage`.
+- Subida de ejercicios JSON desde la interfaz.
 
 ## Ejemplo
 
@@ -8,43 +22,50 @@ Aplicacion local para practicar HTML, CSS y JavaScript con ejercicios declarados
 
 ## Ejecutar en local
 
+Necesitas Node.js y npm.
+
 ```bash
 npm install
 npm run dev
 ```
 
-Vite abrira la app en `http://127.0.0.1:5173`.
-
-## Desplegar en Render
-
-El repositorio incluye `render.yaml` para desplegar la app como Static Site.
-
-Configuracion esperada en Render:
-
-- Build Command: `npm ci && npm run build`
-- Publish Directory: `dist`
-- Variable de entorno: `VITE_BASE_PATH=/estudiar-daw/`
-
-La app esta preparada para publicarse bajo `/estudiar-daw`, por ejemplo:
+Vite abrira la app en:
 
 ```txt
-https://jaime-romero.com/estudiar-daw
+http://127.0.0.1:5173
 ```
 
-Si se configura manualmente desde el dashboard de Render, anade tambien estas rewrites:
+Para generar una build de produccion:
+
+```bash
+npm run build
+```
+
+## Usar la app
+
+1. Elige un ejercicio en la barra lateral.
+2. Escribe tu solucion en las pestanas de HTML, CSS y JavaScript.
+3. Pulsa `Ejecutar` para refrescar la preview.
+4. Pulsa `Comprobar` para validar tu respuesta.
+5. Si el ejercicio tiene objetivo visual, compara tu resultado con el panel de objetivo.
+
+El codigo que escribas y tu progreso se guardan en el navegador. Si cambias de navegador, dispositivo o limpias los datos del sitio, ese progreso local puede desaparecer.
+
+## Subir ejercicios desde la interfaz
+
+El boton `Subir` permite importar uno o varios archivos `.json` con el formato de ejercicio de la app.
+
+Los ejercicios subidos se guardan en IndexedDB, en una base local del navegador llamada `daw-practice-lab`. No se comparten entre usuarios ni dispositivos.
+
+## Donde van los ejercicios del proyecto
+
+Los ejercicios incluidos en el repositorio viven en:
 
 ```txt
-/estudiar-daw    -> /index.html
-/estudiar-daw/*  -> /*
+public/exercises
 ```
 
-Para servirla desde `jaime-romero.com/estudiar-daw` manteniendo el dominio principal en Cloudflare, usa una regla/Worker en Cloudflare que envie ese path al dominio `.onrender.com` de Render.
-
-## Donde van los ejercicios
-
-Los ejercicios viven en `public/exercises`.
-
-Cada archivo JSON define una pregunta. Para que aparezca en la app, anade su nombre a:
+Cada archivo JSON define un ejercicio. Para que aparezca en la app, anade su nombre a:
 
 ```txt
 public/exercises/manifest.json
@@ -55,10 +76,38 @@ La app soporta estos tipos:
 - `build`: ejercicio por enunciado, sin objetivo visual obligatorio.
 - `visual-match`: ejercicio con preview de tu codigo y preview objetivo lado a lado.
 
-Tambien se pueden subir ejercicios desde la interfaz con el boton `Subir`.
-Esos ejercicios se guardan como documentos en IndexedDB, en una base local
-del navegador llamada `daw-practice-lab`. No se comparten entre usuarios ni
-dispositivos porque la app no tiene backend.
+## Formato basico de ejercicio
+
+```json
+{
+  "id": "tema-nombre-corto",
+  "topic": "html",
+  "type": "build",
+  "title": "Titulo breve",
+  "difficulty": "base",
+  "estimatedMinutes": 15,
+  "prompt": "Enunciado del ejercicio",
+  "notes": ["Pista opcional"],
+  "starterCode": {
+    "html": "",
+    "css": "",
+    "javascript": ""
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "Ejercicio completado.",
+    "rules": []
+  }
+}
+```
+
+`targetCode` es opcional y se usa principalmente en ejercicios `visual-match`.
+
+Valores soportados:
+
+- `topic`: `html`, `css`, `javascript`
+- `type`: `build`, `visual-match`
+- `difficulty`: `base`, `media`, `reto`
 
 ## Validaciones disponibles
 
@@ -68,45 +117,18 @@ dispositivos porque la app no tiene backend.
 - `domSelector`: comprueba que el HTML contiene un selector.
 - `consoleIncludes`: comprueba texto emitido por `console.log`.
 
-## Crear ejercicios con IA desde tus apuntes
+Ejemplo:
 
-Abre un PDF de `apuntes/`, copia el fragmento que quieras practicar y pide:
-
-```txt
-Genera 3 ejercicios para DAW Practice Lab usando este esquema JSON.
-Quiero uno de tipo build y dos visual-match. El tema debe ser html/css/javascript segun corresponda.
-Incluye starterCode, targetCode solo cuando sea visual-match y reglas de validation declarativas.
-No uses dependencias externas.
-
-Esquema:
+```json
 {
-  "id": "tema-nombre-corto",
-  "topic": "html | css | javascript",
-  "type": "build | visual-match",
-  "title": "Titulo breve",
-  "difficulty": "base | media | reto",
-  "estimatedMinutes": 15,
-  "prompt": "Enunciado del ejercicio",
-  "notes": ["Pista opcional"],
-  "starterCode": {
-    "html": "",
-    "css": "",
-    "javascript": ""
-  },
-  "targetCode": {
-    "html": "",
-    "css": "",
-    "javascript": ""
-  },
-  "validation": {
-    "mode": "all",
-    "successMessage": "Mensaje al completar",
-    "rules": []
-  }
+  "type": "domSelector",
+  "selector": "h1",
+  "message": "Incluye un h1."
 }
-
-Fragmento de apuntes:
-...
 ```
 
-Despues guarda cada resultado en `public/exercises/*.json` y actualiza `manifest.json`.
+Hay mas ejemplos de esquema en:
+
+```txt
+docs/formato-ejercicios.md
+```

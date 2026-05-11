@@ -1,5 +1,6 @@
 import {
   AlertCircle,
+  BookMarked,
   BookOpen,
   CheckCircle2,
   Database,
@@ -11,6 +12,7 @@ import {
   ShieldQuestion,
   Sparkles,
   Target,
+  X,
 } from "lucide-react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
@@ -92,6 +94,59 @@ function loadHardMode(): boolean {
   return localStorage.getItem(hardModeStorageKey) !== "off";
 }
 
+function renderInlineMarkdown(text: string) {
+  return text.split(/(`[^`]+`)/g).map((part, index) => {
+    if (part.startsWith("`") && part.endsWith("`")) {
+      return (
+        <code
+          key={`${part}-${index}`}
+          className="rounded border bg-secondary px-1 py-0.5 font-mono text-[0.82em] text-foreground"
+        >
+          {part.slice(1, -1)}
+        </code>
+      );
+    }
+
+    return part;
+  });
+}
+
+function renderGlossaryMarkdown(markdown: string) {
+  return markdown
+    .split(/\r?\n/)
+    .map((line) => line.trim())
+    .filter(Boolean)
+    .map((line, index) => {
+      if (line.startsWith("# ")) {
+        return (
+          <h2
+            key={`${line}-${index}`}
+            className="m-0 text-lg font-semibold tracking-tight"
+          >
+            {line.slice(2)}
+          </h2>
+        );
+      }
+
+      if (line.startsWith("## ")) {
+        return (
+          <h3
+            key={`${line}-${index}`}
+            className="m-0 border-t pt-4 text-sm font-semibold uppercase tracking-wider text-muted-foreground first:border-t-0 first:pt-0"
+          >
+            {line.slice(3)}
+          </h3>
+        );
+      }
+
+      return (
+        <p key={`${line}-${index}`} className="m-0 leading-relaxed">
+          {renderInlineMarkdown(line)}
+        </p>
+      );
+    });
+}
+
 export default function App() {
   const [exercises, setExercises] = useState<Exercise[]>([]);
   const [bundledExerciseIds, setBundledExerciseIds] = useState<Set<string>>(
@@ -114,6 +169,9 @@ export default function App() {
   const [showTargetCode, setShowTargetCode] = useState(false);
   const [codeThemeId, setCodeThemeId] = useState<CodeThemeId>(loadCodeTheme);
   const [hardMode, setHardMode] = useState(loadHardMode);
+  const [showGlossary, setShowGlossary] = useState(false);
+  const [glossaryMarkdown, setGlossaryMarkdown] = useState("");
+  const [glossaryError, setGlossaryError] = useState<string | null>(null);
 
   useEffect(() => {
     let isMounted = true;
@@ -141,6 +199,35 @@ export default function App() {
       .catch((error: unknown) => {
         if (isMounted) {
           setLoadError(error instanceof Error ? error.message : "Error cargando ejercicios");
+        }
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    fetch(`${import.meta.env.BASE_URL}glosario_ultimas_dos_paginas.md`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("No se pudo cargar el glosario.");
+        }
+
+        return response.text();
+      })
+      .then((markdown) => {
+        if (isMounted) {
+          setGlossaryMarkdown(markdown);
+        }
+      })
+      .catch((error: unknown) => {
+        if (isMounted) {
+          setGlossaryError(
+            error instanceof Error ? error.message : "No se pudo cargar el glosario.",
+          );
         }
       });
 
@@ -406,6 +493,10 @@ export default function App() {
                   Repo
                 </a>
               </Button>
+              <Button variant="outline" onClick={() => setShowGlossary(true)}>
+                <BookMarked size={14} aria-hidden />
+                Ver glosario
+              </Button>
               <div
                 className="inline-flex h-9 items-center gap-1.5 rounded-md border bg-background px-3 text-xs font-medium tabular-nums text-muted-foreground"
                 title="Ejercicios completados"
@@ -599,6 +690,56 @@ export default function App() {
               />
             </div>
           </div>
+
+          {showGlossary ? (
+            <div
+              className="fixed inset-0 z-50 grid place-items-center bg-background/80 p-4 backdrop-blur-sm"
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="glossary-title"
+            >
+              <Card className="flex max-h-[min(760px,92vh)] w-full max-w-4xl flex-col overflow-hidden">
+                <div className="flex items-center justify-between gap-3 border-b px-4 py-3">
+                  <div className="flex min-w-0 items-center gap-3">
+                    <img
+                      src={`${import.meta.env.BASE_URL}logo-daw.png`}
+                      alt=""
+                      className="h-8 w-8 rounded-md object-cover"
+                      aria-hidden
+                    />
+                    <div className="min-w-0">
+                      <h2
+                        id="glossary-title"
+                        className="m-0 text-base font-semibold leading-tight"
+                      >
+                        Glosario DAW
+                      </h2>
+                      <p className="m-0 mt-0.5 text-xs text-muted-foreground">
+                        Ultimas dos paginas de apuntes de examen
+                      </p>
+                    </div>
+                  </div>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => setShowGlossary(false)}
+                    aria-label="Cerrar glosario"
+                  >
+                    <X size={16} aria-hidden />
+                  </Button>
+                </div>
+                <div className="scrollbar-thin grid gap-4 overflow-auto p-4 text-sm">
+                  {glossaryError ? (
+                    <p className="m-0 text-destructive">{glossaryError}</p>
+                  ) : glossaryMarkdown ? (
+                    renderGlossaryMarkdown(glossaryMarkdown)
+                  ) : (
+                    <p className="m-0 text-muted-foreground">Cargando glosario...</p>
+                  )}
+                </div>
+              </Card>
+            </div>
+          ) : null}
         </main>
       </div>
     </TooltipProvider>

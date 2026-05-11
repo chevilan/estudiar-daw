@@ -1,0 +1,91 @@
+{
+  "id": "jsp-usebean-form-reto",
+  "topic": "jsp",
+  "type": "build",
+  "title": "JavaBean en JSP con scope y property=*",
+  "difficulty": "reto",
+  "estimatedMinutes": 35,
+  "prompt": "Practica acciones JSP con JavaBeans. En JSP declara un bean persona de tipo daw.model.PersonaBean en scope request, carga automaticamente propiedades desde los parametros del formulario con property=\"*\", muestra nombre y email con jsp:getProperty, y usa EL para leer ${persona.nombre}. En Servlet / Bean implementa PersonaBean como JavaBean correcto: Serializable, constructor vacio, atributos privados nombre y email, getters y setters. Evita scriptlets en la JSP.",
+  "notes": [
+    "jsp:useBean busca el atributo en el scope indicado; si no existe, lo instancia.",
+    "property=\"*\" copia parametros de request con el mismo nombre que las propiedades.",
+    "Un JavaBean de examen debe tener constructor sin argumentos y getters/setters estandar."
+  ],
+  "starterCode": {
+    "html": "<%@ page contentType=\"text/html; charset=UTF-8\" pageEncoding=\"UTF-8\" %>\n<!DOCTYPE html>\n<html>\n<body>\n  <h1>Ficha de persona</h1>\n  <form method=\"post\">\n    <label>Nombre <input name=\"nombre\"></label>\n    <label>Email <input name=\"email\"></label>\n    <button>Guardar</button>\n  </form>\n  <!-- Usa acciones JSP para instanciar, rellenar y mostrar el bean -->\n</body>\n</html>",
+    "css": "",
+    "javascript": "package daw.model;\n\npublic class PersonaBean {\n    // Completa el JavaBean\n}\n"
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "JavaBean usado desde JSP correctamente.",
+    "rules": [
+      {
+        "type": "regex",
+        "field": "html",
+        "pattern": "^(?![\\s\\S]*<%(?!@|--))[\\s\\S]*$",
+        "message": "No uses scriptlets ni expresiones Java en la JSP; las directivas <%@ si estan permitidas."
+      },
+      {
+        "type": "regex",
+        "field": "html",
+        "pattern": "<jsp:useBean\\s+id=\\\"persona\\\"\\s+class=\\\"daw\\.model\\.PersonaBean\\\"\\s+scope=\\\"request\\\"\\s*/?>",
+        "message": "Declara persona con jsp:useBean, clase PersonaBean y scope request."
+      },
+      {
+        "type": "regex",
+        "field": "html",
+        "pattern": "<jsp:setProperty\\s+name=\\\"persona\\\"\\s+property=\\\"\\*\\\"\\s*/?>",
+        "message": "Rellena el bean con todos los parametros coincidentes usando property=\"*\"."
+      },
+      {
+        "type": "regex",
+        "field": "html",
+        "pattern": "<jsp:getProperty\\s+name=\\\"persona\\\"\\s+property=\\\"nombre\\\"\\s*/?>",
+        "message": "Muestra la propiedad nombre con jsp:getProperty."
+      },
+      {
+        "type": "regex",
+        "field": "html",
+        "pattern": "<jsp:getProperty\\s+name=\\\"persona\\\"\\s+property=\\\"email\\\"\\s*/?>",
+        "message": "Muestra la propiedad email con jsp:getProperty."
+      },
+      {
+        "type": "contains",
+        "field": "html",
+        "value": "${persona.nombre}",
+        "message": "Incluye tambien una lectura con EL: ${persona.nombre}."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "class\\s+PersonaBean\\s+implements\\s+Serializable",
+        "message": "PersonaBean debe implementar Serializable."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "private\\s+String\\s+nombre\\s*;[\\s\\S]*private\\s+String\\s+email\\s*;",
+        "message": "Declara nombre y email como atributos privados."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "public\\s+PersonaBean\\s*\\(\\s*\\)\\s*\\{\\s*\\}",
+        "message": "Incluye constructor publico sin argumentos."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "public\\s+String\\s+getNombre\\s*\\(\\s*\\)[\\s\\S]*return\\s+nombre\\s*;[\\s\\S]*public\\s+void\\s+setNombre\\s*\\(\\s*String\\s+nombre\\s*\\)[\\s\\S]*this\\.nombre\\s*=\\s*nombre\\s*;",
+        "message": "Implementa getNombre y setNombre con nomenclatura JavaBean."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "public\\s+String\\s+getEmail\\s*\\(\\s*\\)[\\s\\S]*return\\s+email\\s*;[\\s\\S]*public\\s+void\\s+setEmail\\s*\\(\\s*String\\s+email\\s*\\)[\\s\\S]*this\\.email\\s*=\\s*email\\s*;",
+        "message": "Implementa getEmail y setEmail con nomenclatura JavaBean."
+      }
+    ]
+  }
+}

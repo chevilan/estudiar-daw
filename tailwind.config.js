@@ -70,6 +70,8 @@ export default {
           html: "hsl(var(--topic-html))",
           css: "hsl(var(--topic-css))",
           javascript: "hsl(var(--topic-javascript))",
+          jsp: "hsl(var(--topic-jsp))",
+          servlets: "hsl(var(--topic-servlets))",
         },
         code: {
           DEFAULT: "hsl(var(--code))",

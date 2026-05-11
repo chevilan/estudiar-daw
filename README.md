@@ -1,6 +1,6 @@
 # DAW Practice Lab
 
-Aplicacion web para practicar HTML, CSS y JavaScript con ejercicios interactivos.
+Aplicacion web para practicar HTML, CSS, JavaScript, JSP y Servlets con ejercicios interactivos.
 
 Puedes usarla online aqui:
 
@@ -8,9 +8,10 @@ https://estudiar-daw.onrender.com/
 
 ## Que incluye
 
-- Filtro de ejercicios por HTML, CSS y JavaScript.
-- Editor separado para HTML, CSS y JavaScript.
+- Filtro de ejercicios por HTML, CSS, JavaScript, JSP y Servlets.
+- Editor separado por archivos de trabajo. En JSP/Servlets las pestanas se adaptan a `JSP`, `Servlet.java`, `web.xml` o fragmentos relacionados.
 - Preview en vivo dentro de un iframe aislado.
+- Panel de validacion estructural para ejercicios de JSP y Servlets.
 - Ejercicios de construccion y de comparacion visual.
 - Validaciones automaticas declaradas en JSON.
 - Persistencia local del codigo y progreso con `localStorage`.
@@ -50,6 +51,8 @@ npm run build
 5. Si el ejercicio tiene objetivo visual, compara tu resultado con el panel de objetivo.
 
 El codigo que escribas y tu progreso se guardan en el navegador. Si cambias de navegador, dispositivo o limpias los datos del sitio, ese progreso local puede desaparecer.
+
+Los ejercicios de JSP y Servlets no se ejecutan en un contenedor Java desde la app. Se practican como codigo estructural y se validan con reglas sobre los archivos escritos.
 
 ## Subir ejercicios desde la interfaz
 
@@ -105,7 +108,7 @@ La app soporta estos tipos:
 
 Valores soportados:
 
-- `topic`: `html`, `css`, `javascript`
+- `topic`: `html`, `css`, `javascript`, `jsp`, `servlets`
 - `type`: `build`, `visual-match`
 - `difficulty`: `base`, `media`, `reto`
 

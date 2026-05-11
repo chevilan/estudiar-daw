@@ -46,6 +46,16 @@ Para ejercicios `visual-match`, anade `targetCode`:
 
 ## Reglas de validacion
 
+Valores de `topic` soportados:
+
+- `html`
+- `css`
+- `javascript`
+- `jsp`
+- `servlets`
+
+Los ejercicios de JSP y Servlets usan los mismos campos `starterCode.html`, `starterCode.css` y `starterCode.javascript`, pero la interfaz cambia las etiquetas para que funcionen como archivos de practica. Por ejemplo, en Servlets se usan como `JSP`, `web.xml` y `Servlet.java`. Tambien se desactiva la preview de iframe y se muestra un panel estructural porque el laboratorio no arranca un contenedor Java.
+
 ```json
 { "type": "contains", "field": "css", "value": "display: grid", "message": "Usa display grid." }
 ```

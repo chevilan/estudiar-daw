@@ -25,12 +25,16 @@ const topicOptions: Array<{ value: Topic | "todos"; label: string }> = [
   { value: "html", label: "HTML" },
   { value: "css", label: "CSS" },
   { value: "javascript", label: "JS" },
+  { value: "jsp", label: "JSP" },
+  { value: "servlets", label: "Servlets" },
 ];
 
 const topicDotClass: Record<Topic, string> = {
   html: "bg-topic-html",
   css: "bg-topic-css",
   javascript: "bg-topic-javascript",
+  jsp: "bg-topic-jsp",
+  servlets: "bg-topic-servlets",
 };
 
 export default function ExerciseList({
@@ -113,7 +117,7 @@ export default function ExerciseList({
         onValueChange={(value) => {
           if (value) onTopicChange(value as Topic | "todos");
         }}
-        className="grid w-full grid-cols-4 rounded-md border bg-background p-0.5"
+        className="grid w-full grid-cols-3 rounded-md border bg-background p-0.5"
       >
         {topicOptions.map(({ value, label }) => (
           <ToggleGroupItem

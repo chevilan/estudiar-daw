@@ -1,0 +1,97 @@
+{
+  "id": "jsp-el-ambitos-operadores-reto",
+  "topic": "jsp",
+  "type": "build",
+  "title": "EL: ambitos, parametros, cookies y operadores",
+  "difficulty": "reto",
+  "estimatedMinutes": 30,
+  "prompt": "Crea una JSP de diagnostico usando Expression Language sin scriptlets. Debe leer el usuario desde sessionScope, un error desde requestScope, un parametro simple nombre, el segundo valor de paramValues.food, una cookie asignatura, un initParam miEmail y pageContext.request.contextPath. Ademas, usa operadores EL: ge para comprobar nota aprobada, not empty para comprobar usuario y un ternario que muestre Apto o No apto.",
+  "notes": [
+    "EL busca atributos en page, request, session y application si no indicas ambito.",
+    "Usa ambitos explicitos cuando el nombre pueda repetirse.",
+    "paramValues sirve para campos con varios valores."
+  ],
+  "starterCode": {
+    "html": "<%@ page contentType=\"text/html; charset=UTF-8\" pageEncoding=\"UTF-8\" %>\n<!DOCTYPE html>\n<html>\n<body>\n  <h1>Diagnostico EL</h1>\n  <!-- Resuelve todo con ${...}, sin Java embebido -->\n</body>\n</html>",
+    "css": "",
+    "javascript": "package daw.web;\n\nimport jakarta.servlet.ServletException;\nimport jakarta.servlet.http.HttpServlet;\nimport jakarta.servlet.http.HttpServletRequest;\nimport jakarta.servlet.http.HttpServletResponse;\nimport java.io.IOException;\n\npublic class DiagnosticoServlet extends HttpServlet {\n    @Override\n    protected void doGet(HttpServletRequest request, HttpServletResponse response)\n            throws ServletException, IOException {\n        request.setAttribute(\"error\", \"Pendiente de revisar\");\n        request.setAttribute(\"nota\", 7);\n        request.getRequestDispatcher(\"/WEB-INF/jsp/diagnostico.jsp\").forward(request, response);\n    }\n}\n"
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "EL usado con ambitos y operadores clave.",
+    "rules": [
+      {
+        "type": "regex",
+        "field": "html",
+        "pattern": "^(?![\\s\\S]*<%(?!@|--))[\\s\\S]*$",
+        "message": "No uses scriptlets ni expresiones Java; las directivas <%@ si estan permitidas."
+      },
+      {
+        "type": "contains",
+        "field": "html",
+        "value": "${sessionScope.usuario.nombre}",
+        "message": "Lee el usuario desde sessionScope."
+      },
+      {
+        "type": "contains",
+        "field": "html",
+        "value": "${requestScope.error}",
+        "message": "Lee error desde requestScope."
+      },
+      {
+        "type": "contains",
+        "field": "html",
+        "value": "${param.nombre}",
+        "message": "Lee un parametro simple con param.nombre."
+      },
+      {
+        "type": "contains",
+        "field": "html",
+        "value": "${paramValues.food[1]}",
+        "message": "Lee el segundo valor multivalor con paramValues.food[1]."
+      },
+      {
+        "type": "contains",
+        "field": "html",
+        "value": "${cookie.asignatura.value}",
+        "message": "Lee el valor de una cookie con cookie.asignatura.value."
+      },
+      {
+        "type": "contains",
+        "field": "html",
+        "value": "${initParam.miEmail}",
+        "message": "Lee un parametro de contexto con initParam.miEmail."
+      },
+      {
+        "type": "contains",
+        "field": "html",
+        "value": "${pageContext.request.contextPath}",
+        "message": "Usa pageContext.request.contextPath."
+      },
+      {
+        "type": "regex",
+        "field": "html",
+        "pattern": "\\$\\{\\s*nota\\s+ge\\s+5\\s*\\}",
+        "message": "Comprueba aprobado con el operador ge."
+      },
+      {
+        "type": "regex",
+        "field": "html",
+        "pattern": "\\$\\{\\s*not\\s+empty\\s+sessionScope\\.usuario\\s*\\}",
+        "message": "Comprueba usuario con not empty."
+      },
+      {
+        "type": "regex",
+        "field": "html",
+        "pattern": "\\$\\{\\s*nota\\s+ge\\s+5\\s*\\?\\s*[\"']Apto[\"']\\s*:\\s*[\"']No apto[\"']\\s*\\}",
+        "message": "Usa un ternario EL para Apto / No apto."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "request\\.setAttribute\\(\\s*[\"']nota[\"']\\s*,\\s*7\\s*\\)[\\s\\S]*getRequestDispatcher\\(\\s*[\"']/WEB-INF/jsp/diagnostico\\.jsp[\"']\\s*\\)",
+        "message": "El servlet debe preparar nota y reenviar a diagnostico.jsp."
+      }
+    ]
+  }
+}

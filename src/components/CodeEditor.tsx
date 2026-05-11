@@ -22,11 +22,13 @@ import {
   type CodeThemeId,
 } from "@/lib/codeThemes";
 import { cn } from "@/lib/utils";
-import type { CodeFiles, ValidationField } from "../lib/types";
+import type { CodeFiles, EditorLanguage, ValidationField } from "../lib/types";
 
 type CodeEditorProps = {
   files: CodeFiles;
   activeFile: ValidationField;
+  fileLabels?: Partial<Record<ValidationField, string>>;
+  fileLanguages?: Partial<Record<ValidationField, EditorLanguage>>;
   codeThemeId: CodeThemeId;
   onActiveFileChange: (file: ValidationField) => void;
   onChange: (file: ValidationField, value: string) => void;
@@ -47,6 +49,8 @@ const fileTabs: Array<{
 export default function CodeEditor({
   files,
   activeFile,
+  fileLabels,
+  fileLanguages,
   codeThemeId,
   onActiveFileChange,
   onChange,
@@ -110,6 +114,7 @@ export default function CodeEditor({
       >
         {fileTabs.map(({ key, label, icon: Icon }) => {
           const isActive = activeFile === key;
+          const displayLabel = fileLabels?.[key] ?? label;
           return (
             <button
               key={key}
@@ -125,7 +130,7 @@ export default function CodeEditor({
               )}
             >
               <Icon size={14} aria-hidden />
-              <span className="hidden sm:inline">{label}</span>
+              <span className="hidden sm:inline">{displayLabel}</span>
               {isActive ? (
                 <span
                   aria-hidden
@@ -143,7 +148,7 @@ export default function CodeEditor({
       >
         <CodeMirrorBox
           value={files[activeFile]}
-          language={activeFile}
+          language={fileLanguages?.[activeFile] ?? activeFile}
           ariaLabel={`Editor ${activeFile}`}
           themeId={codeThemeId}
           minHeight="460px"

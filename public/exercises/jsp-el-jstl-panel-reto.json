@@ -1,0 +1,85 @@
+{
+  "id": "jsp-el-jstl-panel-reto",
+  "topic": "jsp",
+  "type": "build",
+  "title": "Panel JSP sin scriptlets: EL y JSTL",
+  "difficulty": "reto",
+  "estimatedMinutes": 30,
+  "prompt": "Refactoriza la vista panel.jsp para que no tenga scriptlets. La JSP debe declarar JSTL core, saludar con ${sessionScope.usuario.nombre}, recorrer ${asignaturas} con c:forEach, escapar cada valor con c:out, mostrar un mensaje si la lista esta vacia usando c:if y enlazar /logout con ${pageContext.request.contextPath}. En Servlet / Bean deja preparado el codigo del servlet que crea la lista de asignaturas, la guarda en request y hace forward a /WEB-INF/jsp/panel.jsp.",
+  "notes": [
+    "La JSP debe comportarse como plantilla de presentacion.",
+    "Evita <% ... %> y <%= ... %>; usa EL y JSTL.",
+    "c:out escapa HTML/XML por defecto."
+  ],
+  "starterCode": {
+    "html": "<%@ page contentType=\"text/html; charset=UTF-8\" pageEncoding=\"UTF-8\" %>\n<!DOCTYPE html>\n<html>\n<body>\n  <h1>Panel</h1>\n  <!-- Sustituye cualquier Java por EL y JSTL -->\n</body>\n</html>",
+    "css": "",
+    "javascript": "package daw.web;\n\nimport jakarta.servlet.ServletException;\nimport jakarta.servlet.http.HttpServlet;\nimport jakarta.servlet.http.HttpServletRequest;\nimport jakarta.servlet.http.HttpServletResponse;\nimport java.io.IOException;\nimport java.util.Arrays;\nimport java.util.List;\n\npublic class PanelServlet extends HttpServlet {\n    @Override\n    protected void doGet(HttpServletRequest request, HttpServletResponse response)\n            throws ServletException, IOException {\n        // Prepara datos para panel.jsp\n    }\n}\n"
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "JSP limpia con EL y JSTL.",
+    "rules": [
+      {
+        "type": "regex",
+        "field": "html",
+        "pattern": "<%@\\s*taglib\\s+uri=\\\"http://java\\.sun\\.com/jsp/jstl/core\\\"\\s+prefix=\\\"c\\\"\\s*%>",
+        "message": "Declara la libreria JSTL core con prefijo c."
+      },
+      {
+        "type": "regex",
+        "field": "html",
+        "pattern": "^(?![\\s\\S]*<%(?!@|--))[\\s\\S]*$",
+        "message": "No uses scriptlets, expresiones ni declaraciones JSP; las directivas <%@ si estan permitidas."
+      },
+      {
+        "type": "regex",
+        "field": "html",
+        "pattern": "\\$\\{sessionScope\\.usuario\\.nombre\\}",
+        "message": "Lee el usuario con EL desde sessionScope."
+      },
+      {
+        "type": "regex",
+        "field": "html",
+        "pattern": "<c:forEach\\s+var=\\\"asig\\\"\\s+items=\\\"\\$\\{asignaturas\\}\\\"",
+        "message": "Itera asignaturas con c:forEach."
+      },
+      {
+        "type": "regex",
+        "field": "html",
+        "pattern": "<c:out\\s+value=\\\"\\$\\{asig\\}\\\"\\s*/?>",
+        "message": "Muestra cada asignatura con c:out."
+      },
+      {
+        "type": "regex",
+        "field": "html",
+        "pattern": "<c:if\\s+test=\\\"\\$\\{empty\\s+asignaturas\\}\\\"",
+        "message": "Usa c:if para el caso de lista vacia."
+      },
+      {
+        "type": "regex",
+        "field": "html",
+        "pattern": "href=\\\"\\$\\{pageContext\\.request\\.contextPath\\}/logout\\\"",
+        "message": "Construye el enlace a logout con pageContext.request.contextPath."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "List\\s*<\\s*String\\s*>\\s+asignaturas[\\s\\S]*Arrays\\.asList\\(",
+        "message": "En el servlet crea una lista de asignaturas."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "request\\.setAttribute\\(\\s*[\"']asignaturas[\"']\\s*,\\s*asignaturas\\s*\\)",
+        "message": "Guarda la lista en request para que la lea la JSP."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "request\\.getRequestDispatcher\\(\\s*[\"']/WEB-INF/jsp/panel\\.jsp[\"']\\s*\\)\\.forward\\(\\s*request\\s*,\\s*response\\s*\\)",
+        "message": "Reenvia a panel.jsp con forward."
+      }
+    ]
+  }
+}

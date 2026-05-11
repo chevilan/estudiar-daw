@@ -1,0 +1,85 @@
+{
+  "id": "servlets-config-context-attributes-reto",
+  "topic": "servlets",
+  "type": "build",
+  "title": "ServletConfig, ServletContext y atributos",
+  "difficulty": "reto",
+  "estimatedMinutes": 35,
+  "prompt": "Crea un ConfigServlet que demuestre la diferencia entre parametros y atributos. En web.xml declara un context-param miEmail para toda la aplicacion y un init-param modo solo para ConfigServlet, mapeado a /config. En Servlet.java lee modo con getServletConfig().getInitParameter, lee miEmail con getServletContext().getInitParameter, guarda modo como atributo de request y miEmail como atributo de application, y reenvia a /WEB-INF/jsp/config.jsp. En la JSP muestra ambos valores con JSTL/EL.",
+  "notes": [
+    "ServletConfig pertenece a un servlet concreto.",
+    "ServletContext pertenece a toda la aplicacion.",
+    "Los parametros son configuracion estatica; los atributos son datos en ejecucion."
+  ],
+  "starterCode": {
+    "html": "<%@ page contentType=\"text/html; charset=UTF-8\" pageEncoding=\"UTF-8\" %>\n<%@ taglib uri=\"http://java.sun.com/jsp/jstl/core\" prefix=\"c\" %>\n<!DOCTYPE html>\n<html>\n<body>\n  <h1>Configuracion</h1>\n  <!-- Muestra modo y miEmailGlobal con c:out -->\n</body>\n</html>",
+    "css": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<web-app xmlns=\"https://jakarta.ee/xml/ns/jakartaee\"\n         version=\"6.0\">\n  <!-- context-param, servlet, init-param y servlet-mapping -->\n</web-app>",
+    "javascript": "package daw.web;\n\nimport jakarta.servlet.ServletException;\nimport jakarta.servlet.http.HttpServlet;\nimport jakarta.servlet.http.HttpServletRequest;\nimport jakarta.servlet.http.HttpServletResponse;\nimport java.io.IOException;\n\npublic class ConfigServlet extends HttpServlet {\n    @Override\n    protected void doGet(HttpServletRequest request, HttpServletResponse response)\n            throws ServletException, IOException {\n        // Lee parametros, crea atributos y reenvia a config.jsp\n    }\n}\n"
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "ConfigServlet diferencia parametros y atributos correctamente.",
+    "rules": [
+      {
+        "type": "regex",
+        "field": "css",
+        "pattern": "<context-param>[\\s\\S]*<param-name>\\s*miEmail\\s*</param-name>[\\s\\S]*<param-value>[\\s\\S]*@",
+        "message": "Define miEmail como context-param en web.xml."
+      },
+      {
+        "type": "regex",
+        "field": "css",
+        "pattern": "<servlet-name>\\s*ConfigServlet\\s*</servlet-name>[\\s\\S]*<servlet-class>\\s*daw\\.web\\.ConfigServlet\\s*</servlet-class>[\\s\\S]*<init-param>[\\s\\S]*<param-name>\\s*modo\\s*</param-name>",
+        "message": "Declara ConfigServlet con un init-param modo."
+      },
+      {
+        "type": "regex",
+        "field": "css",
+        "pattern": "<servlet-mapping>[\\s\\S]*<servlet-name>\\s*ConfigServlet\\s*</servlet-name>[\\s\\S]*<url-pattern>\\s*/config\\s*</url-pattern>",
+        "message": "Mapea ConfigServlet a /config."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "class\\s+ConfigServlet\\s+extends\\s+HttpServlet",
+        "message": "Define ConfigServlet extendiendo HttpServlet."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "getServletConfig\\(\\)\\.getInitParameter\\(\\s*[\"']modo[\"']\\s*\\)",
+        "message": "Lee el init-param modo con getServletConfig()."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "getServletContext\\(\\)\\.getInitParameter\\(\\s*[\"']miEmail[\"']\\s*\\)",
+        "message": "Lee el context-param miEmail con getServletContext()."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "request\\.setAttribute\\(\\s*[\"']modo[\"']\\s*,\\s*modo\\s*\\)",
+        "message": "Guarda modo como atributo de request."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "getServletContext\\(\\)\\.setAttribute\\(\\s*[\"']miEmailGlobal[\"']\\s*,\\s*miEmail\\s*\\)",
+        "message": "Guarda miEmailGlobal como atributo de aplicacion."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "getRequestDispatcher\\(\\s*[\"']/WEB-INF/jsp/config\\.jsp[\"']\\s*\\)[\\s\\S]*\\.forward\\(\\s*request\\s*,\\s*response\\s*\\)",
+        "message": "Reenvia a /WEB-INF/jsp/config.jsp."
+      },
+      {
+        "type": "regex",
+        "field": "html",
+        "pattern": "<c:out\\s+value=\\\"\\$\\{modo\\}\\\"\\s*/?>[\\s\\S]*<c:out\\s+value=\\\"\\$\\{applicationScope\\.miEmailGlobal\\}\\\"\\s*/?>",
+        "message": "Muestra modo y miEmailGlobal con c:out y EL."
+      }
+    ]
+  }
+}

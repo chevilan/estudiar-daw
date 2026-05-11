@@ -53,9 +53,11 @@ export default function ExerciseList({
   return (
     <aside className="flex h-screen min-h-0 flex-col gap-4 overflow-hidden border-r bg-secondary/40 p-4 lg:sticky lg:top-0">
       <div className="flex items-center gap-3">
-        <div className="grid h-8 w-8 place-items-center rounded-md border bg-background text-[0.7rem] font-bold tracking-wider">
-          DW
-        </div>
+        <img
+          src={`${import.meta.env.BASE_URL}logo-daw.png`}
+          alt="Logo DAW"
+          className="h-9 w-9 rounded-md object-cover shadow-sm"
+        />
         <div className="min-w-0">
           <p className="truncate text-sm font-semibold leading-none">
             DAW Practice Lab

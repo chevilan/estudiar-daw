@@ -1,4 +1,4 @@
-export type Topic = "html" | "css" | "javascript";
+export type Topic = "html" | "css" | "javascript" | "jsp" | "servlets";
 
 export type ExerciseType = "build" | "visual-match";
 
@@ -9,6 +9,8 @@ export type CodeFiles = {
 };
 
 export type ValidationField = keyof CodeFiles;
+
+export type EditorLanguage = ValidationField | "plain";
 
 export type ValidationRule =
   | {

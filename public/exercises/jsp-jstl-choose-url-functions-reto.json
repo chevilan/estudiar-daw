@@ -1,0 +1,85 @@
+{
+  "id": "jsp-jstl-choose-url-functions-reto",
+  "topic": "jsp",
+  "type": "build",
+  "title": "JSTL core y functions en una vista",
+  "difficulty": "reto",
+  "estimatedMinutes": 35,
+  "prompt": "Construye una JSP sin scriptlets que combine JSTL core y functions. Declara las taglibs c y fn. Usa c:set para crear una nota, c:choose con c:when y c:otherwise para mostrar aprobado/suspenso, c:forEach para recorrer asignaturas, fn:length para contar asignaturas, fn:toUpperCase para mostrar el parametro nombre en mayusculas, y c:url con c:param para crear un enlace a /detalle con parametro origen=panel. El servlet debe preparar la lista asignaturas y reenviar a la JSP.",
+  "notes": [
+    "c:choose es la alternativa JSTL a if/else.",
+    "c:url construye URLs respetando el contexto de la aplicacion.",
+    "Las funciones fn trabajan sobre cadenas y colecciones."
+  ],
+  "starterCode": {
+    "html": "<%@ page contentType=\"text/html; charset=UTF-8\" pageEncoding=\"UTF-8\" %>\n<!-- Declara JSTL core y functions -->\n<!DOCTYPE html>\n<html>\n<body>\n  <h1>Panel JSTL</h1>\n  <!-- Resuelve la vista con c:set, c:choose, c:forEach, c:url y fn -->\n</body>\n</html>",
+    "css": "",
+    "javascript": "package daw.web;\n\nimport jakarta.servlet.ServletException;\nimport jakarta.servlet.http.HttpServlet;\nimport jakarta.servlet.http.HttpServletRequest;\nimport jakarta.servlet.http.HttpServletResponse;\nimport java.io.IOException;\nimport java.util.Arrays;\n\npublic class JstlServlet extends HttpServlet {\n    @Override\n    protected void doGet(HttpServletRequest request, HttpServletResponse response)\n            throws ServletException, IOException {\n        // Prepara asignaturas y reenvia\n    }\n}\n"
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "Vista JSTL con core y functions completada.",
+    "rules": [
+      {
+        "type": "regex",
+        "field": "html",
+        "pattern": "^(?![\\s\\S]*<%(?!@|--))[\\s\\S]*$",
+        "message": "No uses scriptlets ni expresiones Java; las directivas <%@ si estan permitidas."
+      },
+      {
+        "type": "regex",
+        "field": "html",
+        "pattern": "<%@\\s*taglib\\s+uri=\\\"http://java\\.sun\\.com/jsp/jstl/core\\\"\\s+prefix=\\\"c\\\"\\s*%>",
+        "message": "Declara JSTL core con prefijo c."
+      },
+      {
+        "type": "regex",
+        "field": "html",
+        "pattern": "<%@\\s*taglib\\s+uri=\\\"http://java\\.sun\\.com/jsp/jstl/functions\\\"\\s+prefix=\\\"fn\\\"\\s*%>",
+        "message": "Declara JSTL functions con prefijo fn."
+      },
+      {
+        "type": "regex",
+        "field": "html",
+        "pattern": "<c:set\\s+var=\\\"nota\\\"[\\s\\S]*value=\\\"(?:\\$\\{)?[0-9]+(?:\\})?\\\"\\s*/?>",
+        "message": "Crea la variable nota con c:set."
+      },
+      {
+        "type": "regex",
+        "field": "html",
+        "pattern": "<c:choose>[\\s\\S]*<c:when\\s+test=\\\"\\$\\{nota\\s+ge\\s+5\\}\\\"[\\s\\S]*</c:when>[\\s\\S]*<c:otherwise>[\\s\\S]*</c:otherwise>[\\s\\S]*</c:choose>",
+        "message": "Usa c:choose, c:when y c:otherwise para la nota."
+      },
+      {
+        "type": "regex",
+        "field": "html",
+        "pattern": "<c:forEach\\s+var=\\\"asig\\\"\\s+items=\\\"\\$\\{asignaturas\\}\\\"[\\s\\S]*\\$\\{asig\\}[\\s\\S]*</c:forEach>",
+        "message": "Recorre asignaturas con c:forEach."
+      },
+      {
+        "type": "contains",
+        "field": "html",
+        "value": "${fn:length(asignaturas)}",
+        "message": "Cuenta asignaturas con fn:length."
+      },
+      {
+        "type": "contains",
+        "field": "html",
+        "value": "${fn:toUpperCase(param.nombre)}",
+        "message": "Muestra param.nombre en mayusculas con fn:toUpperCase."
+      },
+      {
+        "type": "regex",
+        "field": "html",
+        "pattern": "<c:url\\s+var=\\\"detalleUrl\\\"\\s+value=\\\"/detalle\\\"[\\s\\S]*<c:param\\s+name=\\\"origen\\\"\\s+value=\\\"panel\\\"\\s*/?>[\\s\\S]*</c:url>[\\s\\S]*href=\\\"\\$\\{detalleUrl\\}\\\"",
+        "message": "Construye un enlace con c:url y c:param."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "request\\.setAttribute\\(\\s*[\"']asignaturas[\"']\\s*,\\s*Arrays\\.asList\\([\\s\\S]*\\)\\s*\\)[\\s\\S]*getRequestDispatcher\\(\\s*[\"']/WEB-INF/jsp/jstl\\.jsp[\"']\\s*\\)\\.forward\\(\\s*request\\s*,\\s*response\\s*\\)",
+        "message": "El servlet debe preparar asignaturas y reenviar a jstl.jsp."
+      }
+    ]
+  }
+}

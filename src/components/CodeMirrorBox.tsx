@@ -12,11 +12,11 @@ import {
   codeThemes,
   type CodeThemeId,
 } from "@/lib/codeThemes";
-import type { ValidationField } from "@/lib/types";
+import type { EditorLanguage } from "@/lib/types";
 
 type CodeMirrorBoxProps = {
   value: string;
-  language: ValidationField;
+  language: EditorLanguage;
   ariaLabel: string;
   className?: string;
   minHeight?: string;
@@ -26,14 +26,16 @@ type CodeMirrorBoxProps = {
   onChange?: (value: string) => void;
 };
 
-function languageExtension(language: ValidationField): Extension {
+function languageExtension(language: EditorLanguage): Extension[] {
   switch (language) {
     case "html":
-      return html({ autoCloseTags: true, matchClosingTags: true });
+      return [html({ autoCloseTags: true, matchClosingTags: true })];
     case "css":
-      return css();
+      return [css()];
     case "javascript":
-      return javascript({ jsx: false, typescript: false });
+      return [javascript({ jsx: false, typescript: false })];
+    case "plain":
+      return [];
   }
 }
 
@@ -86,7 +88,7 @@ export default function CodeMirrorBox({
       EditorState.tabSize.of(2),
       EditorView.lineWrapping,
       editorChrome(codeTheme),
-      languageExtension(language),
+      ...languageExtension(language),
     ],
     [codeTheme, language],
   );

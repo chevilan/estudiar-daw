@@ -1,0 +1,97 @@
+{
+  "id": "servlets-session-listado-logout-reto",
+  "topic": "servlets",
+  "type": "build",
+  "title": "Sesion protegida: listado y logout",
+  "difficulty": "reto",
+  "estimatedMinutes": 40,
+  "prompt": "Completa dos controladores de una aplicacion MVC. ListadoServlet debe proteger /listado: obtiene la sesion con getSession(false), si no hay usuario redirige a /inicio y termina con return; si hay sesion, carga una lista de asignaturas en request y hace forward a /WEB-INF/jsp/panel.jsp. LogoutServlet debe invalidar la sesion si existe y redirigir a /inicio. En panel.jsp muestra el usuario de sesion, recorre asignaturas con JSTL y enlaza logout. En web.xml mapea /listado y /logout y configura 30 minutos de sesion.",
+  "notes": [
+    "Usa atributos de request para datos que solo necesita la vista actual.",
+    "Usa atributos de session para datos que sobreviven a varias peticiones.",
+    "forward conserva request; sendRedirect crea una peticion nueva."
+  ],
+  "starterCode": {
+    "html": "<%@ page contentType=\"text/html; charset=UTF-8\" pageEncoding=\"UTF-8\" %>\n<%@ taglib uri=\"http://java.sun.com/jsp/jstl/core\" prefix=\"c\" %>\n<!DOCTYPE html>\n<html>\n<body>\n  <!-- Panel autenticado -->\n</body>\n</html>",
+    "css": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<web-app xmlns=\"https://jakarta.ee/xml/ns/jakartaee\"\n         version=\"6.0\">\n  <!-- Mapea ListadoServlet y LogoutServlet. Configura session-timeout. -->\n</web-app>",
+    "javascript": "package daw.web;\n\nimport jakarta.servlet.ServletException;\nimport jakarta.servlet.http.HttpServlet;\nimport jakarta.servlet.http.HttpServletRequest;\nimport jakarta.servlet.http.HttpServletResponse;\nimport jakarta.servlet.http.HttpSession;\nimport java.io.IOException;\nimport java.util.Arrays;\nimport java.util.List;\n\npublic class ListadoServlet extends HttpServlet {\n    @Override\n    protected void doGet(HttpServletRequest request, HttpServletResponse response)\n            throws ServletException, IOException {\n        // Protege la URL y envia datos a panel.jsp\n    }\n}\n\npublic class LogoutServlet extends HttpServlet {\n    @Override\n    protected void doGet(HttpServletRequest request, HttpServletResponse response)\n            throws IOException {\n        // Cierra sesion y redirige a inicio\n    }\n}\n"
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "Sesion, listado y logout resueltos con patron MVC.",
+    "rules": [
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "class\\s+ListadoServlet\\s+extends\\s+HttpServlet[\\s\\S]*class\\s+LogoutServlet\\s+extends\\s+HttpServlet",
+        "message": "Define ListadoServlet y LogoutServlet extendiendo HttpServlet."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "HttpSession\\s+session\\s*=\\s*request\\.getSession\\(\\s*false\\s*\\)",
+        "message": "Recupera la sesion con getSession(false)."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "session\\s*==\\s*null\\s*\\|\\|\\s*session\\.getAttribute\\(\\s*[\"']usuario[\"']\\s*\\)\\s*==\\s*null",
+        "message": "Comprueba que exista sesion y usuario autenticado."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "response\\.sendRedirect\\(\\s*request\\.getContextPath\\(\\)\\s*\\+\\s*[\"']/inicio[\"']\\s*\\)[\\s\\S]*return\\s*;",
+        "message": "Si no hay usuario, redirige a /inicio y corta el metodo con return."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "List\\s*<\\s*String\\s*>\\s+asignaturas[\\s\\S]*Arrays\\.asList\\(",
+        "message": "Crea una lista de asignaturas para la vista."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "request\\.setAttribute\\(\\s*[\"']asignaturas[\"']\\s*,\\s*asignaturas\\s*\\)",
+        "message": "Guarda asignaturas como atributo de request."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "getRequestDispatcher\\(\\s*[\"']/WEB-INF/jsp/panel\\.jsp[\"']\\s*\\)[\\s\\S]*\\.forward\\(\\s*request\\s*,\\s*response\\s*\\)",
+        "message": "Haz forward a /WEB-INF/jsp/panel.jsp."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "session\\s*=\\s*request\\.getSession\\(\\s*false\\s*\\)[\\s\\S]*if\\s*\\(\\s*session\\s*!=\\s*null\\s*\\)[\\s\\S]*session\\.invalidate\\(\\s*\\)",
+        "message": "En logout invalida la sesion solo si existe."
+      },
+      {
+        "type": "regex",
+        "field": "html",
+        "pattern": "\\$\\{sessionScope\\.usuario\\.nombre\\}",
+        "message": "Muestra el nombre del usuario desde sessionScope."
+      },
+      {
+        "type": "regex",
+        "field": "html",
+        "pattern": "<c:forEach\\s+var=\\\"asig\\\"\\s+items=\\\"\\$\\{asignaturas\\}\\\"[\\s\\S]*<c:out\\s+value=\\\"\\$\\{asig\\}\\\"\\s*/?>[\\s\\S]*</c:forEach>",
+        "message": "Recorre asignaturas con c:forEach y muestra con c:out."
+      },
+      {
+        "type": "regex",
+        "field": "html",
+        "pattern": "href=\\\"\\$\\{pageContext\\.request\\.contextPath\\}/logout\\\"",
+        "message": "El enlace de logout debe usar contextPath."
+      },
+      {
+        "type": "regex",
+        "field": "css",
+        "pattern": "<url-pattern>\\s*/listado\\s*</url-pattern>[\\s\\S]*<url-pattern>\\s*/logout\\s*</url-pattern>[\\s\\S]*<session-timeout>\\s*30\\s*</session-timeout>",
+        "message": "web.xml debe mapear /listado, /logout y configurar session-timeout a 30."
+      }
+    ]
+  }
+}

@@ -1,0 +1,97 @@
+{
+  "id": "servlets-mvc-login-reto",
+  "topic": "servlets",
+  "type": "build",
+  "title": "Login MVC con Servlet, JSP y web.xml",
+  "difficulty": "reto",
+  "estimatedMinutes": 35,
+  "prompt": "Construye el flujo de login de una aplicacion web Java siguiendo MVC. En Servlet.java completa LoginServlet con doPost: lee nombre y pwd, si la password es DAW crea un UsuarioBean, lo guarda en sesion como usuario y redirige a /listado. Si falla, guarda un atributo request error y hace forward a /WEB-INF/jsp/login.jsp. En JSP crea el formulario de login con JSTL para mostrar el error. En web.xml declara y mapea LoginServlet a /login.",
+  "notes": [
+    "Este laboratorio valida estructura de codigo JSP/Servlet; no ejecuta Tomcat.",
+    "Usa jakarta.servlet para proyectos actuales.",
+    "Recuerda: servlet prepara y decide; JSP muestra."
+  ],
+  "starterCode": {
+    "html": "<%@ page contentType=\"text/html; charset=UTF-8\" pageEncoding=\"UTF-8\" %>\n<!-- Declara JSTL core con prefijo c -->\n<!DOCTYPE html>\n<html>\n<body>\n  <h1>Acceso</h1>\n  <!-- Muestra error si existe y crea el formulario POST a /login -->\n</body>\n</html>",
+    "css": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<web-app xmlns=\"https://jakarta.ee/xml/ns/jakartaee\"\n         version=\"6.0\">\n  <!-- Declara y mapea LoginServlet -->\n</web-app>",
+    "javascript": "package daw.web;\n\nimport daw.model.UsuarioBean;\nimport jakarta.servlet.ServletException;\nimport jakarta.servlet.http.HttpServlet;\nimport jakarta.servlet.http.HttpServletRequest;\nimport jakarta.servlet.http.HttpServletResponse;\nimport java.io.IOException;\n\npublic class LoginServlet extends HttpServlet {\n\n    @Override\n    protected void doPost(HttpServletRequest request, HttpServletResponse response)\n            throws ServletException, IOException {\n        // Completa el login MVC\n    }\n}\n"
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "Login MVC estructurado correctamente.",
+    "rules": [
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "class\\s+LoginServlet\\s+extends\\s+HttpServlet",
+        "message": "Define LoginServlet extendiendo HttpServlet."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "protected\\s+void\\s+doPost\\s*\\(\\s*HttpServletRequest\\s+request\\s*,\\s*HttpServletResponse\\s+response",
+        "message": "Implementa doPost con HttpServletRequest y HttpServletResponse."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "request\\.getParameter\\(\\s*[\"']nombre[\"']\\s*\\)[\\s\\S]*request\\.getParameter\\(\\s*[\"']pwd[\"']\\s*\\)",
+        "message": "Lee los parametros nombre y pwd desde request."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "[\"']DAW[\"']\\.equals\\s*\\(\\s*pwd\\s*\\)",
+        "message": "Compara la password con \"DAW\" usando equals de forma segura."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "new\\s+UsuarioBean\\s*\\(\\s*nombre\\s*\\)",
+        "message": "Crea un UsuarioBean con el nombre recibido."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "request\\.getSession\\s*\\(\\s*\\)\\.setAttribute\\(\\s*[\"']usuario[\"']\\s*,\\s*usuario\\s*\\)",
+        "message": "Guarda el bean usuario en la sesion."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "response\\.sendRedirect\\(\\s*request\\.getContextPath\\(\\)\\s*\\+\\s*[\"']/listado[\"']\\s*\\)",
+        "message": "Tras login correcto redirige a /listado usando contextPath."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "request\\.setAttribute\\(\\s*[\"']error[\"']\\s*,[\\s\\S]*getRequestDispatcher\\(\\s*[\"']/WEB-INF/jsp/login\\.jsp[\"']\\s*\\)[\\s\\S]*\\.forward\\(\\s*request\\s*,\\s*response\\s*\\)",
+        "message": "Si falla, guarda error en request y haz forward a login.jsp."
+      },
+      {
+        "type": "regex",
+        "field": "html",
+        "pattern": "<%@\\s*taglib[\\s\\S]*prefix\\s*=\\s*[\"']c[\"'][\\s\\S]*%>",
+        "message": "Declara JSTL core con prefijo c."
+      },
+      {
+        "type": "regex",
+        "field": "html",
+        "pattern": "<c:if\\s+test=\\\"\\$\\{not\\s+empty\\s+error\\}\\\"[\\s\\S]*\\$\\{error\\}[\\s\\S]*</c:if>",
+        "message": "Muestra el error de request con c:if y EL."
+      },
+      {
+        "type": "regex",
+        "field": "html",
+        "pattern": "<form[^>]+action=\\\"\\$\\{pageContext\\.request\\.contextPath\\}/login\\\"[^>]+method=\\\"post\\\"",
+        "message": "El formulario debe enviar por POST a /login usando contextPath."
+      },
+      {
+        "type": "regex",
+        "field": "css",
+        "pattern": "<servlet-name>\\s*LoginServlet\\s*</servlet-name>[\\s\\S]*<servlet-class>\\s*daw\\.web\\.LoginServlet\\s*</servlet-class>[\\s\\S]*<url-pattern>\\s*/login\\s*</url-pattern>",
+        "message": "Declara y mapea LoginServlet a /login en web.xml."
+      }
+    ]
+  }
+}

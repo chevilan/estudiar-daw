@@ -81,6 +81,14 @@
     "javascript-tabla-usuarios-local.json",
     "javascript-arrow-color-parrafo-rojo.json",
     "javascript-xhr-usuarios-lista.json",
-    "javascript-getelementsbytagname-eventos.json"
+    "javascript-getelementsbytagname-eventos.json",
+    "jsp-el-ambitos-operadores-reto.json",
+    "jsp-el-jstl-panel-reto.json",
+    "jsp-jstl-choose-url-functions-reto.json",
+    "jsp-usebean-form-reto.json",
+    "servlets-config-context-attributes-reto.json",
+    "servlets-cookies-session-reto.json",
+    "servlets-mvc-login-reto.json",
+    "servlets-session-listado-logout-reto.json"
   ]
 }

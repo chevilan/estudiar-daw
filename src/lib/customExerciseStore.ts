@@ -9,7 +9,7 @@ type CustomExerciseDocument = Exercise & {
   updatedAt: string;
 };
 
-const topics: Topic[] = ["html", "css", "javascript"];
+const topics: Topic[] = ["html", "css", "javascript", "jsp", "servlets"];
 const difficulties = ["base", "media", "reto"];
 const exerciseTypes = ["build", "visual-match"];
 const codeFields: ValidationField[] = ["html", "css", "javascript"];

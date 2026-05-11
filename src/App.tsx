@@ -46,6 +46,7 @@ import {
 import { validateExercise } from "@/lib/validation";
 import type {
   CodeFiles,
+  EditorLanguage,
   Exercise,
   ExerciseProgress,
   Topic,
@@ -67,6 +68,8 @@ const topicLabels: Record<Topic, string> = {
   html: "HTML",
   css: "CSS",
   javascript: "JavaScript",
+  jsp: "JSP",
+  servlets: "Servlets",
 };
 
 const fileLabels: Record<ValidationField, string> = {
@@ -74,6 +77,48 @@ const fileLabels: Record<ValidationField, string> = {
   css: "CSS",
   javascript: "JS",
 };
+
+const topicFileLabels: Partial<Record<Topic, Record<ValidationField, string>>> = {
+  jsp: {
+    html: "JSP",
+    css: "CSS / fragmento",
+    javascript: "Servlet / Bean",
+  },
+  servlets: {
+    html: "JSP",
+    css: "web.xml",
+    javascript: "Servlet.java",
+  },
+};
+
+const topicFileLanguages: Partial<Record<Topic, Record<ValidationField, EditorLanguage>>> = {
+  jsp: {
+    html: "html",
+    css: "plain",
+    javascript: "plain",
+  },
+  servlets: {
+    html: "html",
+    css: "html",
+    javascript: "plain",
+  },
+};
+
+function getFileLabel(topic: Topic, field: ValidationField) {
+  return topicFileLabels[topic]?.[field] ?? fileLabels[field];
+}
+
+function getFileLanguage(topic: Topic, field: ValidationField) {
+  return topicFileLanguages[topic]?.[field] ?? field;
+}
+
+function getInitialActiveFile(topic: Topic): ValidationField {
+  return topic === "servlets" ? "javascript" : "html";
+}
+
+function isServerSideTopic(topic: Topic) {
+  return topic === "jsp" || topic === "servlets";
+}
 
 function createPendingResults(exercise: Exercise): ValidationResult[] {
   return exercise.validation.rules.map((rule) => ({
@@ -248,7 +293,7 @@ export default function App() {
     }
 
     setFiles(loadSavedCode(selectedExercise.id) ?? selectedExercise.starterCode);
-    setActiveFile("html");
+    setActiveFile(getInitialActiveFile(selectedExercise.topic));
     setConsoleLines([]);
     setValidationResults(createPendingResults(selectedExercise));
     setHasRunValidation(false);
@@ -459,6 +504,7 @@ export default function App() {
 
   const hasTarget = Boolean(selectedExercise.targetCode);
   const currentProgress = progressById[selectedExercise.id];
+  const isServerSideExercise = isServerSideTopic(selectedExercise.topic);
 
   return (
     <TooltipProvider delayDuration={150}>
@@ -585,6 +631,8 @@ export default function App() {
               <CodeEditor
                 files={files}
                 activeFile={activeFile}
+                fileLabels={topicFileLabels[selectedExercise.topic]}
+                fileLanguages={topicFileLanguages[selectedExercise.topic]}
                 codeThemeId={codeThemeId}
                 onActiveFileChange={setActiveFile}
                 onChange={handleChangeFile}
@@ -601,10 +649,14 @@ export default function App() {
                 <div className="flex items-center gap-2 text-sm font-semibold">
                   <Eye size={16} className="text-muted-foreground" aria-hidden />
                   <h2 className="m-0 text-sm font-semibold">
-                    {hasTarget ? "Preview y objetivo" : "Preview"}
+                    {isServerSideExercise
+                      ? "Validación estructural"
+                      : hasTarget
+                        ? "Preview y objetivo"
+                        : "Preview"}
                   </h2>
                 </div>
-                {hasTarget && !hardMode ? (
+                {hasTarget && !hardMode && !isServerSideExercise ? (
                   <Button
                     variant="outline"
                     size="sm"
@@ -617,47 +669,70 @@ export default function App() {
                 ) : null}
               </div>
 
-              <div
-                className={
-                  hasTarget
-                    ? "grid grid-cols-1 gap-3 md:grid-cols-2"
-                    : "grid gap-3"
-                }
-              >
-                <div className="flex min-w-0 flex-col gap-1.5">
-                  <span className="text-[0.7rem] font-semibold uppercase tracking-wider text-muted-foreground">
-                    Tu resultado
-                  </span>
-                  <PreviewFrame
-                    files={files}
-                    title="Tu resultado"
-                    channelId={solutionChannelId}
-                  />
+              {isServerSideExercise ? (
+                <div className="grid min-h-[360px] place-items-center rounded-md border bg-secondary/40 p-6 text-center">
+                  <div className="grid max-w-md gap-3">
+                    <p className="m-0 text-sm font-semibold text-foreground">
+                      Ejercicio de código servidor
+                    </p>
+                    <p className="m-0 text-sm leading-relaxed text-muted-foreground">
+                      JSP y Servlets se comprueban con reglas sobre tus archivos.
+                      La ejecución real requiere un contenedor Java como Tomcat.
+                    </p>
+                    <div className="mt-1 flex flex-wrap justify-center gap-1.5">
+                      {(["html", "css", "javascript"] as ValidationField[]).map((field) => (
+                        <Badge key={field} variant="muted">
+                          {getFileLabel(selectedExercise.topic, field)}
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
                 </div>
-
-                {selectedExercise.targetCode ? (
+              ) : (
+                <div
+                  className={
+                    hasTarget
+                      ? "grid grid-cols-1 gap-3 md:grid-cols-2"
+                      : "grid gap-3"
+                  }
+                >
                   <div className="flex min-w-0 flex-col gap-1.5">
                     <span className="text-[0.7rem] font-semibold uppercase tracking-wider text-muted-foreground">
-                      Objetivo
+                      Tu resultado
                     </span>
                     <PreviewFrame
-                      files={selectedExercise.targetCode}
-                      title="Objetivo"
-                      channelId={`target:${selectedExercise.id}`}
+                      files={files}
+                      title="Tu resultado"
+                      channelId={solutionChannelId}
                     />
                   </div>
-                ) : null}
-              </div>
 
-              {!hardMode && showTargetCode && selectedExercise.targetCode ? (
+                  {selectedExercise.targetCode ? (
+                    <div className="flex min-w-0 flex-col gap-1.5">
+                      <span className="text-[0.7rem] font-semibold uppercase tracking-wider text-muted-foreground">
+                        Objetivo
+                      </span>
+                      <PreviewFrame
+                        files={selectedExercise.targetCode}
+                        title="Objetivo"
+                        channelId={`target:${selectedExercise.id}`}
+                      />
+                    </div>
+                  ) : null}
+                </div>
+              )}
+
+              {!hardMode && showTargetCode && selectedExercise.targetCode && !isServerSideExercise ? (
                 <div className="overflow-hidden rounded-md border">
                   <div className="flex items-center gap-2 border-b bg-secondary/60 px-3 py-2 text-[0.72rem] font-semibold uppercase tracking-wider text-muted-foreground">
                     <Save size={13} aria-hidden />
-                    <span>Código objetivo: {fileLabels[activeFile]}</span>
+                    <span>
+                      Código objetivo: {getFileLabel(selectedExercise.topic, activeFile)}
+                    </span>
                   </div>
                   <CodeMirrorBox
                     value={selectedExercise.targetCode[activeFile]}
-                    language={activeFile}
+                    language={getFileLanguage(selectedExercise.topic, activeFile)}
                     ariaLabel="Código objetivo"
                     themeId={codeThemeId}
                     minHeight="180px"

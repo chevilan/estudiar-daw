@@ -1,0 +1,85 @@
+{
+  "id": "servlets-cookies-session-reto",
+  "topic": "servlets",
+  "type": "build",
+  "title": "Cookies y HttpSession para preferencias",
+  "difficulty": "reto",
+  "estimatedMinutes": 35,
+  "prompt": "Implementa un servlet de preferencias. En doPost lee el parametro tema, crea una Cookie llamada tema con ese valor y duracion de 30 minutos, la anade a response, guarda tambien tema en HttpSession y redirige a /preferencias usando contextPath. En la JSP muestra el valor de la cookie y el valor de la sesion con EL/JSTL. En web.xml mapea PreferenciasServlet a /preferencias.",
+  "notes": [
+    "La cookie viaja al cliente; la sesion guarda datos en servidor.",
+    "request.getSession() crea la sesion si no existia.",
+    "Despues de un POST correcto suele usarse sendRedirect."
+  ],
+  "starterCode": {
+    "html": "<%@ page contentType=\"text/html; charset=UTF-8\" pageEncoding=\"UTF-8\" %>\n<%@ taglib uri=\"http://java.sun.com/jsp/jstl/core\" prefix=\"c\" %>\n<!DOCTYPE html>\n<html>\n<body>\n  <h1>Preferencias</h1>\n  <form action=\"${pageContext.request.contextPath}/preferencias\" method=\"post\">\n    <select name=\"tema\">\n      <option value=\"claro\">Claro</option>\n      <option value=\"oscuro\">Oscuro</option>\n    </select>\n    <button>Guardar</button>\n  </form>\n  <!-- Muestra cookie.tema.value y sessionScope.tema -->\n</body>\n</html>",
+    "css": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<web-app xmlns=\"https://jakarta.ee/xml/ns/jakartaee\"\n         version=\"6.0\">\n  <!-- Mapea PreferenciasServlet -->\n</web-app>",
+    "javascript": "package daw.web;\n\nimport jakarta.servlet.http.Cookie;\nimport jakarta.servlet.http.HttpServlet;\nimport jakarta.servlet.http.HttpServletRequest;\nimport jakarta.servlet.http.HttpServletResponse;\nimport jakarta.servlet.http.HttpSession;\nimport java.io.IOException;\n\npublic class PreferenciasServlet extends HttpServlet {\n    @Override\n    protected void doPost(HttpServletRequest request, HttpServletResponse response)\n            throws IOException {\n        // Guarda preferencia en cookie y sesion\n    }\n}\n"
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "Preferencias guardadas con cookie y HttpSession.",
+    "rules": [
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "class\\s+PreferenciasServlet\\s+extends\\s+HttpServlet",
+        "message": "Define PreferenciasServlet extendiendo HttpServlet."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "protected\\s+void\\s+doPost\\s*\\(\\s*HttpServletRequest\\s+request\\s*,\\s*HttpServletResponse\\s+response",
+        "message": "Implementa doPost con request y response."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "String\\s+tema\\s*=\\s*request\\.getParameter\\(\\s*[\"']tema[\"']\\s*\\)",
+        "message": "Lee el parametro tema."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "Cookie\\s+cookie\\s*=\\s*new\\s+Cookie\\(\\s*[\"']tema[\"']\\s*,\\s*tema\\s*\\)",
+        "message": "Crea una cookie llamada tema con el valor recibido."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "cookie\\.setMaxAge\\(\\s*30\\s*\\*\\s*60\\s*\\)",
+        "message": "Configura la cookie para 30 minutos."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "response\\.addCookie\\(\\s*cookie\\s*\\)",
+        "message": "Anade la cookie a la respuesta."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "HttpSession\\s+session\\s*=\\s*request\\.getSession\\(\\s*\\)[\\s\\S]*session\\.setAttribute\\(\\s*[\"']tema[\"']\\s*,\\s*tema\\s*\\)",
+        "message": "Guarda el tema tambien en HttpSession."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "response\\.sendRedirect\\(\\s*request\\.getContextPath\\(\\)\\s*\\+\\s*[\"']/preferencias[\"']\\s*\\)",
+        "message": "Redirige a /preferencias usando contextPath."
+      },
+      {
+        "type": "regex",
+        "field": "html",
+        "pattern": "<c:out\\s+value=\\\"\\$\\{cookie\\.tema\\.value\\}\\\"\\s*/?>[\\s\\S]*<c:out\\s+value=\\\"\\$\\{sessionScope\\.tema\\}\\\"\\s*/?>",
+        "message": "Muestra el tema desde cookie y desde sessionScope con c:out."
+      },
+      {
+        "type": "regex",
+        "field": "css",
+        "pattern": "<servlet-name>\\s*PreferenciasServlet\\s*</servlet-name>[\\s\\S]*<servlet-class>\\s*daw\\.web\\.PreferenciasServlet\\s*</servlet-class>[\\s\\S]*<url-pattern>\\s*/preferencias\\s*</url-pattern>",
+        "message": "Mapea PreferenciasServlet a /preferencias en web.xml."
+      }
+    ]
+  }
+}

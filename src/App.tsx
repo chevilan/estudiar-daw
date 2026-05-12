@@ -6,19 +6,18 @@ import {
   Database,
   Eye,
   Github,
+  Lightbulb,
   ListChecks,
   Play,
-  Save,
   ShieldQuestion,
   Sparkles,
-  Target,
   X,
 } from "lucide-react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 import CodeEditor from "@/components/CodeEditor";
-import CodeMirrorBox from "@/components/CodeMirrorBox";
 import ExerciseList from "@/components/ExerciseList";
+import GiveUpDialog from "@/components/GiveUpDialog";
 import PreviewFrame from "@/components/PreviewFrame";
 import ValidationPanel from "@/components/ValidationPanel";
 import { Badge } from "@/components/ui/badge";
@@ -211,7 +210,7 @@ export default function App() {
   const [hasRunValidation, setHasRunValidation] = useState(false);
   const [progressById, setProgressById] = useState<Record<string, ExerciseProgress>>({});
   const [previewNonce, setPreviewNonce] = useState(0);
-  const [showTargetCode, setShowTargetCode] = useState(false);
+  const [showGiveUpDialog, setShowGiveUpDialog] = useState(false);
   const [codeThemeId, setCodeThemeId] = useState<CodeThemeId>(loadCodeTheme);
   const [hardMode, setHardMode] = useState(loadHardMode);
   const [showGlossary, setShowGlossary] = useState(false);
@@ -297,7 +296,7 @@ export default function App() {
     setConsoleLines([]);
     setValidationResults(createPendingResults(selectedExercise));
     setHasRunValidation(false);
-    setShowTargetCode(false);
+    setShowGiveUpDialog(false);
     setPreviewNonce((current) => current + 1);
   }, [selectedExercise]);
 
@@ -360,7 +359,7 @@ export default function App() {
       localStorage.setItem(hardModeStorageKey, next ? "on" : "off");
 
       if (next) {
-        setShowTargetCode(false);
+    setShowGiveUpDialog(false);
       }
 
       return next;
@@ -479,6 +478,16 @@ export default function App() {
     saveProgress(selectedExercise.id, nextProgress);
   }, [consoleLines, files, progressById, selectedExercise]);
 
+  const handleCopySolution = useCallback(() => {
+    if (!selectedExercise?.targetCode) {
+      return;
+    }
+
+    setFiles(selectedExercise.targetCode);
+    setShowGiveUpDialog(false);
+    setPreviewNonce((current) => current + 1);
+  }, [selectedExercise]);
+
   if (loadError) {
     return (
       <main className="flex min-h-screen flex-col items-center justify-center gap-3 p-8 text-center">
@@ -571,6 +580,16 @@ export default function App() {
                 <ListChecks size={14} aria-hidden />
                 Comprobar
               </Button>
+              {!hardMode && !isServerSideExercise ? (
+                <Button
+                  variant="outline"
+                  onClick={() => setShowGiveUpDialog(true)}
+                  title="Ver solución"
+                >
+                  <Lightbulb size={14} aria-hidden />
+                  Ver solución
+                </Button>
+              ) : null}
             </div>
           </header>
 
@@ -656,17 +675,6 @@ export default function App() {
                         : "Preview"}
                   </h2>
                 </div>
-                {hasTarget && !hardMode && !isServerSideExercise ? (
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => setShowTargetCode((current) => !current)}
-                    title="Ver código objetivo"
-                  >
-                    <Target size={14} aria-hidden />
-                    {showTargetCode ? "Ocultar" : "Solución"}
-                  </Button>
-                ) : null}
               </div>
 
               {isServerSideExercise ? (
@@ -722,26 +730,6 @@ export default function App() {
                 </div>
               )}
 
-              {!hardMode && showTargetCode && selectedExercise.targetCode && !isServerSideExercise ? (
-                <div className="overflow-hidden rounded-md border">
-                  <div className="flex items-center gap-2 border-b bg-secondary/60 px-3 py-2 text-[0.72rem] font-semibold uppercase tracking-wider text-muted-foreground">
-                    <Save size={13} aria-hidden />
-                    <span>
-                      Código objetivo: {getFileLabel(selectedExercise.topic, activeFile)}
-                    </span>
-                  </div>
-                  <CodeMirrorBox
-                    value={selectedExercise.targetCode[activeFile]}
-                    language={getFileLanguage(selectedExercise.topic, activeFile)}
-                    ariaLabel="Código objetivo"
-                    themeId={codeThemeId}
-                    minHeight="180px"
-                    maxHeight="240px"
-                    readOnly
-                  />
-                </div>
-              ) : null}
-
               {consoleLines.length ? (
                 <div
                   className="grid max-h-40 gap-1 overflow-auto rounded-md border bg-code p-3 font-mono text-xs text-code-foreground"
@@ -765,6 +753,22 @@ export default function App() {
               />
             </div>
           </div>
+
+          <GiveUpDialog
+            open={showGiveUpDialog}
+            onOpenChange={setShowGiveUpDialog}
+            userFiles={files}
+            targetCode={selectedExercise.targetCode}
+            activeFile={activeFile}
+            validationResults={validationResults}
+            hasRunValidation={hasRunValidation}
+            fileLabels={{
+              html: getFileLabel(selectedExercise.topic, "html"),
+              css: getFileLabel(selectedExercise.topic, "css"),
+              javascript: getFileLabel(selectedExercise.topic, "javascript"),
+            }}
+            onCopySolution={handleCopySolution}
+          />
 
           {showGlossary ? (
             <div

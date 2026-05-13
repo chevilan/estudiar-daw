@@ -3,8 +3,9 @@ import { html } from "@codemirror/lang-html";
 import { javascript } from "@codemirror/lang-javascript";
 import { EditorState, type Extension } from "@codemirror/state";
 import { EditorView } from "@codemirror/view";
+import { Vim, getCM, vim } from "@replit/codemirror-vim";
 import CodeMirror from "@uiw/react-codemirror";
-import { type CSSProperties, useMemo } from "react";
+import { forwardRef, type CSSProperties, useCallback, useMemo } from "react";
 
 import { cn } from "@/lib/utils";
 import {
@@ -23,6 +24,7 @@ type CodeMirrorBoxProps = {
   maxHeight?: string;
   readOnly?: boolean;
   themeId: CodeThemeId;
+  vimMode: boolean;
   onChange?: (value: string) => void;
 };
 
@@ -71,27 +73,60 @@ function editorChrome(theme: (typeof codeThemes)[CodeThemeId]): Extension {
   );
 }
 
-export default function CodeMirrorBox({
-  value,
-  language,
-  ariaLabel,
-  className,
-  minHeight = "460px",
-  maxHeight,
-  readOnly = false,
-  themeId,
-  onChange,
-}: CodeMirrorBoxProps) {
+function vimEscapeHandler(): Extension {
+  return EditorView.domEventHandlers({
+    keydown(event, view) {
+      if (event.key !== "Escape") return false;
+      event.preventDefault();
+      event.stopPropagation();
+      const cm = getCM(view);
+      if (cm) {
+        Vim.handleKey(cm, "<Esc>", "user");
+      }
+      requestAnimationFrame(() => view.focus());
+      return true;
+    },
+  });
+}
+
+const CodeMirrorBox = forwardRef<EditorView, CodeMirrorBoxProps>(function CodeMirrorBox(
+  {
+    value,
+    language,
+    ariaLabel,
+    className,
+    minHeight = "460px",
+    maxHeight,
+    readOnly = false,
+    themeId,
+    vimMode,
+    onChange,
+  },
+  ref,
+) {
   const codeTheme = codeThemes[themeId];
   const extensions = useMemo(
     () => [
+      ...(vimMode ? [vim(), vimEscapeHandler()] : []),
       EditorState.tabSize.of(2),
       EditorView.lineWrapping,
       editorChrome(codeTheme),
       ...languageExtension(language),
     ],
-    [codeTheme, language],
+    [codeTheme, language, vimMode],
   );
+
+  const mergedRef = useCallback(
+    (view: EditorView | null) => {
+      if (typeof ref === "function") {
+        ref(view);
+      } else if (ref) {
+        (ref as React.MutableRefObject<EditorView | null>).current = view;
+      }
+    },
+    [ref],
+  );
+
   const style = {
     "--code-editor-bg": codeTheme.background,
     "--code-editor-scrollbar": codeTheme.scrollbar,
@@ -99,6 +134,8 @@ export default function CodeMirrorBox({
 
   return (
     <CodeMirror
+      ref={mergedRef}
+      key={vimMode ? "vim" : "normal"}
       value={value}
       aria-label={ariaLabel}
       theme={codeTheme.extension}
@@ -129,4 +166,6 @@ export default function CodeMirrorBox({
       style={style}
     />
   );
-}
+});
+
+export default CodeMirrorBox;

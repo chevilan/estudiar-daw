@@ -6,6 +6,7 @@ import {
   RotateCcw,
   TerminalSquare,
 } from "lucide-react";
+import { forwardRef } from "react";
 
 import CodeMirrorBox from "@/components/CodeMirrorBox";
 import { Button } from "@/components/ui/button";
@@ -23,6 +24,7 @@ import {
 } from "@/lib/codeThemes";
 import { cn } from "@/lib/utils";
 import type { CodeFiles, EditorLanguage, ValidationField } from "../lib/types";
+import type { EditorView } from "@codemirror/view";
 
 type CodeEditorProps = {
   files: CodeFiles;
@@ -30,10 +32,14 @@ type CodeEditorProps = {
   fileLabels?: Partial<Record<ValidationField, string>>;
   fileLanguages?: Partial<Record<ValidationField, EditorLanguage>>;
   codeThemeId: CodeThemeId;
+  vimMode: boolean;
+  previewLayout: "right" | "left" | "below";
   onActiveFileChange: (file: ValidationField) => void;
   onChange: (file: ValidationField, value: string) => void;
   onCodeThemeChange: (themeId: CodeThemeId) => void;
+  onVimModeChange: (vim: boolean) => void;
   onReset: () => void;
+  onPreviewLayoutChange: (layout: "right" | "left" | "below") => void;
 };
 
 const fileTabs: Array<{
@@ -46,17 +52,24 @@ const fileTabs: Array<{
   { key: "javascript", label: "JS", icon: TerminalSquare },
 ];
 
-export default function CodeEditor({
-  files,
-  activeFile,
-  fileLabels,
-  fileLanguages,
-  codeThemeId,
-  onActiveFileChange,
-  onChange,
-  onCodeThemeChange,
-  onReset,
-}: CodeEditorProps) {
+const CodeEditor = forwardRef<EditorView, CodeEditorProps>(function CodeEditor(
+  {
+    files,
+    activeFile,
+    fileLabels,
+    fileLanguages,
+    codeThemeId,
+    vimMode,
+    previewLayout,
+    onActiveFileChange,
+    onChange,
+    onCodeThemeChange,
+    onVimModeChange,
+    onReset,
+    onPreviewLayoutChange,
+  },
+  ref,
+) {
   const selectedTheme = codeThemes[codeThemeId];
 
   return (
@@ -81,7 +94,7 @@ export default function CodeEditor({
                 }
               }}
               aria-label="Tema del editor"
-              className="h-8 max-w-[10rem] rounded-md border bg-background py-0 pl-8 pr-7 text-xs font-medium text-foreground outline-none transition-colors hover:bg-secondary focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+              className="h-8 max-w-[10rem] rounded-md border bg-background py-0 pl-8 pr-7 text-xs font-medium text-foreground outline-none transition-colors hover:bg-secondary"
             >
               {codeThemeOptions.map((theme) => (
                 <option key={theme.id} value={theme.id}>
@@ -90,6 +103,40 @@ export default function CodeEditor({
               ))}
             </select>
           </label>
+          <label className="relative inline-flex items-center">
+            <select
+              value={previewLayout}
+              onChange={(event) =>
+                onPreviewLayoutChange(event.target.value as "right" | "left" | "below")
+              }
+              aria-label="Posición del preview"
+              className="h-8 rounded-md border bg-background px-2 pr-7 text-xs font-medium text-foreground outline-none transition-colors hover:bg-secondary"
+            >
+              <option value="right">Preview: derecha</option>
+              <option value="left">Preview: izquierda</option>
+              <option value="below">Preview: abajo</option>
+            </select>
+          </label>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                variant="outline"
+                size="icon"
+                className={cn(
+                  "h-8 w-8",
+                  vimMode && "text-success hover:text-success",
+                )}
+                onClick={() => onVimModeChange(!vimMode)}
+                aria-label={vimMode ? "Desactivar Vim" : "Activar Vim"}
+                aria-pressed={vimMode}
+              >
+                <span className="text-[11px] font-bold leading-none">Vim</span>
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              {vimMode ? "Desactivar Vim" : "Activar Vim"}
+            </TooltipContent>
+          </Tooltip>
           <Tooltip>
             <TooltipTrigger asChild>
               <Button
@@ -147,14 +194,18 @@ export default function CodeEditor({
         style={{ backgroundColor: selectedTheme.background }}
       >
         <CodeMirrorBox
+          ref={ref}
           value={files[activeFile]}
           language={fileLanguages?.[activeFile] ?? activeFile}
           ariaLabel={`Editor ${activeFile}`}
           themeId={codeThemeId}
+          vimMode={vimMode}
           minHeight="460px"
           onChange={(value) => onChange(activeFile, value)}
         />
       </div>
     </Card>
   );
-}
+});
+
+export default CodeEditor;

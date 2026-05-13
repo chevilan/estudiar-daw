@@ -5,15 +5,10 @@ import {
   CheckCircle2,
   Database,
   Eye,
-  Github,
-  Lightbulb,
-  ListChecks,
-  Play,
-  ShieldQuestion,
   Sparkles,
   X,
 } from "lucide-react";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import CodeEditor from "@/components/CodeEditor";
 import ExerciseList from "@/components/ExerciseList";
@@ -26,6 +21,7 @@ import { Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import {
+  codeThemeOptions,
   defaultCodeThemeId,
   isCodeThemeId,
   type CodeThemeId,
@@ -52,6 +48,7 @@ import type {
   ValidationField,
   ValidationResult,
 } from "@/lib/types";
+import type { EditorView } from "@codemirror/view";
 
 const emptyFiles: CodeFiles = {
   html: "",
@@ -60,7 +57,10 @@ const emptyFiles: CodeFiles = {
 };
 
 const codeThemeStorageKey = "daw-lab:code-theme";
-const hardModeStorageKey = "daw-lab:hard-mode";
+const vimModeStorageKey = "daw-lab:vim-mode";
+const exerciseListStorageKey = "daw-lab:exercise-list-open";
+const previewLayoutStorageKey = "daw-lab:preview-layout";
+const appThemeStorageKey = "daw-lab:app-theme";
 const repositoryUrl = "https://github.com/chevilan/estudiar-daw";
 
 const topicLabels: Record<Topic, string> = {
@@ -119,6 +119,9 @@ function isServerSideTopic(topic: Topic) {
   return topic === "jsp" || topic === "servlets";
 }
 
+type PreviewLayout = "right" | "left" | "below";
+type AppTheme = CodeThemeId | "gruvbox";
+
 function createPendingResults(exercise: Exercise): ValidationResult[] {
   return exercise.validation.rules.map((rule) => ({
     passed: false,
@@ -134,8 +137,30 @@ function loadCodeTheme(): CodeThemeId {
     : defaultCodeThemeId;
 }
 
-function loadHardMode(): boolean {
-  return localStorage.getItem(hardModeStorageKey) !== "off";
+function loadVimMode(): boolean {
+  return localStorage.getItem(vimModeStorageKey) === "on";
+}
+
+function isPreviewLayout(value: string): value is PreviewLayout {
+  return value === "right" || value === "left" || value === "below";
+}
+
+function loadExerciseListOpen(): boolean {
+  return localStorage.getItem(exerciseListStorageKey) !== "off";
+}
+
+function loadPreviewLayout(): PreviewLayout {
+  const saved = localStorage.getItem(previewLayoutStorageKey);
+  return saved && isPreviewLayout(saved) ? saved : "right";
+}
+
+function isAppTheme(value: string): value is AppTheme {
+  return value === "gruvbox" || isCodeThemeId(value);
+}
+
+function loadAppTheme(): AppTheme {
+  const saved = localStorage.getItem(appThemeStorageKey);
+  return saved && isAppTheme(saved) ? saved : "vscode-light";
 }
 
 function renderInlineMarkdown(text: string) {
@@ -212,10 +237,16 @@ export default function App() {
   const [previewNonce, setPreviewNonce] = useState(0);
   const [showGiveUpDialog, setShowGiveUpDialog] = useState(false);
   const [codeThemeId, setCodeThemeId] = useState<CodeThemeId>(loadCodeTheme);
-  const [hardMode, setHardMode] = useState(loadHardMode);
+  const [vimMode, setVimMode] = useState(loadVimMode);
+  const [showNotes, setShowNotes] = useState(false);
+  const [showValidation, setShowValidation] = useState(false);
   const [showGlossary, setShowGlossary] = useState(false);
+  const [showExerciseList, setShowExerciseList] = useState(loadExerciseListOpen);
+  const [previewLayout, setPreviewLayout] = useState<PreviewLayout>(loadPreviewLayout);
+  const [appTheme, setAppTheme] = useState<AppTheme>(loadAppTheme);
   const [glossaryMarkdown, setGlossaryMarkdown] = useState("");
   const [glossaryError, setGlossaryError] = useState<string | null>(null);
+  const editorRef = useRef<EditorView | null>(null);
 
   useEffect(() => {
     let isMounted = true;
@@ -353,18 +384,23 @@ export default function App() {
     localStorage.setItem(codeThemeStorageKey, themeId);
   }, []);
 
-  const handleHardModeChange = useCallback(() => {
-    setHardMode((current) => {
-      const next = !current;
-      localStorage.setItem(hardModeStorageKey, next ? "on" : "off");
-
-      if (next) {
-    setShowGiveUpDialog(false);
-      }
-
-      return next;
-    });
+  const handleVimModeChange = useCallback((next: boolean) => {
+    setVimMode(next);
+    localStorage.setItem(vimModeStorageKey, next ? "on" : "off");
   }, []);
+
+  useEffect(() => {
+    localStorage.setItem(exerciseListStorageKey, showExerciseList ? "on" : "off");
+  }, [showExerciseList]);
+
+  useEffect(() => {
+    localStorage.setItem(previewLayoutStorageKey, previewLayout);
+  }, [previewLayout]);
+
+  useEffect(() => {
+    localStorage.setItem(appThemeStorageKey, appTheme);
+    document.documentElement.setAttribute("data-app-theme", appTheme);
+  }, [appTheme]);
 
   const handleImportExercises = useCallback(
     async (fileList: FileList | null) => {
@@ -446,11 +482,6 @@ export default function App() {
     setPreviewNonce((current) => current + 1);
   }, [selectedExercise]);
 
-  const handleRun = useCallback(() => {
-    setConsoleLines([]);
-    setPreviewNonce((current) => current + 1);
-  }, []);
-
   const handleValidate = useCallback(() => {
     if (!selectedExercise) {
       return;
@@ -471,6 +502,7 @@ export default function App() {
 
     setValidationResults(results);
     setHasRunValidation(true);
+    setShowValidation(true);
     setProgressById((current) => ({
       ...current,
       [selectedExercise.id]: nextProgress,
@@ -517,20 +549,40 @@ export default function App() {
 
   return (
     <TooltipProvider delayDuration={150}>
-      <div className="grid min-h-screen bg-background lg:grid-cols-[280px_minmax(0,1fr)]">
-        <ExerciseList
-          exercises={exercises}
-          selectedId={selectedExercise.id}
-          topic={topic}
-          progressById={progressById}
-          repositoryUrl={repositoryUrl}
-          customExerciseCount={customExerciseIds.size}
-          onTopicChange={setTopic}
-          onSelect={handleSelectExercise}
-          onImportExercises={handleImportExercises}
-        />
+      <div className="relative min-h-screen bg-background">
+        {showExerciseList ? (
+          <button
+            type="button"
+            className="fixed inset-0 z-30 bg-background/60 lg:hidden"
+            aria-label="Cerrar listado de ejercicios"
+            onClick={() => setShowExerciseList(false)}
+          />
+        ) : null}
+        <div
+          className={`fixed z-40 lg:z-10 ${
+            showExerciseList ? "inset-y-0 left-0 w-[280px]" : "top-0 left-0 w-[280px]"
+          }`}
+        >
+          <ExerciseList
+            exercises={exercises}
+            selectedId={selectedExercise.id}
+            collapsed={!showExerciseList}
+            topic={topic}
+            progressById={progressById}
+            repositoryUrl={repositoryUrl}
+            customExerciseCount={customExerciseIds.size}
+            onTopicChange={setTopic}
+            onSelect={handleSelectExercise}
+            onImportExercises={handleImportExercises}
+            onTogglePanel={() => setShowExerciseList((current) => !current)}
+          />
+        </div>
 
-        <main className="flex min-w-0 flex-col gap-5 p-4 sm:p-6">
+        <main
+          className={`flex min-w-0 flex-col gap-5 p-4 pt-20 sm:p-6 sm:pt-24 ${
+            showExerciseList ? "lg:ml-[280px]" : ""
+          }`}
+        >
           <header className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
             <div className="min-w-0">
               <p className="m-0 text-[0.7rem] font-semibold uppercase tracking-wider text-muted-foreground">
@@ -542,12 +594,6 @@ export default function App() {
             </div>
 
             <div className="flex flex-wrap items-center gap-2">
-              <Button variant="outline" asChild>
-                <a href={repositoryUrl} target="_blank" rel="noreferrer">
-                  <Github size={14} aria-hidden />
-                  Repo
-                </a>
-              </Button>
               <Button variant="outline" onClick={() => setShowGlossary(true)}>
                 <BookMarked size={14} aria-hidden />
                 Ver glosario
@@ -563,33 +609,6 @@ export default function App() {
                 <span className="opacity-60">/</span>
                 <span>{exercises.length}</span>
               </div>
-              <Button variant="outline" onClick={handleRun}>
-                <Play size={14} aria-hidden />
-                Ejecutar
-              </Button>
-              <Button
-                variant={hardMode ? "default" : "outline"}
-                onClick={handleHardModeChange}
-                aria-pressed={hardMode}
-                title="Modo difícil"
-              >
-                <ShieldQuestion size={14} aria-hidden />
-                {hardMode ? "Difícil" : "Normal"}
-              </Button>
-              <Button onClick={handleValidate}>
-                <ListChecks size={14} aria-hidden />
-                Comprobar
-              </Button>
-              {!hardMode && !isServerSideExercise ? (
-                <Button
-                  variant="outline"
-                  onClick={() => setShowGiveUpDialog(true)}
-                  title="Ver solución"
-                >
-                  <Lightbulb size={14} aria-hidden />
-                  Ver solución
-                </Button>
-              ) : null}
             </div>
           </header>
 
@@ -606,14 +625,26 @@ export default function App() {
               ))}
             </div>
 
-            {!hardMode && selectedExercise.notes?.length ? (
-              <ul className="m-0 mt-3 grid list-disc gap-1.5 pl-5 text-sm text-muted-foreground">
-                {selectedExercise.notes.map((note) => (
-                  <li key={note} className="leading-snug">
-                    {note}
-                  </li>
-                ))}
-              </ul>
+            {selectedExercise.notes?.length ? (
+              <>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="mt-3 h-auto p-0 text-xs font-medium text-muted-foreground hover:text-foreground"
+                  onClick={() => setShowNotes((current) => !current)}
+                >
+                  {showNotes ? "Ocultar pistas" : "Mostrar pistas"}
+                </Button>
+                {showNotes ? (
+                  <ul className="m-0 mt-2 grid list-disc gap-1.5 pl-5 text-sm text-muted-foreground">
+                    {selectedExercise.notes.map((note) => (
+                      <li key={note} className="leading-snug">
+                        {note}
+                      </li>
+                    ))}
+                  </ul>
+                ) : null}
+              </>
             ) : null}
 
             <Separator className="my-4" />
@@ -645,23 +676,36 @@ export default function App() {
             ) : null}
           </Card>
 
-          <div className="grid items-start gap-4 xl:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] xl:[grid-template-areas:'editor_preview''checks_preview']">
-            <div className="xl:[grid-area:editor]">
+          <div
+            className={
+              previewLayout === "left"
+                ? "grid grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] items-start gap-4 [grid-template-areas:'preview_editor''preview_checks']"
+                : previewLayout === "right"
+                  ? "grid grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] items-start gap-4 [grid-template-areas:'editor_preview''checks_preview']"
+                  : "grid items-start gap-4 [grid-template-areas:'editor''preview''checks']"
+            }
+          >
+            <div className="[grid-area:editor]">
               <CodeEditor
+                ref={editorRef}
                 files={files}
                 activeFile={activeFile}
                 fileLabels={topicFileLabels[selectedExercise.topic]}
                 fileLanguages={topicFileLanguages[selectedExercise.topic]}
                 codeThemeId={codeThemeId}
+                vimMode={vimMode}
                 onActiveFileChange={setActiveFile}
                 onChange={handleChangeFile}
                 onCodeThemeChange={handleCodeThemeChange}
+                onVimModeChange={handleVimModeChange}
                 onReset={handleReset}
+                previewLayout={previewLayout}
+                onPreviewLayoutChange={setPreviewLayout}
               />
             </div>
 
             <Card
-              className="flex flex-col gap-3 p-4 xl:[grid-area:preview]"
+              className="flex flex-col gap-3 p-4 [grid-area:preview]"
               aria-label="Previsualización"
             >
               <div className="flex items-center justify-between gap-3 border-b pb-3">
@@ -744,13 +788,22 @@ export default function App() {
               ) : null}
             </Card>
 
-            <div className="xl:[grid-area:checks]">
+            <div className="[grid-area:checks]">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="mb-2 h-auto p-0 text-xs font-medium text-muted-foreground hover:text-foreground"
+                onClick={() => setShowValidation((current) => !current)}
+              >
+                {showValidation ? "Ocultar validación" : "Mostrar validación"}
+              </Button>
+              {showValidation ? (
               <ValidationPanel
                 results={validationResults}
                 successMessage={selectedExercise.validation.successMessage}
                 hasRunValidation={hasRunValidation}
-                hideCriteria={hardMode}
               />
+              ) : null}
             </div>
           </div>
 
@@ -769,6 +822,44 @@ export default function App() {
             }}
             onCopySolution={handleCopySolution}
           />
+
+          <div className="fixed top-4 right-4 z-20 flex items-center justify-end gap-2">
+            <label className="inline-flex items-center">
+              <select
+                value={appTheme}
+                onChange={(event) => {
+                  if (isAppTheme(event.target.value)) {
+                    setAppTheme(event.target.value);
+                  }
+                }}
+                aria-label="Tema de la app"
+                className="h-9 rounded-md border bg-background px-2 text-xs font-medium text-foreground outline-none transition-colors hover:bg-secondary"
+              >
+                {codeThemeOptions.map((theme) => (
+                  <option key={theme.id} value={theme.id}>
+                    Tema: {theme.label}
+                  </option>
+                ))}
+                <option value="gruvbox">Tema: gruvbox</option>
+              </select>
+            </label>
+            <Button variant="outline" size="sm" onClick={handleValidate}>
+              Comprobar
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              disabled={isServerSideExercise}
+              onClick={() => setShowGiveUpDialog(true)}
+              title={
+                isServerSideExercise
+                  ? "No disponible para ejercicios de servidor"
+                  : "Ver soluciones"
+              }
+            >
+              Ver soluciones
+            </Button>
+          </div>
 
           {showGlossary ? (
             <div

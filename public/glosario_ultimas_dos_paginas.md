@@ -4,40 +4,44 @@ Glosario que Tahoces entrega en los exámenes.
 
 ## HTML
 
-`!DOCTYPE`, `meta`, `h1`, `...`, `h6`, `p`, `a`, `blockquote`, `strong`, `em`, `q`, `br`, `pre`, `ol`, `ul`, `li`, `dl`, `dt`, `dd`, `img`, `table`, `tr`, `th`, `td`, `caption`, `div`, `header`, `footer`, `main`, `section`, `article`, `aside`, `nav`, `figure`, `picture`, `source`, `figcaption`, `audio`, `video`, `track`, `canvas`, `iframe`, `mark`, `meter`, `time`, `progress`, `form`, `input`, `textarea`, `select`, `label`, `datalist`, `fieldset`, `legend`, `style`, `link`, `script`.
+`!DOCTYPE`, `a`, `article`, `aside`, `audio`, `b`, `blockquote`, `br`, `canvas`, `caption`, `dd`, `datalist`, `div`, `dl`, `dt`, `em`, `fieldset`, `figcaption`, `figure`, `footer`, `form`, `h1`, `h2`, `h3`, `h4`, `h5`, `h6`, `header`, `i`, `iframe`, `img`, `<input type="" size="" id="" name="" submit="" value="">`, `<label for="">`, `legend`, `li`, `link`, `main`, `mark`, `meta`, `meter`, `nav`, `ol`, `p`, `picture`, `pre`, `progress`, `q`, `script`, `section`, `select`, `source`, `strong`, `style`, `table`, `td`, `textarea`, `th`, `time`, `tr`, `track`, `ul`, `video`.
 
 ## CSS
 
-`@import`, `@media`, `@font-face`, `with`, `only`, `screen`, `font-family`, `font-size`, `font-weight`, `text-decoration`, `font-style`, `text-align`, `line-height`, `text-transform`, `color`, `border`, `border-style`, `border-radius`, `box-shadow`, `list-style-type`, `list-style`, `display`, `position`, `float`, `z-index`, `left`, `right`, `top`, `bottom`, `clear`, `caption-side`, `background-color`, `background-image`, `background-repeat`, `background-position`, `width`, `max-width`, `min-width`, `height`, `max-height`, `min-height`, `padding`, `margin`, `outline`, `background`, `overflow`, `opacity`, `visibility`, `box-sizing`, `column-count`, `flex-direction`, `flex-wrap`, `flex-flow`, `justify-content`, `align-items`, `align-contents`, `grid-template-columns`, `grid-template-rows`, `grid-template-areas`, `grid-gap`, `grid-column`, `grid-row`, `grid-area`.
+`@font-face`, `with`, `@import`, `@media`, `absolute`, `align-contents`, `align-items`, `background`, `background-color`, `background-image`, `background-position`, `background-repeat`, `block`, `border`, `border-radius`, `border-style`, `box-shadow`, `box-sizing`, `caption-side`, `clear`, `color`, `column-count`, `display`, `flex`, `flex-direction`, `flex-flow`, `flex-wrap`, `float`, `font-family`, `font-size`, `font-style`, `font-weight`, `grid`, `grid-area`, `grid-column`, `grid-gap`, `grid-row`, `grid-template-areas`, `grid-template-columns`, `grid-template-rows`, `height`, `inline`, `inline-block`, `justify-content`, `line-height`, `list-style`, `list-style-type`, `margin`, `max-height`, `max-width`, `min-height`, `min-width`, `opacity`, `outline`, `overflow`, `padding`, `position`, `relative`, `text-align`, `text-decoration`, `text-transform`, `width`, `visibility`, `z-index`.
 
 ## JavaScript
 
-`getElementById()`, `querySelector()`, `getElementsByClassName()`, `getElementsByName()`, `getElementsByTagName()`, `querySelectorAll()`, `nodeValue`, `nodeName`, `nodeType`, `innerHTML`, `textContent`, `createElement()`, `createTextNode()`, `appendChild()`, `removeChild()`, `parentNode`, `previousSibling`, `nextSibling`, `firstChild`, `lastChild`, `firstElementChild`, `childNodes`, `children`, `attributes`, `getAttribute()`, `getAttributeNode()`, `hasAttribute()`, `setAttribute()`, `removeAttribute()`, `style`, `color`, `backgroundColor`, `addEventListener()`, `parseFloat()`, `parseInt()`, `toString()`, `with()`, `function()`, `arguments`, `arguments.length`, `toString()`.
+`.test()`, `.exec()`, `.matchAll()`, `addEventListener()`, `appendChild()`, `arguments`, `arguments.length`, `attributes`, `childNodes`, `children`, `createElement()`, `createTextNode()`, `e.type`, `e.target`, `e.preventDefault()`, `firstChild`, `firstElementChild`, `function()`, `getAttribute()`, `getAttributeNode()`, `getComputedStyle()`, `getElementById()`, `getElementsByClassName()`, `getElementsByName()`, `getElementsByTagName()`, `getPropertyValue()`, `hasAttribute()`, `innerHTML`, `lastChild`, `nextSibling`, `nodeName`, `nodeType`, `nodeValue`, `parentNode`, `parseFloat()`, `parseInt()`, `previousSibling`, `querySelector()`, `querySelectorAll()`, `removeAttribute()`, `removeChild()`, `setAttribute()`, `style`, `textContent`, `this`, `toString()`, `with()`.
+
+## Expresiones Regulares (ER)
+
+`exec()`, `global`, `ignoreCase`, `match()`, `matchAll()`, `multiline`, `replace()`, `replaceAll()`, `search()`, `split()`, `test()`, `toString()`, `valueOf()`.
 
 ## jQuery
 
-`$`, `.ready()`, `.html()`, `.text()`, `.replaceWidth()`, `.remove()`, `.before()`, `.after()`, `.prepend()`, `.append()`, `.remove()`, `.clone()`, `.unwrap()`, `.detach()`, `.empty()`, `.add()`, `.attr()`, `.removeAttr()`, `.addClass()`, `.removeClass()`, `.css()`, `.val()`, `.isNumeric()`, `.find()`, `.closest()`, `.parent()`, `.parents()`, `.children()`, `.siblings()`, `.next()`, `.nextAll()`, `.prev()`, `.prevAll()`, `.each()`, `.filter()`, `.not()`, `.has()`, `.is()`, `.contains()`, `.eq()`, `.lt()`, `.gt()`, `.height()`, `.width()`, `.innerHeight()`, `.innerWidth()`, `.outerHeight()`, `.outerWidth()`, `.offset()`, `.position()`, `.scrollLeft()`, `.scrollTop()`, `.show()`, `.hide()`, `.toggle()`, `.fadeIn()`, `.fadeOut()`, `.fadeTo()`, `.fadeToggle()`, `.slideDown()`, `.slideUp()`, `.slideToggle()`, `.delay()`, `.stop()`, `.animate()`, `.on()`, `.preventDefault()`, `.stopPropagation()`.
-
-## XML y JSON
-
-`.getElementsByTagName()`, `.appendChild()`, `.removeChild()`, `nodeName`, `nodeValue`, `nodeType`, `textContent`, `JSON.parse()`.
-
-## AJAX
-
-`XMLHttpRequest`, `open()`, `send()`, `onreadystatechange`, `readyState`, `onload`, `readyState`, `responseText`, `responseXML`, `status`.
+`$`, `$(this)`, `.add()`, `.addClass()`, `.after()`, `.animate()`, `.append()`, `.attr()`, `.before()`, `.children()`, `.clone()`, `.closest()`, `.contains()`, `.css()`, `.delay()`, `.each()`, `.empty()`, `.eq()`, `.fadeIn()`, `.fadeOut()`, `.fadeTo()`, `.fadeToggle()`, `.filter()`, `.find()`, `.gt()`, `.has()`, `.height()`, `.hide()`, `.html()`, `.innerHeight()`, `.innerWidth()`, `.is()`, `.isNumeric()`, `.lt()`, `.next()`, `.nextAll()`, `.not()`, `.offset()`, `.on()`, `.parent()`, `.parents()`, `.position()`, `.prepend()`, `.preventDefault()`, `.prev()`, `.prevAll()`, `.ready()`, `.remove()`, `.removeAttr()`, `removeClass()`, `.replaceWidth()`, `.siblings()`, `.slideDown()`, `.slideUp()`, `.slideToggle()`, `.stop()`, `.stopPropagation()`, `.text()`, `.toggle()`, `.unwrap()`, `.val()`, `.width()`, `outerHeight()`, `outerWidth()`, `scrollLeft()`, `scrollTop()`.
 
 ## Eventos
 
-`focus`, `blur`, `change`, `input`, `keydown`, `keyup`, `keypress`, `click`, `dblclick`, `mouseup`, `mousedown`, `mouseover`, `mousemove`, `mouseout`, `hover`, `submit`, `select`, `change`, `ready`, `load`, `unload`, `error`, `resize`, `scroll`.
+`blur`, `change`, `click`, `dblclick`, `error`, `focus`, `hover`, `input`, `keydown`, `keypress`, `keyup`, `load`, `mousedown`, `mousemove`, `mouseout`, `mouseover`, `mouseup`, `ready`, `resize`, `scroll`, `select`, `submit`, `unload`.
 
 ## Servlets
 
-`HttpServlet`, `HttpServletRequest`, `HttpServletResponse`, `doGet()`, `doPost()`, `getAttribute()`, `setAttribute()`, `RequestDispatcher`, `getRequestDispatcher()`, `forward()`, `include()`, `sendRedirect()`, `getParameter()`, `ServletContext`, `getServletContext()`, `getSession()`, `HttpSession()`, `Cookie`, `addCookie()`, `getCookies()`, `web-app`, `servlet`, `servlet-class`, `servlet-name`, `servlet-mapping`, `url-pattern`, `session-config`, `session-timeout`, `error-page`, `error-code`, `welcome-file-list`, `init-param`, `context-param`, `location`, `param-name`, `param-value`, `welcome-file`.
+`@Override`, `Cookie`, `HttpServlet`, `HttpServletRequest`, `HttpServletResponse`, `HttpSession()`, `RequestDispatcher`, `ServletContext`, `addCookie()`, `context-param`, `doGet()`, `doPost()`, `error-code`, `error-page`, `forward()`, `getAttribute()`, `getCookies()`, `getParameter()`, `getRequestDispatcher()`, `getServletContext()`, `getSession()`, `include()`, `init-param`, `location`, `param-name`, `param-value`, `sendRedirect()`, `servlet`, `servlet-class`, `servlet-mapping`, `servlet-name`, `session-config`, `session-timeout`, `setAttribute()`, `url-pattern`, `web-app`, `welcome-file`, `welcome-file-list`.
 
 ## JSPs
 
-`<jsp:useBean id="" class="">`, `<jsp:setProperty name="" property="" value="">`, `<jsp:getProperty name="" property="">`, `<jsp:forward page="">`, `<jsp:include page="">`, `property`, `name`, `scope`, `@page`, `@taglib`.
+`@page`, `@taglib`, `<jsp:forward page="">`, `<jsp:getProperty name="" property="">`, `<jsp:include page="">`, `<jsp:setProperty name="" property="" value="">`, `<jsp:useBean id="" class="" scope="">`.
+
+## Expresiones de Lenguaje (EL)
+
+`${ ... }`, `${ ... .key ... }` para HashMaps.
 
 ## JSTL
 
-`<c:out value="">`, `<c:if test="">`, `<c:set var="" value="">`, `<c:choose>`, `<c:when>`, `<c:foreach var="" begin="" end="">`, `<c:foreach var="" items="">`, `<c:otherwise>`.
+`<c:otherwise>`, `<c:choose>`, `<c:foreach var="" begin="" end="">`, `<c:foreach var="" items="">`, `<c:if test="">`, `<c:out value="">`, `<c:set var="" value="">`, `<c:when test="">`.
+
+## Java
+
+`HashMap<..., ...> h = new HashMap<>()`, `h.put()`, `h.get(key)`, `List<...> l = new ArrayList<>()`, `l.add()`, `l.get()`, `Vector<...> v = new Vector<>()`, `v.add()`, `v.get()`.

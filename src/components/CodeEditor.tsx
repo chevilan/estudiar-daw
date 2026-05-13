@@ -3,6 +3,9 @@ import {
   FileCode2,
   Paintbrush,
   Palette,
+  PanelBottom,
+  PanelLeft,
+  PanelRight,
   RotateCcw,
   TerminalSquare,
 } from "lucide-react";
@@ -52,6 +55,16 @@ const fileTabs: Array<{
   { key: "javascript", label: "JS", icon: TerminalSquare },
 ];
 
+const previewLayoutOptions: Array<{
+  value: "right" | "left" | "below";
+  label: string;
+  icon: typeof PanelRight;
+}> = [
+  { value: "right", label: "Derecha", icon: PanelRight },
+  { value: "left", label: "Izquierda", icon: PanelLeft },
+  { value: "below", label: "Abajo", icon: PanelBottom },
+];
+
 const CodeEditor = forwardRef<EditorView, CodeEditorProps>(function CodeEditor(
   {
     files,
@@ -71,6 +84,10 @@ const CodeEditor = forwardRef<EditorView, CodeEditorProps>(function CodeEditor(
   ref,
 ) {
   const selectedTheme = codeThemes[codeThemeId];
+  const selectedPreviewLayout =
+    previewLayoutOptions.find((option) => option.value === previewLayout) ??
+    previewLayoutOptions[0];
+  const PreviewLayoutIcon = selectedPreviewLayout.icon;
 
   return (
     <Card className="flex flex-col overflow-hidden">
@@ -104,17 +121,24 @@ const CodeEditor = forwardRef<EditorView, CodeEditorProps>(function CodeEditor(
             </select>
           </label>
           <label className="relative inline-flex items-center">
+            <PreviewLayoutIcon
+              size={14}
+              className="pointer-events-none absolute left-2.5 text-muted-foreground"
+              aria-hidden
+            />
             <select
               value={previewLayout}
               onChange={(event) =>
                 onPreviewLayoutChange(event.target.value as "right" | "left" | "below")
               }
               aria-label="Posición del preview"
-              className="h-8 max-w-[10rem] rounded-md border bg-background px-2 pr-7 text-xs font-medium text-foreground outline-none transition-colors hover:bg-secondary focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+              className="h-8 max-w-[8.5rem] rounded-md border bg-background py-0 pl-8 pr-7 text-xs font-medium text-foreground outline-none transition-colors hover:bg-secondary focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             >
-              <option value="right">Preview: derecha</option>
-              <option value="left">Preview: izquierda</option>
-              <option value="below">Preview: abajo</option>
+              {previewLayoutOptions.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
             </select>
           </label>
           <Tooltip>

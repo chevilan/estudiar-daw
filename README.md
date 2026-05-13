@@ -19,7 +19,7 @@ https://estudiar-daw.onrender.com/
 
 ## Ejemplo
 
-![Ejemplo de DAW Practice Lab](docs/assets/daw-practice-lab-example.png)
+![Ejemplo de DAW Practice Lab](docs/assets/daw-practice-lab-example-2.png)
 
 ## Ejecutar en local
 

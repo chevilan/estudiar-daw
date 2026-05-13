@@ -1,6 +1,7 @@
 import type { Extension } from "@codemirror/state";
 import { draculaInit } from "@uiw/codemirror-theme-dracula";
 import { githubDarkInit, githubLightInit } from "@uiw/codemirror-theme-github";
+import { gruvboxDarkInit } from "@uiw/codemirror-theme-gruvbox-dark";
 import { monokaiInit } from "@uiw/codemirror-theme-monokai";
 import { tokyoNightInit } from "@uiw/codemirror-theme-tokyo-night";
 import { vscodeDarkInit, vscodeLightInit } from "@uiw/codemirror-theme-vscode";
@@ -22,6 +23,7 @@ export const codeThemeOptions = [
   { id: "dracula", label: "Dracula" },
   { id: "tokyo-night", label: "Tokyo Night" },
   { id: "monokai", label: "Monokai" },
+  { id: "gruvbox-dark", label: "Gruvbox Dark" },
 ] as const;
 
 export type CodeThemeId = (typeof codeThemeOptions)[number]["id"];
@@ -85,6 +87,13 @@ export const codeThemes: Record<CodeThemeId, CodeThemeDefinition> = {
     background: "#272822",
     border: "#3e3d32",
     scrollbar: "#49483e",
+  },
+  "gruvbox-dark": {
+    extension: gruvboxDarkInit(themeFontSettings),
+    isDark: true,
+    background: "#282828",
+    border: "#504945",
+    scrollbar: "#665c54",
   },
 };
 

@@ -71,6 +71,7 @@ const emptyFiles: CodeFiles = {
 const codeThemeStorageKey = "daw-lab:code-theme";
 const hardModeStorageKey = "daw-lab:hard-mode";
 const vimModeStorageKey = "daw-lab:vim-mode";
+const autocompleteDisabledStorageKey = "daw-lab:autocomplete-disabled";
 const previewLayoutStorageKey = "daw-lab:preview-layout";
 const appThemeStorageKey = "daw-lab:app-theme";
 const sidebarHiddenStorageKey = "daw-lab:sidebar-hidden";
@@ -156,6 +157,10 @@ function loadHardMode(): boolean {
 
 function loadVimMode(): boolean {
   return localStorage.getItem(vimModeStorageKey) === "on";
+}
+
+function loadAutocompleteDisabled(): boolean {
+  return localStorage.getItem(autocompleteDisabledStorageKey) === "on";
 }
 
 function isPreviewLayout(value: string): value is PreviewLayout {
@@ -256,6 +261,9 @@ export default function App() {
   const [codeThemeId, setCodeThemeId] = useState<CodeThemeId>(loadCodeTheme);
   const [hardMode, setHardMode] = useState(loadHardMode);
   const [vimMode, setVimMode] = useState(loadVimMode);
+  const [autocompleteDisabled, setAutocompleteDisabled] = useState(
+    loadAutocompleteDisabled,
+  );
   const [previewLayout, setPreviewLayout] = useState<PreviewLayout>(loadPreviewLayout);
   const [appTheme, setAppTheme] = useState<AppTheme>(loadAppTheme);
   const [showGlossary, setShowGlossary] = useState(false);
@@ -415,6 +423,11 @@ export default function App() {
   const handleVimModeChange = useCallback((next: boolean) => {
     setVimMode(next);
     localStorage.setItem(vimModeStorageKey, next ? "on" : "off");
+  }, []);
+
+  const handleAutocompleteDisabledChange = useCallback((next: boolean) => {
+    setAutocompleteDisabled(next);
+    localStorage.setItem(autocompleteDisabledStorageKey, next ? "on" : "off");
   }, []);
 
   useEffect(() => {
@@ -717,8 +730,8 @@ export default function App() {
                   <div className="space-y-1">
                     <p className="font-bold">Modo difícil</p>
                     <p className="text-xs text-muted-foreground">
-                      Oculta los criterios de validación y desactiva el
-                      autocompletado del editor.
+                      Oculta los criterios de validación para una mayor
+                      dificultad.
                     </p>
                   </div>
                 </TooltipContent>
@@ -810,12 +823,13 @@ export default function App() {
                 fileLanguages={topicFileLanguages[selectedExercise.topic]}
                 codeThemeId={codeThemeId}
                 vimMode={vimMode}
-                hardMode={hardMode}
+                autocompleteDisabled={autocompleteDisabled}
                 previewLayout={previewLayout}
                 onActiveFileChange={setActiveFile}
                 onChange={handleChangeFile}
                 onCodeThemeChange={handleCodeThemeChange}
                 onVimModeChange={handleVimModeChange}
+                onAutocompleteDisabledChange={handleAutocompleteDisabledChange}
                 onReset={handleReset}
                 onPreviewLayoutChange={setPreviewLayout}
                 resizable

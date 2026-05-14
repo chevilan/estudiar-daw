@@ -7,6 +7,7 @@ import {
   PanelLeft,
   PanelRight,
   RotateCcw,
+  Sparkles,
   TerminalSquare,
 } from "lucide-react";
 import { forwardRef } from "react";
@@ -36,12 +37,13 @@ type CodeEditorProps = {
   fileLanguages?: Partial<Record<ValidationField, EditorLanguage>>;
   codeThemeId: CodeThemeId;
   vimMode: boolean;
-  hardMode: boolean;
+  autocompleteDisabled: boolean;
   previewLayout: "right" | "left" | "below";
   onActiveFileChange: (file: ValidationField) => void;
   onChange: (file: ValidationField, value: string) => void;
   onCodeThemeChange: (themeId: CodeThemeId) => void;
   onVimModeChange: (vim: boolean) => void;
+  onAutocompleteDisabledChange: (disabled: boolean) => void;
   onReset: () => void;
   onPreviewLayoutChange: (layout: "right" | "left" | "below") => void;
   resizable?: boolean;
@@ -75,12 +77,13 @@ const CodeEditor = forwardRef<EditorView, CodeEditorProps>(function CodeEditor(
     fileLanguages,
     codeThemeId,
     vimMode,
-    hardMode,
+    autocompleteDisabled,
     previewLayout,
     onActiveFileChange,
     onChange,
     onCodeThemeChange,
     onVimModeChange,
+    onAutocompleteDisabledChange,
     onReset,
     onPreviewLayoutChange,
     resizable = false,
@@ -150,6 +153,34 @@ const CodeEditor = forwardRef<EditorView, CodeEditorProps>(function CodeEditor(
               ))}
             </select>
           </label>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                variant="outline"
+                size="icon"
+                className={cn(
+                  "h-8 w-8",
+                  !autocompleteDisabled && "text-success hover:text-success",
+                )}
+                onClick={() =>
+                  onAutocompleteDisabledChange(!autocompleteDisabled)
+                }
+                aria-label={
+                  autocompleteDisabled
+                    ? "Activar autocompletado"
+                    : "Desactivar autocompletado"
+                }
+                aria-pressed={!autocompleteDisabled}
+              >
+                <Sparkles size={14} aria-hidden />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              {autocompleteDisabled
+                ? "Activar autocompletado"
+                : "Desactivar autocompletado"}
+            </TooltipContent>
+          </Tooltip>
           <Tooltip>
             <TooltipTrigger asChild>
               <Button
@@ -233,7 +264,7 @@ const CodeEditor = forwardRef<EditorView, CodeEditorProps>(function CodeEditor(
           ariaLabel={`Editor ${activeFile}`}
           themeId={codeThemeId}
           vimMode={vimMode}
-          hardMode={hardMode}
+          autocompleteDisabled={autocompleteDisabled}
           minHeight="460px"
           onChange={(value) => onChange(activeFile, value)}
         />

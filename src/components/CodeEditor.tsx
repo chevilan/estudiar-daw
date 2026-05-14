@@ -7,7 +7,7 @@ import {
   PanelLeft,
   PanelRight,
   RotateCcw,
-  Sparkles,
+  Lightbulb,
   TerminalSquare,
 } from "lucide-react";
 import { forwardRef } from "react";
@@ -171,10 +171,11 @@ const CodeEditor = forwardRef<EditorView, CodeEditorProps>(function CodeEditor(
                     : "Desactivar autocompletado"
                 }
                 aria-pressed={!autocompleteDisabled}
-              >
-                <Sparkles size={14} aria-hidden />
-              </Button>
-            </TooltipTrigger>
+                >
+                <Lightbulb size={14} aria-hidden />
+                </Button>
+                </TooltipTrigger>
+
             <TooltipContent>
               {autocompleteDisabled
                 ? "Activar autocompletado"

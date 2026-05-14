@@ -25,7 +25,12 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { TooltipProvider } from "@/components/ui/tooltip";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import {
   codeThemeOptions,
   defaultCodeThemeId,
@@ -644,15 +649,27 @@ export default function App() {
                 <Play size={14} aria-hidden />
                 Ejecutar
               </Button>
-              <Button
-                variant={hardMode ? "default" : "outline"}
-                onClick={handleHardModeChange}
-                aria-pressed={hardMode}
-                title="Modo difícil"
-              >
-                <ShieldQuestion size={14} aria-hidden />
-                {hardMode ? "Difícil" : "Normal"}
-              </Button>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant={hardMode ? "default" : "outline"}
+                    onClick={handleHardModeChange}
+                    aria-pressed={hardMode}
+                  >
+                    <ShieldQuestion size={14} aria-hidden />
+                    {hardMode ? "Difícil" : "Normal"}
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <div className="space-y-1">
+                    <p className="font-bold">Modo difícil</p>
+                    <p className="text-xs text-muted-foreground">
+                      Oculta los criterios de validación y desactiva el
+                      autocompletado del editor.
+                    </p>
+                  </div>
+                </TooltipContent>
+              </Tooltip>
               <Button onClick={handleValidate}>
                 <ListChecks size={14} aria-hidden />
                 Comprobar
@@ -731,6 +748,7 @@ export default function App() {
                 fileLanguages={topicFileLanguages[selectedExercise.topic]}
                 codeThemeId={codeThemeId}
                 vimMode={vimMode}
+                hardMode={hardMode}
                 previewLayout={previewLayout}
                 onActiveFileChange={setActiveFile}
                 onChange={handleChangeFile}
@@ -738,6 +756,7 @@ export default function App() {
                 onVimModeChange={handleVimModeChange}
                 onReset={handleReset}
                 onPreviewLayoutChange={setPreviewLayout}
+                resizable
               />
             </div>
 
@@ -793,6 +812,7 @@ export default function App() {
                       files={files}
                       title="Tu resultado"
                       channelId={solutionChannelId}
+                      resizable
                     />
                   </div>
 
@@ -805,6 +825,7 @@ export default function App() {
                         files={selectedExercise.targetCode}
                         title="Objetivo"
                         channelId={`target:${selectedExercise.id}`}
+                        resizable
                       />
                     </div>
                   ) : null}

@@ -36,6 +36,7 @@ type CodeEditorProps = {
   fileLanguages?: Partial<Record<ValidationField, EditorLanguage>>;
   codeThemeId: CodeThemeId;
   vimMode: boolean;
+  hardMode: boolean;
   previewLayout: "right" | "left" | "below";
   onActiveFileChange: (file: ValidationField) => void;
   onChange: (file: ValidationField, value: string) => void;
@@ -43,6 +44,7 @@ type CodeEditorProps = {
   onVimModeChange: (vim: boolean) => void;
   onReset: () => void;
   onPreviewLayoutChange: (layout: "right" | "left" | "below") => void;
+  resizable?: boolean;
 };
 
 const fileTabs: Array<{
@@ -73,6 +75,7 @@ const CodeEditor = forwardRef<EditorView, CodeEditorProps>(function CodeEditor(
     fileLanguages,
     codeThemeId,
     vimMode,
+    hardMode,
     previewLayout,
     onActiveFileChange,
     onChange,
@@ -80,6 +83,7 @@ const CodeEditor = forwardRef<EditorView, CodeEditorProps>(function CodeEditor(
     onVimModeChange,
     onReset,
     onPreviewLayoutChange,
+    resizable = false,
   },
   ref,
 ) {
@@ -90,7 +94,12 @@ const CodeEditor = forwardRef<EditorView, CodeEditorProps>(function CodeEditor(
   const PreviewLayoutIcon = selectedPreviewLayout.icon;
 
   return (
-    <Card className="flex flex-col overflow-hidden">
+    <Card
+      className={cn(
+        "flex flex-col overflow-hidden",
+        resizable && "resize-y overflow-auto",
+      )}
+    >
       <div className="flex flex-col gap-3 border-b px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-center gap-2 text-sm font-semibold">
           <Code2 size={16} className="text-muted-foreground" aria-hidden />
@@ -224,6 +233,7 @@ const CodeEditor = forwardRef<EditorView, CodeEditorProps>(function CodeEditor(
           ariaLabel={`Editor ${activeFile}`}
           themeId={codeThemeId}
           vimMode={vimMode}
+          hardMode={hardMode}
           minHeight="460px"
           onChange={(value) => onChange(activeFile, value)}
         />

@@ -81,7 +81,16 @@ export default function ValidationPanel({
                     <XCircle size={14} aria-hidden />
                   )}
                 </span>
-                <span>{result.message}</span>
+                <div className="flex flex-col gap-1">
+                  <span>{result.message}</span>
+                  {result.rule.type === "domSelector" && (
+                    <div className="flex items-center gap-1 text-[0.65rem] opacity-70">
+                      <span className="font-mono bg-background/50 px-1 rounded border">
+                        {result.rule.selector}
+                      </span>
+                    </div>
+                  )}
+                </div>
               </li>
             );
           })}

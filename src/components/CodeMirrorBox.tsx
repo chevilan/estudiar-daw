@@ -25,6 +25,7 @@ type CodeMirrorBoxProps = {
   readOnly?: boolean;
   themeId: CodeThemeId;
   vimMode: boolean;
+  hardMode: boolean;
   onChange?: (value: string) => void;
 };
 
@@ -100,6 +101,7 @@ const CodeMirrorBox = forwardRef<EditorView, CodeMirrorBoxProps>(function CodeMi
     readOnly = false,
     themeId,
     vimMode,
+    hardMode,
     onChange,
   },
   ref,
@@ -154,7 +156,7 @@ const CodeMirrorBox = forwardRef<EditorView, CodeMirrorBoxProps>(function CodeMi
         indentOnInput: true,
         bracketMatching: true,
         closeBrackets: !readOnly,
-        autocompletion: !readOnly,
+        autocompletion: !readOnly && !hardMode,
         rectangularSelection: true,
         crosshairCursor: true,
         highlightActiveLine: !readOnly,

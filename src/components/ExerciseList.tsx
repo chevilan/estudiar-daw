@@ -1,4 +1,11 @@
-import { CheckCircle2, Clock3, Database, Github, Upload } from "lucide-react";
+import {
+  CheckCircle2,
+  Clock3,
+  Database,
+  Github,
+  PanelLeftClose,
+  Upload,
+} from "lucide-react";
 import { useRef } from "react";
 
 import { Badge } from "@/components/ui/badge";
@@ -18,6 +25,7 @@ type ExerciseListProps = {
   onTopicChange: (topic: Topic | "todos") => void;
   onSelect: (exercise: Exercise) => void;
   onImportExercises: (files: FileList | null) => void;
+  onHide: () => void;
 };
 
 const topicOptions: Array<{ value: Topic | "todos"; label: string }> = [
@@ -47,6 +55,7 @@ export default function ExerciseList({
   onTopicChange,
   onSelect,
   onImportExercises,
+  onHide,
 }: ExerciseListProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const filteredExercises =
@@ -62,7 +71,7 @@ export default function ExerciseList({
           alt="Logo DAW"
           className="h-9 w-9 rounded-md object-cover shadow-sm"
         />
-        <div className="min-w-0">
+        <div className="min-w-0 flex-1">
           <p className="truncate text-sm font-semibold leading-none">
             DAW Practice Lab
           </p>
@@ -70,6 +79,16 @@ export default function ExerciseList({
             {exercises.length} ejercicios
           </p>
         </div>
+        <Button
+          variant="ghost"
+          size="icon"
+          type="button"
+          onClick={onHide}
+          title="Ocultar barra lateral"
+          aria-label="Ocultar barra lateral"
+        >
+          <PanelLeftClose size={16} aria-hidden />
+        </Button>
       </div>
 
       <div className="grid grid-cols-2 gap-2">

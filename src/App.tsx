@@ -9,6 +9,7 @@ import {
   Lightbulb,
   ListChecks,
   Palette,
+  PanelLeftOpen,
   Play,
   ShieldQuestion,
   Sparkles,
@@ -49,6 +50,7 @@ import {
   saveCode,
   saveProgress,
 } from "@/lib/storage";
+import { cn } from "@/lib/utils";
 import { validateExercise } from "@/lib/validation";
 import type {
   CodeFiles,
@@ -71,6 +73,7 @@ const hardModeStorageKey = "daw-lab:hard-mode";
 const vimModeStorageKey = "daw-lab:vim-mode";
 const previewLayoutStorageKey = "daw-lab:preview-layout";
 const appThemeStorageKey = "daw-lab:app-theme";
+const sidebarHiddenStorageKey = "daw-lab:sidebar-hidden";
 const repositoryUrl = "https://github.com/chevilan/estudiar-daw";
 
 const topicLabels: Record<Topic, string> = {
@@ -173,6 +176,10 @@ function loadAppTheme(): AppTheme {
   return saved && isAppTheme(saved) ? saved : "classic";
 }
 
+function loadSidebarHidden(): boolean {
+  return localStorage.getItem(sidebarHiddenStorageKey) === "on";
+}
+
 function renderInlineMarkdown(text: string) {
   return text.split(/(`[^`]+`)/g).map((part, index) => {
     if (part.startsWith("`") && part.endsWith("`")) {
@@ -254,6 +261,7 @@ export default function App() {
   const [showGlossary, setShowGlossary] = useState(false);
   const [glossaryMarkdown, setGlossaryMarkdown] = useState("");
   const [glossaryError, setGlossaryError] = useState<string | null>(null);
+  const [sidebarHidden, setSidebarHidden] = useState(loadSidebarHidden);
 
   useEffect(() => {
     let isMounted = true;
@@ -530,6 +538,30 @@ export default function App() {
     saveProgress(selectedExercise.id, nextProgress);
   }, [consoleLines, files, progressById, selectedExercise]);
 
+  const handleToggleCompleted = useCallback(() => {
+    if (!selectedExercise) {
+      return;
+    }
+
+    const current = progressById[selectedExercise.id];
+    const next: ExerciseProgress = {
+      completed: !(current?.completed ?? false),
+      attempts: current?.attempts ?? 0,
+      lastEditedAt: new Date().toISOString(),
+    };
+
+    setProgressById((prev) => ({ ...prev, [selectedExercise.id]: next }));
+    saveProgress(selectedExercise.id, next);
+  }, [progressById, selectedExercise]);
+
+  const handleToggleSidebar = useCallback(() => {
+    setSidebarHidden((prev) => {
+      const next = !prev;
+      localStorage.setItem(sidebarHiddenStorageKey, next ? "on" : "off");
+      return next;
+    });
+  }, []);
+
   const handleCopySolution = useCallback(() => {
     if (!selectedExercise?.targetCode) {
       return;
@@ -575,18 +607,39 @@ export default function App() {
 
   return (
     <TooltipProvider delayDuration={150}>
-      <div className="grid min-h-screen bg-background lg:grid-cols-[280px_minmax(0,1fr)]">
-        <ExerciseList
-          exercises={exercises}
-          selectedId={selectedExercise.id}
-          topic={topic}
-          progressById={progressById}
-          repositoryUrl={repositoryUrl}
-          customExerciseCount={customExerciseIds.size}
-          onTopicChange={setTopic}
-          onSelect={handleSelectExercise}
-          onImportExercises={handleImportExercises}
-        />
+      <div
+        className={cn(
+          "grid min-h-screen bg-background",
+          sidebarHidden ? "lg:grid-cols-[minmax(0,1fr)]" : "lg:grid-cols-[280px_minmax(0,1fr)]",
+        )}
+      >
+        {sidebarHidden ? null : (
+          <ExerciseList
+            exercises={exercises}
+            selectedId={selectedExercise.id}
+            topic={topic}
+            progressById={progressById}
+            repositoryUrl={repositoryUrl}
+            customExerciseCount={customExerciseIds.size}
+            onTopicChange={setTopic}
+            onSelect={handleSelectExercise}
+            onImportExercises={handleImportExercises}
+            onHide={handleToggleSidebar}
+          />
+        )}
+
+        {sidebarHidden ? (
+          <Button
+            variant="outline"
+            size="icon"
+            onClick={handleToggleSidebar}
+            title="Mostrar lista de ejercicios"
+            aria-label="Mostrar lista de ejercicios"
+            className="fixed left-3 top-3 z-40 shadow-md"
+          >
+            <PanelLeftOpen size={16} aria-hidden />
+          </Button>
+        ) : null}
 
         <main className="flex min-w-0 flex-col gap-5 p-4 sm:p-6">
           <header className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
@@ -670,6 +723,15 @@ export default function App() {
                   </div>
                 </TooltipContent>
               </Tooltip>
+              <Button
+                variant={currentProgress?.completed ? "default" : "outline"}
+                onClick={handleToggleCompleted}
+                aria-pressed={Boolean(currentProgress?.completed)}
+                title={currentProgress?.completed ? "Desmarcar como hecha" : "Marcar como hecha"}
+              >
+                <CheckCircle2 size={14} aria-hidden />
+                {currentProgress?.completed ? "Hecha" : "Marcar hecha"}
+              </Button>
               <Button onClick={handleValidate}>
                 <ListChecks size={14} aria-hidden />
                 Comprobar

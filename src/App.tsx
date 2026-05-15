@@ -108,12 +108,12 @@ const topicFileLanguages: Partial<Record<Topic, Record<ValidationField, EditorLa
   jsp: {
     html: "html",
     css: "plain",
-    javascript: "plain",
+    javascript: "java",
   },
   servlets: {
     html: "html",
     css: "html",
-    javascript: "plain",
+    javascript: "java",
   },
 };
 

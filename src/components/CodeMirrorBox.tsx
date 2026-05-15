@@ -1,5 +1,6 @@
 import { css } from "@codemirror/lang-css";
 import { html } from "@codemirror/lang-html";
+import { java } from "@codemirror/lang-java";
 import { javascript } from "@codemirror/lang-javascript";
 import { EditorState, type Extension } from "@codemirror/state";
 import { EditorView } from "@codemirror/view";
@@ -37,6 +38,8 @@ function languageExtension(language: EditorLanguage): Extension[] {
       return [css()];
     case "javascript":
       return [javascript({ jsx: false, typescript: false })];
+    case "java":
+      return [java()];
     case "plain":
       return [];
   }

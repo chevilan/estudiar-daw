@@ -10,7 +10,7 @@ export type CodeFiles = {
 
 export type ValidationField = keyof CodeFiles;
 
-export type EditorLanguage = ValidationField | "plain";
+export type EditorLanguage = ValidationField | "java" | "plain";
 
 export type ValidationRule =
   | {

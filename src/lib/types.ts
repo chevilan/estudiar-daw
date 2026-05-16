@@ -1,6 +1,10 @@
-export type Topic = "html" | "css" | "javascript" | "jsp" | "servlets";
+export type Topic = "html" | "css" | "javascript" | "jsp" | "servlets" | "examen";
 
-export type ExerciseType = "build" | "visual-match";
+export type ExerciseType =
+  | "build"
+  | "visual-match"
+  | "written-answer"
+  | "table-answer";
 
 export type CodeFiles = {
   html: string;
@@ -11,6 +15,37 @@ export type CodeFiles = {
 export type ValidationField = keyof CodeFiles;
 
 export type EditorLanguage = ValidationField | "java" | "plain";
+
+export type ExerciseAsset = {
+  src: string;
+  title?: string;
+  alt?: string;
+};
+
+export type ExerciseEditorConfig = {
+  labels?: Partial<Record<ValidationField, string>>;
+  languages?: Partial<Record<ValidationField, EditorLanguage>>;
+  initialFile?: ValidationField;
+};
+
+export type ExercisePreviewConfig = {
+  htmlField?: ValidationField;
+  cssFields?: ValidationField[];
+  javascriptFields?: ValidationField[];
+};
+
+export type TableQuestion = {
+  columns: string[];
+  rows: string[];
+  options?: string[];
+};
+
+export type TableAnswerRule = {
+  type: "tableAnswer";
+  answers: Record<string, Record<string, string>>;
+  message: string;
+  caseSensitive?: boolean;
+};
 
 export type ValidationRule =
   | {
@@ -45,7 +80,16 @@ export type ValidationRule =
       value: string;
       message: string;
       caseSensitive?: boolean;
-    };
+    }
+  | {
+      type: "keywords";
+      field: ValidationField;
+      values: string[];
+      minMatches?: number;
+      message: string;
+      caseSensitive?: boolean;
+    }
+  | TableAnswerRule;
 
 export type ExerciseValidation = {
   mode: "all";
@@ -62,6 +106,10 @@ export type Exercise = {
   estimatedMinutes: number;
   prompt: string;
   notes?: string[];
+  assets?: ExerciseAsset[];
+  editor?: ExerciseEditorConfig;
+  preview?: ExercisePreviewConfig;
+  tableQuestion?: TableQuestion;
   starterCode: CodeFiles;
   targetCode?: CodeFiles;
   validation: ExerciseValidation;

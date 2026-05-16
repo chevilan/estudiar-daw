@@ -1,0 +1,64 @@
+{
+  "id": "examen25-01-html-basico",
+  "topic": "examen",
+  "type": "written-answer",
+  "title": "Examen 2025 - 01. Fundamentos de HTML",
+  "difficulty": "base",
+  "estimatedMinutes": 8,
+  "prompt": "Responde a la pregunta i) del examen: ¿Quien fue el creador del HTML y en que contexto? ¿Que dos tipos de etiquetas lo componen y cuales son sus caracteristicas a nivel de renderizado? ¿Como indicamos que un documento esta en HTML 5? ¿Mediante que instruccion se indica la codificacion de un documento?",
+  "notes": [
+    "Es una respuesta teorica: escribe frases completas, pero incluye los terminos clave.",
+    "La correccion busca conceptos esenciales, no una redaccion literal."
+  ],
+  "assets": [
+    {
+      "src": "exercises/assets/examen25-page-01.jpg",
+      "title": "Enunciado original, pagina 1",
+      "alt": "Primera pagina del examen DAW 2025 con las preguntas i, ii y iii"
+    }
+  ],
+  "editor": {
+    "labels": {
+      "html": "Respuesta",
+      "css": "Esquema",
+      "javascript": "Notas"
+    },
+    "languages": {
+      "html": "plain",
+      "css": "plain",
+      "javascript": "plain"
+    }
+  },
+  "starterCode": {
+    "html": "Creador y contexto:\n\nTipos de etiquetas:\n\nHTML 5:\n\nCodificacion:\n",
+    "css": "",
+    "javascript": ""
+  },
+  "targetCode": {
+    "html": "HTML fue creado por Tim Berners-Lee en el CERN para compartir documentos enlazados dentro de la Web. Las etiquetas pueden ser de bloque, que ocupan una linea o caja propia, y en linea, que fluyen dentro del texto sin romper el flujo. Un documento HTML5 se indica con <!doctype html>. La codificacion se declara normalmente con <meta charset=\"UTF-8\"> dentro de head.",
+    "css": "",
+    "javascript": ""
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "Respuesta HTML completa.",
+    "rules": [
+      {
+        "type": "keywords",
+        "field": "html",
+        "values": [
+          "Tim Berners",
+          "CERN",
+          "bloque",
+          "linea",
+          "inline",
+          "doctype",
+          "meta charset",
+          "utf-8"
+        ],
+        "minMatches": 5,
+        "message": "Incluye creador/contexto, etiquetas de bloque/en linea, doctype y charset."
+      }
+    ]
+  }
+}

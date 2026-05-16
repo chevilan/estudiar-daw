@@ -1,0 +1,50 @@
+{
+  "id": "examen25-06-regex-lookahead",
+  "topic": "examen",
+  "type": "written-answer",
+  "title": "Examen 2025 - 06. Captura de expresion regular",
+  "difficulty": "base",
+  "estimatedMinutes": 5,
+  "prompt": "Resuelve la pregunta vi) del examen. Dada la expresion regular `[5-9](?=[l-r]+)`, indica cual es el resultado de su captura sobre el texto: `El codigo buscado es: f648r4q1m2h5`.",
+  "assets": [
+    {
+      "src": "exercises/assets/examen25-page-03.jpg",
+      "title": "Enunciado original, pregunta vi",
+      "alt": "Tercera pagina del examen con la pregunta vi"
+    }
+  ],
+  "editor": {
+    "labels": {
+      "html": "Respuesta",
+      "css": "Razonamiento",
+      "javascript": "Prueba JS"
+    },
+    "languages": {
+      "html": "plain",
+      "css": "plain",
+      "javascript": "javascript"
+    }
+  },
+  "starterCode": {
+    "html": "La captura es: ",
+    "css": "",
+    "javascript": "const texto = 'f648r4q1m2h5';\nconst resultado = texto.match(/[5-9](?=[l-r]+)/);\nconsole.log(resultado?.[0]);\n"
+  },
+  "targetCode": {
+    "html": "La captura es: 8",
+    "css": "El 8 cumple el rango [5-9] y va seguido de r, que pertenece al rango [l-r]. El 5 final no captura porque no tiene ningun caracter posterior.",
+    "javascript": "const texto = 'f648r4q1m2h5';\nconst resultado = texto.match(/[5-9](?=[l-r]+)/);\nconsole.log(resultado?.[0]);\n"
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "La captura de la regex es correcta.",
+    "rules": [
+      {
+        "type": "regex",
+        "field": "html",
+        "pattern": "(^|\\D)8(\\D|$)",
+        "message": "La respuesta debe indicar que la captura es 8."
+      }
+    ]
+  }
+}

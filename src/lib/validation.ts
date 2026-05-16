@@ -1,7 +1,26 @@
 import type { CodeFiles, ValidationResult, ValidationRule } from "./types";
 
 const normalize = (value: string, caseSensitive = false) =>
-  caseSensitive ? value : value.toLowerCase();
+  caseSensitive
+    ? value
+    : value
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "");
+
+function parseTableAnswers(value: string): Record<string, Record<string, string>> {
+  try {
+    const parsed = JSON.parse(value);
+
+    if (typeof parsed === "object" && parsed !== null && !Array.isArray(parsed)) {
+      return parsed as Record<string, Record<string, string>>;
+    }
+  } catch {
+    return {};
+  }
+
+  return {};
+}
 
 function evaluateRule(
   rule: ValidationRule,
@@ -36,6 +55,28 @@ function evaluateRule(
   if (rule.type === "consoleIncludes") {
     const haystack = normalize(consoleLines.join("\n"), rule.caseSensitive);
     return haystack.includes(normalize(rule.value, rule.caseSensitive));
+  }
+
+  if (rule.type === "keywords") {
+    const haystack = normalize(files[rule.field], rule.caseSensitive);
+    const matches = rule.values.filter((value) =>
+      haystack.includes(normalize(value, rule.caseSensitive)),
+    );
+
+    return matches.length >= (rule.minMatches ?? rule.values.length);
+  }
+
+  if (rule.type === "tableAnswer") {
+    const tableAnswers = parseTableAnswers(files.html);
+
+    return Object.entries(rule.answers).every(([row, columns]) =>
+      Object.entries(columns).every(([column, expected]) => {
+        const actual = tableAnswers[row]?.[column] ?? "";
+
+        return normalize(actual.trim(), rule.caseSensitive) ===
+          normalize(expected.trim(), rule.caseSensitive);
+      }),
+    );
   }
 
   return false;

@@ -1,6 +1,6 @@
 # DAW Practice Lab
 
-Aplicacion web para practicar HTML, CSS, JavaScript, JSP y Servlets con ejercicios interactivos.
+Aplicacion web para practicar HTML, CSS, JavaScript, JSP, Servlets y examenes con ejercicios interactivos.
 
 Puedes usarla online aqui:
 
@@ -8,11 +8,11 @@ https://estudiar-daw.onrender.com/
 
 ## Que incluye
 
-- Filtro de ejercicios por HTML, CSS, JavaScript, JSP y Servlets.
+- Filtro de ejercicios por HTML, CSS, JavaScript, JSP, Servlets y Examen.
 - Editor separado por archivos de trabajo. En JSP/Servlets las pestanas se adaptan a `JSP`, `Servlet.java`, `web.xml` o fragmentos relacionados.
 - Preview en vivo dentro de un iframe aislado.
 - Panel de validacion estructural para ejercicios de JSP y Servlets.
-- Ejercicios de construccion y de comparacion visual.
+- Ejercicios de construccion, comparacion visual, respuesta escrita y tablas de examen.
 - Validaciones automaticas declaradas en JSON.
 - Persistencia local del codigo y progreso con `localStorage`.
 - Subida de ejercicios JSON desde la interfaz.
@@ -78,6 +78,8 @@ La app soporta estos tipos:
 
 - `build`: ejercicio por enunciado, sin objetivo visual obligatorio.
 - `visual-match`: ejercicio con preview de tu codigo y preview objetivo lado a lado.
+- `written-answer`: pregunta teorica o de codigo sin iframe.
+- `table-answer`: pregunta con tabla de opciones cerradas.
 
 ## Formato basico de ejercicio
 
@@ -108,8 +110,8 @@ La app soporta estos tipos:
 
 Valores soportados:
 
-- `topic`: `html`, `css`, `javascript`, `jsp`, `servlets`
-- `type`: `build`, `visual-match`
+- `topic`: `html`, `css`, `javascript`, `jsp`, `servlets`, `examen`
+- `type`: `build`, `visual-match`, `written-answer`, `table-answer`
 - `difficulty`: `base`, `media`, `reto`
 
 ## Validaciones disponibles
@@ -119,6 +121,8 @@ Valores soportados:
 - `regex`: comprueba un patron con expresion regular.
 - `domSelector`: comprueba que el HTML contiene un selector.
 - `consoleIncludes`: comprueba texto emitido por `console.log`.
+- `keywords`: comprueba conceptos clave en respuestas escritas.
+- `tableAnswer`: comprueba celdas de una tabla de respuesta.
 
 Ejemplo:
 

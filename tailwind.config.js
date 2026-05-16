@@ -72,6 +72,7 @@ export default {
           javascript: "hsl(var(--topic-javascript))",
           jsp: "hsl(var(--topic-jsp))",
           servlets: "hsl(var(--topic-servlets))",
+          examen: "hsl(var(--topic-examen))",
         },
         code: {
           DEFAULT: "hsl(var(--code))",

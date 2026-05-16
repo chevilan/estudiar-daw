@@ -1,0 +1,63 @@
+{
+  "id": "examen25-02-css-basico",
+  "topic": "examen",
+  "type": "written-answer",
+  "title": "Examen 2025 - 02. Reglas CSS, import, box-sizing e identificadores",
+  "difficulty": "media",
+  "estimatedMinutes": 12,
+  "prompt": "Responde a la pregunta ii) del examen: ¿Cuales son los dos componentes basicos de una regla de estilos CSS y que papel desempenan? ¿Cual es el uso de @import en un documento CSS? ¿Para que se utiliza la propiedad `box-sizing`? ¿Cuales serian sus posibles valores y cual seria su efecto? Indica las diferencias y similitudes entre los atributos `id`, `class` y `name` de una etiqueta HTML.",
+  "assets": [
+    {
+      "src": "exercises/assets/examen25-page-01.jpg",
+      "title": "Enunciado original, pagina 1",
+      "alt": "Primera pagina del examen DAW 2025"
+    }
+  ],
+  "editor": {
+    "labels": {
+      "html": "Respuesta",
+      "css": "Esquema",
+      "javascript": "Notas"
+    },
+    "languages": {
+      "html": "plain",
+      "css": "plain",
+      "javascript": "plain"
+    }
+  },
+  "starterCode": {
+    "html": "Regla CSS:\n\n@import:\n\nbox-sizing:\n\nid, class y name:\n",
+    "css": "",
+    "javascript": ""
+  },
+  "targetCode": {
+    "html": "Una regla CSS se compone de selector y declaracion. El selector decide a que elementos afecta; la declaracion agrupa propiedades y valores. @import sirve para cargar otra hoja de estilos desde una hoja CSS. box-sizing controla como se calcula el tamano de una caja: content-box mide solo el contenido y suma padding/border fuera; border-box incluye contenido, padding y border dentro de width/height. id identifica un elemento unico y puede usarse como ancla o selector #id; class agrupa varios elementos y se selecciona con .clase; name se usa sobre todo para nombrar campos de formulario y enviarlos al servidor, aunque tambien puede ser consultado desde JavaScript.",
+    "css": "",
+    "javascript": ""
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "Respuesta CSS completa.",
+    "rules": [
+      {
+        "type": "keywords",
+        "field": "html",
+        "values": [
+          "selector",
+          "declaracion",
+          "propiedad",
+          "valor",
+          "@import",
+          "box-sizing",
+          "content-box",
+          "border-box",
+          "id",
+          "class",
+          "name"
+        ],
+        "minMatches": 8,
+        "message": "Incluye selector/declaracion, @import, box-sizing y diferencias entre id, class y name."
+      }
+    ]
+  }
+}

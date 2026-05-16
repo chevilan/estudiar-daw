@@ -1,0 +1,93 @@
+{
+  "id": "examen25-08-ajax-json-universidades",
+  "topic": "examen",
+  "type": "written-answer",
+  "title": "Examen 2025 - 08. AJAX, JSON y renderizado de universidades",
+  "difficulty": "media",
+  "estimatedMinutes": 18,
+  "prompt": "Resuelve la pregunta viii) del examen. Primero explica a que corresponden los fragmentos de las Figuras 8.1 y 8.2 y que hace cada linea. Despues, dado el JSON de la Figura 8.3 y el HTML con `<ul id=\"datos\"></ul>`, escribe el codigo necesario para renderizar la lista de la Figura 8.4.",
+  "assets": [
+    {
+      "src": "exercises/assets/examen25-page-03.jpg",
+      "title": "Enunciado original, pregunta viii",
+      "alt": "Pregunta viii del examen"
+    },
+    {
+      "src": "exercises/assets/examen25-page-08.jpg",
+      "title": "Figuras 8.1, 8.2, 8.3 y 8.4",
+      "alt": "Figuras de AJAX, JSON y lista renderizada"
+    }
+  ],
+  "editor": {
+    "labels": {
+      "html": "Explicacion",
+      "css": "JSON",
+      "javascript": "AJAX y DOM"
+    },
+    "languages": {
+      "html": "plain",
+      "css": "javascript",
+      "javascript": "javascript"
+    },
+    "initialFile": "javascript"
+  },
+  "starterCode": {
+    "html": "Fig. 8.1:\n\nFig. 8.2:\n",
+    "css": "{\n  \"Universidades\": [\n    { \"Nombre\": \"USC\", \"Ciudad\": \"Santiago de Compostela\", \"Pais\": \"Espana\" },\n    { \"Nombre\": \"UChicago\", \"Ciudad\": \"Chicago\", \"Pais\": \"EE.UU.\" },\n    { \"Nombre\": \"USI\", \"Ciudad\": \"Lugano\", \"Pais\": \"Suiza\" },\n    { \"Nombre\": \"UDC\", \"Ciudad\": \"La Coruna\", \"Pais\": \"Espana\" }\n  ]\n}",
+    "javascript": "const lista = document.querySelector('#datos');\n\n// Escribe aqui el codigo con XMLHttpRequest, JSON.parse y renderizado de <li>.\n"
+  },
+  "targetCode": {
+    "html": "Fig. 8.1 crea un objeto XMLHttpRequest, abre una peticion GET asincrona contra una URL y la envia. Fig. 8.2 define el manejador onload; cuando la respuesta llega y el status es 200, se procesa el contenido recibido.",
+    "css": "{\n  \"Universidades\": [\n    { \"Nombre\": \"USC\", \"Ciudad\": \"Santiago de Compostela\", \"Pais\": \"Espana\" },\n    { \"Nombre\": \"UChicago\", \"Ciudad\": \"Chicago\", \"Pais\": \"EE.UU.\" },\n    { \"Nombre\": \"USI\", \"Ciudad\": \"Lugano\", \"Pais\": \"Suiza\" },\n    { \"Nombre\": \"UDC\", \"Ciudad\": \"La Coruna\", \"Pais\": \"Espana\" }\n  ]\n}",
+    "javascript": "const xhr = new XMLHttpRequest();\nxhr.open('GET', 'universidades.json', true);\nxhr.onload = function () {\n  if (xhr.status === 200) {\n    const datos = JSON.parse(xhr.responseText);\n    const lista = document.querySelector('#datos');\n\n    datos.Universidades.forEach((universidad) => {\n      const item = document.createElement('li');\n      item.textContent = `${universidad.Nombre}: ${universidad.Pais}`;\n      lista.appendChild(item);\n    });\n  }\n};\nxhr.send();\n"
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "La explicacion AJAX y el renderizado JSON estan completos.",
+    "rules": [
+      {
+        "type": "keywords",
+        "field": "html",
+        "values": ["XMLHttpRequest", "GET", "asincrona", "send", "onload", "status", "200"],
+        "minMatches": 5,
+        "message": "Explica las lineas principales de las Figuras 8.1 y 8.2."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "new\\s+XMLHttpRequest\\s*\\(",
+        "message": "Crea una peticion con XMLHttpRequest."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "\\.open\\s*\\([\\s\\S]*GET[\\s\\S]*\\)[\\s\\S]*\\.send\\s*\\(",
+        "message": "Abre y envia la peticion GET."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "onload|addEventListener\\s*\\(\\s*['\\\"]load['\\\"]",
+        "message": "Procesa la respuesta al cargar."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "status\\s*={2,3}\\s*200[\\s\\S]*JSON\\.parse",
+        "message": "Comprueba status 200 y parsea JSON."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "(Universidades|universidades)[\\s\\S]*(forEach|map|for\\s*\\()",
+        "message": "Recorre el array de universidades."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "(createElement\\s*\\(\\s*['\\\"]li['\\\"]|innerHTML|insertAdjacentHTML)[\\s\\S]*(Nombre|nombre)[\\s\\S]*(Pais|pais)",
+        "message": "Genera items con el formato Nombre: Pais."
+      }
+    ]
+  }
+}

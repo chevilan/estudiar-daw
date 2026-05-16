@@ -9,9 +9,9 @@ type CustomExerciseDocument = Exercise & {
   updatedAt: string;
 };
 
-const topics: Topic[] = ["html", "css", "javascript", "jsp", "servlets"];
+const topics: Topic[] = ["html", "css", "javascript", "jsp", "servlets", "examen"];
 const difficulties = ["base", "media", "reto"];
-const exerciseTypes = ["build", "visual-match"];
+const exerciseTypes = ["build", "visual-match", "written-answer", "table-answer"];
 const codeFields: ValidationField[] = ["html", "css", "javascript"];
 
 function openDatabase(): Promise<IDBDatabase> {
@@ -89,6 +89,10 @@ function parseExerciseDocument(value: unknown): Exercise {
     estimatedMinutes,
     prompt,
     notes,
+    assets,
+    editor,
+    preview,
+    tableQuestion,
     starterCode,
     targetCode,
     validation,
@@ -148,6 +152,14 @@ function parseExerciseDocument(value: unknown): Exercise {
     estimatedMinutes,
     prompt,
     notes: Array.isArray(notes) ? notes.filter((note) => typeof note === "string") : undefined,
+    assets: Array.isArray(assets)
+      ? (assets as Exercise["assets"])
+      : undefined,
+    editor: isRecord(editor) ? (editor as Exercise["editor"]) : undefined,
+    preview: isRecord(preview) ? (preview as Exercise["preview"]) : undefined,
+    tableQuestion: isRecord(tableQuestion)
+      ? (tableQuestion as Exercise["tableQuestion"])
+      : undefined,
     starterCode,
     targetCode,
     validation: {

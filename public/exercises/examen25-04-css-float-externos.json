@@ -1,0 +1,94 @@
+{
+  "id": "examen25-04-css-float-externos",
+  "topic": "examen",
+  "type": "visual-match",
+  "title": "Examen 2025 - 04. Dos ficheros CSS con float",
+  "difficulty": "reto",
+  "estimatedMinutes": 18,
+  "prompt": "Resuelve la pregunta iv) del examen sin modificar el HTML dado. Simula los dos ficheros externos: `cssBasico.css` debe recoger el formato basico de los cuadrados y `cssPos.css` el posicionamiento responsive. El preview combina ambos ficheros virtuales para que puedas comparar el resultado.",
+  "notes": [
+    "El cuadrado azul corresponde a `p1` y el rojo a `p2`.",
+    "Usa la solucion indicada: version `<= 450` y version `> 450`."
+  ],
+  "assets": [
+    {
+      "src": "exercises/assets/examen25-page-02.jpg",
+      "title": "Enunciado original, pregunta iv",
+      "alt": "Segunda pagina del examen con la pregunta iv"
+    },
+    {
+      "src": "exercises/assets/examen25-page-07.jpg",
+      "title": "Figuras 4.1 y 4.2",
+      "alt": "Figuras de los cuadrados p1 y p2"
+    }
+  ],
+  "editor": {
+    "labels": {
+      "html": "index.html",
+      "css": "cssBasico.css",
+      "javascript": "cssPos.css"
+    },
+    "languages": {
+      "html": "html",
+      "css": "css",
+      "javascript": "css"
+    },
+    "initialFile": "css"
+  },
+  "preview": {
+    "cssFields": ["css", "javascript"],
+    "javascriptFields": []
+  },
+  "starterCode": {
+    "html": "<em id=\"p1\"></em>\n<em id=\"p2\"></em>",
+    "css": "/* cssBasico.css */\n",
+    "javascript": "/* cssPos.css */\n"
+  },
+  "targetCode": {
+    "html": "<em id=\"p1\"></em>\n<em id=\"p2\"></em>",
+    "css": "/* cssBasico.css - version <= 450 */\nem {\n  width: 100px;\n  height: 100px;\n}\n\n#p1 {\n  display: inline-block;\n  background: blue;\n}\n\n#p2 {\n  display: block;\n  background: red;\n  float: left;\n}\n",
+    "javascript": "/* cssPos.css - version > 450 */\n@media (min-width: 451px) {\n  em {\n    display: block;\n    width: 100px;\n    height: 100px;\n  }\n\n  #p1 {\n    background: blue;\n    float: right;\n  }\n\n  #p2 {\n    background: red;\n    float: right;\n    clear: right;\n  }\n}\n"
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "Los dos ficheros CSS virtuales reproducen la figura.",
+    "rules": [
+      {
+        "type": "regex",
+        "field": "css",
+        "pattern": "width\\s*:\\s*100px[\\s\\S]*height\\s*:\\s*100px|height\\s*:\\s*100px[\\s\\S]*width\\s*:\\s*100px",
+        "message": "Define cuadrados de 100 x 100 en cssBasico.css."
+      },
+      {
+        "type": "regex",
+        "field": "css",
+        "pattern": "#p1[\\s\\S]*background\\s*:\\s*blue",
+        "message": "Da color azul a p1 en cssBasico.css."
+      },
+      {
+        "type": "regex",
+        "field": "css",
+        "pattern": "#p2[\\s\\S]*background\\s*:\\s*red[\\s\\S]*float\\s*:\\s*left",
+        "message": "Da color rojo a p2 y colocalo con float left en la version <= 450."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "@media[\\s\\S]*(min-width\\s*:\\s*451px|width\\s*>\\s*450px)",
+        "message": "Crea la version > 450 con una media query."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "#p1[\\s\\S]*float\\s*:\\s*right",
+        "message": "En pantallas grandes, p1 flota a la derecha."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "#p2[\\s\\S]*float\\s*:\\s*right[\\s\\S]*clear\\s*:\\s*right",
+        "message": "En pantallas grandes, p2 flota a la derecha y limpia por la derecha."
+      }
+    ]
+  }
+}

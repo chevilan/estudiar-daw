@@ -1,0 +1,133 @@
+{
+  "id": "examen25-11-servlets-registro-preferencias",
+  "topic": "examen",
+  "type": "written-answer",
+  "title": "Examen 2025 - 11. Aplicacion MVC de registro y preferencias",
+  "difficulty": "reto",
+  "estimatedMinutes": 45,
+  "prompt": "Resuelve la pregunta xi) del examen. Implementa las piezas pedidas para la aplicacion MVC de registro de usuarios y preferencias: i) `welcome.jsp`; ii) `servlet_1` (`Registro.java`); iii) `servlet_3` (`RegistroUsuarios.java`); iv) `vistaUsuarios.jsp`; v) `web.xml`; vi) `setUsuario()` de `ListadoGeneral`, evitando usuarios repetidos en el `HashMap` por ID. Usa `Despachador` para las invocaciones a vistas desde servlets.",
+  "notes": [
+    "Este ejercicio es largo: usa las pestanas como bloques de entrega, no como ficheros literales unicos.",
+    "La validacion revisa estructura y conceptos clave; puede haber varias soluciones correctas."
+  ],
+  "assets": [
+    {
+      "src": "exercises/assets/examen25-page-04.jpg",
+      "title": "Enunciado xi, parte 1",
+      "alt": "Cuarta pagina del examen con la descripcion de la aplicacion"
+    },
+    {
+      "src": "exercises/assets/examen25-page-05.jpg",
+      "title": "Enunciado xi, parte 2",
+      "alt": "Quinta pagina del examen con vistas"
+    },
+    {
+      "src": "exercises/assets/examen25-page-06.jpg",
+      "title": "Enunciado xi, parte 3",
+      "alt": "Sexta pagina del examen con lo pedido"
+    },
+    {
+      "src": "exercises/assets/examen25-page-09.jpg",
+      "title": "Figura 11.1 a 11.4",
+      "alt": "Esquema MVC y primeras vistas"
+    },
+    {
+      "src": "exercises/assets/examen25-page-10.jpg",
+      "title": "Figura 11.5 a 11.10",
+      "alt": "Vistas de registro, preferencias y listados"
+    },
+    {
+      "src": "exercises/assets/examen25-page-11.jpg",
+      "title": "Clases Java y estructuras de datos",
+      "alt": "Diagrama de clases Java y estructuras de datos"
+    },
+    {
+      "src": "exercises/assets/examen25-page-12.jpg",
+      "title": "Formularios del anexo",
+      "alt": "Formularios HTML del anexo"
+    }
+  ],
+  "editor": {
+    "labels": {
+      "html": "welcome.jsp",
+      "css": "vistaUsuarios.jsp / web.xml",
+      "javascript": "Servlets / Java"
+    },
+    "languages": {
+      "html": "html",
+      "css": "html",
+      "javascript": "java"
+    },
+    "initialFile": "html"
+  },
+  "starterCode": {
+    "html": "<%@ page contentType=\"text/html; charset=UTF-8\" pageEncoding=\"UTF-8\" %>\n<%@ taglib prefix=\"c\" uri=\"http://java.sun.com/jsp/jstl/core\" %>\n<!-- welcome.jsp: gestiona param.opt y decide la vista/accion -->\n",
+    "css": "<!-- vistaUsuarios.jsp y web.xml -->\n",
+    "javascript": "package daw;\n\n// Registro.java, RegistroUsuarios.java y ListadoGeneral.setUsuario()\n"
+  },
+  "targetCode": {
+    "html": "<%@ page contentType=\"text/html; charset=UTF-8\" pageEncoding=\"UTF-8\" %>\n<%@ taglib prefix=\"c\" uri=\"http://java.sun.com/jsp/jstl/core\" %>\n<jsp:include page=\"/includes/otros/header.html\" />\n<c:choose>\n  <c:when test=\"${param.opt == 'verDatos'}\">\n    <jsp:forward page=\"servlet_4\" />\n  </c:when>\n  <c:when test=\"${param.opt == 'verUsuarios'}\">\n    <jsp:forward page=\"servlet_3\" />\n  </c:when>\n  <c:when test=\"${param.opt == 'registro'}\">\n    <jsp:forward page=\"/vistas/registro.jsp\" />\n  </c:when>\n  <c:when test=\"${param.opt == 'cambiarPreferencias'}\">\n    <p style=\"color:red\">Lo lamentamos. Cambiar preferencias no disponible en este momento.</p>\n    <jsp:include page=\"/includes/formularios/forminput.html\" />\n  </c:when>\n  <c:otherwise>\n    <jsp:include page=\"/includes/formularios/forminput.html\" />\n  </c:otherwise>\n</c:choose>\n<jsp:include page=\"/includes/otros/footer.html\" />\n",
+    "css": "<!-- vistaUsuarios.jsp -->\n<%@ page contentType=\"text/html; charset=UTF-8\" pageEncoding=\"UTF-8\" %>\n<%@ taglib prefix=\"c\" uri=\"http://java.sun.com/jsp/jstl/core\" %>\n<jsp:include page=\"/includes/otros/header.html\" />\n<h2>Lista de Usuarios</h2>\n<table>\n  <tr><th>Nombre</th><th>Apellidos</th></tr>\n  <c:forEach var=\"usuario\" items=\"${listaUsuarios.lista}\">\n    <tr>\n      <td>${usuario.nombre}</td>\n      <td>${usuario.apellido}</td>\n    </tr>\n  </c:forEach>\n</table>\n<a href=\"${pageContext.request.contextPath}/daw.jsp\">Volver a la pagina principal</a>\n<jsp:include page=\"/includes/otros/footer.html\" />\n\n<!-- web.xml -->\n<web-app>\n  <servlet><servlet-name>servlet_1</servlet-name><servlet-class>daw.Registro</servlet-class></servlet>\n  <servlet><servlet-name>servlet_2</servlet-name><servlet-class>daw.Preferencias</servlet-class></servlet>\n  <servlet><servlet-name>servlet_3</servlet-name><servlet-class>daw.RegistroUsuarios</servlet-class></servlet>\n  <servlet><servlet-name>servlet_4</servlet-name><servlet-class>daw.RegistroGeneral</servlet-class></servlet>\n  <servlet-mapping><servlet-name>servlet_1</servlet-name><url-pattern>/servlet_1</url-pattern></servlet-mapping>\n  <servlet-mapping><servlet-name>servlet_3</servlet-name><url-pattern>/servlet_3</url-pattern></servlet-mapping>\n  <welcome-file-list><welcome-file>daw.jsp</welcome-file></welcome-file-list>\n</web-app>\n",
+    "javascript": "public class Registro extends HttpServlet {\n  private ListaUsuarios lista;\n\n  protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {\n    Usuario usuario = getUsuario(request);\n    request.setAttribute(\"currentUser\", usuario);\n    response.addCookie(new Cookie(\"userID\", usuario.getId()));\n    lista.changeCurrentUser(usuario);\n    new Despachador().includePage(request, response, \"servlet_3\");\n    new Despachador().includePage(request, response, \"servlet_4\");\n    new Despachador().forwardPage(request, response, \"/welcomeUser.jsp\");\n  }\n\n  private Usuario getUsuario(HttpServletRequest request) {\n    Usuario usuario = new Usuario();\n    usuario.setNombre(request.getParameter(\"nombre\"));\n    usuario.setApellido(request.getParameter(\"apellido\"));\n    usuario.setId(request.getParameter(\"id\"));\n    usuario.setPassword(request.getParameter(\"pwd\"));\n    return usuario;\n  }\n}\n\npublic class RegistroUsuarios extends HttpServlet {\n  private ListaUsuarios lista;\n\n  protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {\n    procesaLista(request);\n  }\n\n  private void procesaLista(HttpServletRequest request) {\n    Usuario actual = (Usuario) request.getAttribute(\"currentUser\");\n    lista.getLista().add(actual);\n    request.setAttribute(\"listaUsuarios\", lista);\n    request.setAttribute(\"nUsers\", lista.getNUsers());\n  }\n}\n\npublic class ListadoGeneral {\n  private HashMap<String, Usuario> lista = new HashMap<>();\n\n  public void setUsuario(Usuario usuario) {\n    if (usuario != null && !lista.containsKey(usuario.getId())) {\n      lista.put(usuario.getId(), usuario);\n    }\n  }\n}\n"
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "La estructura MVC del ejercicio xi esta cubierta.",
+    "rules": [
+      {
+        "type": "regex",
+        "field": "html",
+        "pattern": "<c:choose>[\\s\\S]*(verDatos|vistaDatos)[\\s\\S]*(verUsuarios|vistaUsuarios)[\\s\\S]*cambiarPreferencias[\\s\\S]*registro",
+        "message": "welcome.jsp decide entre verDatos, verUsuarios, cambiarPreferencias y registro."
+      },
+      {
+        "type": "regex",
+        "field": "html",
+        "pattern": "<jsp:(forward|include)[\\s\\S]*(servlet_4|vistaDatos)[\\s\\S]*<jsp:(forward|include)[\\s\\S]*(servlet_3|vistaUsuarios)",
+        "message": "welcome.jsp redirige o incluye las acciones de listado general y usuarios."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "class\\s+Registro[\\s\\S]*getUsuario[\\s\\S]*setAttribute\\s*\\(\\s*[\"']currentUser[\"']",
+        "message": "Registro.java crea el usuario y lo guarda como currentUser."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "new\\s+Cookie\\s*\\(\\s*[\"']userID[\"'][\\s\\S]*addCookie",
+        "message": "Registro.java crea y envia la cookie userID."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "Despachador[\\s\\S]*(servlet_3|RegistroUsuarios)[\\s\\S]*(servlet_4|RegistroGeneral)[\\s\\S]*welcomeUser\\.jsp",
+        "message": "Registro.java usa Despachador para servlet_3, servlet_4 y welcomeUser.jsp."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "class\\s+RegistroUsuarios[\\s\\S]*procesaLista[\\s\\S]*(ListaUsuarios|ArrayList)[\\s\\S]*setAttribute",
+        "message": "RegistroUsuarios.java procesa la lista local y publica datos para la vista."
+      },
+      {
+        "type": "regex",
+        "field": "css",
+        "pattern": "vistaUsuarios[\\s\\S]*(<c:forEach|forEach)[\\s\\S]*nombre[\\s\\S]*apellido",
+        "message": "vistaUsuarios.jsp recorre usuarios y muestra nombre y apellidos."
+      },
+      {
+        "type": "regex",
+        "field": "css",
+        "pattern": "<web-app[\\s\\S]*servlet_1[\\s\\S]*Registro[\\s\\S]*servlet_3[\\s\\S]*RegistroUsuarios[\\s\\S]*url-pattern",
+        "message": "web.xml declara y mapea al menos servlet_1 y servlet_3."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "HashMap\\s*<\\s*String\\s*,\\s*Usuario\\s*>[\\s\\S]*containsKey[\\s\\S]*put\\s*\\(",
+        "message": "ListadoGeneral.setUsuario usa HashMap y evita IDs repetidos antes de put."
+      }
+    ]
+  }
+}

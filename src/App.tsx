@@ -5,6 +5,7 @@ import {
   CheckCircle2,
   Database,
   Eye,
+  FileText,
   Github,
   Lightbulb,
   ListChecks,
@@ -21,6 +22,7 @@ import CodeEditor from "@/components/CodeEditor";
 import ExerciseList from "@/components/ExerciseList";
 import GiveUpDialog from "@/components/GiveUpDialog";
 import PreviewFrame from "@/components/PreviewFrame";
+import TableAnswer from "@/components/TableAnswer";
 import ValidationPanel from "@/components/ValidationPanel";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -56,6 +58,7 @@ import type {
   CodeFiles,
   EditorLanguage,
   Exercise,
+  ExercisePreviewConfig,
   ExerciseProgress,
   Topic,
   ValidationField,
@@ -83,6 +86,7 @@ const topicLabels: Record<Topic, string> = {
   javascript: "JavaScript",
   jsp: "JSP",
   servlets: "Servlets",
+  examen: "Examen",
 };
 
 const fileLabels: Record<ValidationField, string> = {
@@ -125,12 +129,69 @@ function getFileLanguage(topic: Topic, field: ValidationField) {
   return topicFileLanguages[topic]?.[field] ?? field;
 }
 
-function getInitialActiveFile(topic: Topic): ValidationField {
-  return topic === "servlets" ? "javascript" : "html";
+function getExerciseFileLabels(exercise: Exercise) {
+  return {
+    ...topicFileLabels[exercise.topic],
+    ...exercise.editor?.labels,
+  };
+}
+
+function getExerciseFileLanguages(exercise: Exercise) {
+  return {
+    ...topicFileLanguages[exercise.topic],
+    ...exercise.editor?.languages,
+  };
+}
+
+function getInitialActiveFile(exercise: Exercise): ValidationField {
+  return exercise.editor?.initialFile ?? (exercise.topic === "servlets" ? "javascript" : "html");
 }
 
 function isServerSideTopic(topic: Topic) {
   return topic === "jsp" || topic === "servlets";
+}
+
+function isPreviewType(exercise: Exercise) {
+  return exercise.type === "build" || exercise.type === "visual-match";
+}
+
+function getExerciseTypeLabel(type: Exercise["type"]) {
+  if (type === "visual-match") {
+    return "Clonar objetivo";
+  }
+
+  if (type === "written-answer") {
+    return "Respuesta escrita";
+  }
+
+  if (type === "table-answer") {
+    return "Tabla";
+  }
+
+  return "Construir";
+}
+
+function assetSource(src: string) {
+  if (/^(?:https?:)?\/\//.test(src) || src.startsWith("/")) {
+    return src;
+  }
+
+  return `${import.meta.env.BASE_URL}${src}`;
+}
+
+function createExercisePreviewFiles(
+  sourceFiles: CodeFiles,
+  previewConfig?: ExercisePreviewConfig,
+): CodeFiles {
+  const htmlField = previewConfig?.htmlField ?? "html";
+  const cssFields = previewConfig?.cssFields ?? ["css"];
+  const javascriptFields = previewConfig?.javascriptFields ?? ["javascript"];
+
+  return {
+    html: sourceFiles[htmlField],
+    css: cssFields.map((field) => sourceFiles[field]).join("\n\n"),
+    javascript: javascriptFields.map((field) => sourceFiles[field]).join("\n\n"),
+  };
 }
 
 type PreviewLayout = "right" | "left" | "below";
@@ -346,7 +407,7 @@ export default function App() {
     }
 
     setFiles(loadSavedCode(selectedExercise.id) ?? selectedExercise.starterCode);
-    setActiveFile(getInitialActiveFile(selectedExercise.topic));
+    setActiveFile(getInitialActiveFile(selectedExercise));
     setConsoleLines([]);
     setValidationResults(createPendingResults(selectedExercise));
     setHasRunValidation(false);
@@ -611,6 +672,13 @@ export default function App() {
   const hasTarget = Boolean(selectedExercise.targetCode);
   const currentProgress = progressById[selectedExercise.id];
   const isServerSideExercise = isServerSideTopic(selectedExercise.topic);
+  const canShowPreview = !isServerSideExercise && isPreviewType(selectedExercise);
+  const exerciseFileLabels = getExerciseFileLabels(selectedExercise);
+  const exerciseFileLanguages = getExerciseFileLanguages(selectedExercise);
+  const previewFiles = createExercisePreviewFiles(files, selectedExercise.preview);
+  const targetPreviewFiles = selectedExercise.targetCode
+    ? createExercisePreviewFiles(selectedExercise.targetCode, selectedExercise.preview)
+    : null;
   const previewGridClass =
     previewLayout === "left"
       ? "grid items-start gap-4 [grid-template-areas:'editor''preview''checks'] xl:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] xl:[grid-template-areas:'preview_editor''preview_checks']"
@@ -770,10 +838,33 @@ export default function App() {
             <div className="space-y-2 text-[0.92rem] leading-relaxed text-foreground">
               {selectedExercise.prompt.split("\n").map((line, index) => (
                 <p key={`${selectedExercise.id}-prompt-${index}`} className="m-0 max-w-[70ch]">
-                  {line}
+                  {renderInlineMarkdown(line)}
                 </p>
               ))}
             </div>
+
+            {selectedExercise.assets?.length ? (
+              <div className="mt-4 grid gap-3 sm:grid-cols-2">
+                {selectedExercise.assets.map((asset) => (
+                  <figure
+                    key={asset.src}
+                    className="m-0 overflow-hidden rounded-md border bg-secondary/30"
+                  >
+                    <img
+                      src={assetSource(asset.src)}
+                      alt={asset.alt ?? asset.title ?? "Referencia del ejercicio"}
+                      className="max-h-[520px] w-full object-contain"
+                      loading="lazy"
+                    />
+                    {asset.title ? (
+                      <figcaption className="border-t px-3 py-2 text-xs text-muted-foreground">
+                        {asset.title}
+                      </figcaption>
+                    ) : null}
+                  </figure>
+                ))}
+              </div>
+            ) : null}
 
             {!hardMode && selectedExercise.notes?.length ? (
               <ul className="m-0 mt-3 grid list-disc gap-1.5 pl-5 text-sm text-muted-foreground">
@@ -795,9 +886,7 @@ export default function App() {
                 </Badge>
               ) : null}
               <Badge variant="muted">
-                {selectedExercise.type === "visual-match"
-                  ? "Clonar objetivo"
-                  : "Construir"}
+                {getExerciseTypeLabel(selectedExercise.type)}
               </Badge>
               <Badge variant="muted">{selectedExercise.estimatedMinutes} min</Badge>
               <Badge variant="muted" className="capitalize">
@@ -816,24 +905,33 @@ export default function App() {
 
           <div className={previewGridClass}>
             <div className="[grid-area:editor]">
-              <CodeEditor
-                files={files}
-                activeFile={activeFile}
-                fileLabels={topicFileLabels[selectedExercise.topic]}
-                fileLanguages={topicFileLanguages[selectedExercise.topic]}
-                codeThemeId={codeThemeId}
-                vimMode={vimMode}
-                autocompleteDisabled={autocompleteDisabled}
-                previewLayout={previewLayout}
-                onActiveFileChange={setActiveFile}
-                onChange={handleChangeFile}
-                onCodeThemeChange={handleCodeThemeChange}
-                onVimModeChange={handleVimModeChange}
-                onAutocompleteDisabledChange={handleAutocompleteDisabledChange}
-                onReset={handleReset}
-                onPreviewLayoutChange={setPreviewLayout}
-                resizable
-              />
+              {selectedExercise.type === "table-answer" &&
+              selectedExercise.tableQuestion ? (
+                <TableAnswer
+                  question={selectedExercise.tableQuestion}
+                  value={files.html}
+                  onChange={(value) => handleChangeFile("html", value)}
+                />
+              ) : (
+                <CodeEditor
+                  files={files}
+                  activeFile={activeFile}
+                  fileLabels={exerciseFileLabels}
+                  fileLanguages={exerciseFileLanguages}
+                  codeThemeId={codeThemeId}
+                  vimMode={vimMode}
+                  autocompleteDisabled={autocompleteDisabled}
+                  previewLayout={previewLayout}
+                  onActiveFileChange={setActiveFile}
+                  onChange={handleChangeFile}
+                  onCodeThemeChange={handleCodeThemeChange}
+                  onVimModeChange={handleVimModeChange}
+                  onAutocompleteDisabledChange={handleAutocompleteDisabledChange}
+                  onReset={handleReset}
+                  onPreviewLayoutChange={setPreviewLayout}
+                  resizable
+                />
+              )}
             </div>
 
             <Card
@@ -846,9 +944,11 @@ export default function App() {
                   <h2 className="m-0 text-sm font-semibold">
                     {isServerSideExercise
                       ? "Validación estructural"
-                      : hasTarget
+                      : canShowPreview && hasTarget
                         ? "Preview y objetivo"
-                        : "Preview"}
+                        : canShowPreview
+                          ? "Preview"
+                          : "Modo de respuesta"}
                   </h2>
                 </div>
               </div>
@@ -872,7 +972,7 @@ export default function App() {
                     </div>
                   </div>
                 </div>
-              ) : (
+              ) : canShowPreview ? (
                 <div
                   className={
                     hasTarget
@@ -885,26 +985,44 @@ export default function App() {
                       Tu resultado
                     </span>
                     <PreviewFrame
-                      files={files}
+                      files={previewFiles}
                       title="Tu resultado"
                       channelId={solutionChannelId}
                       resizable
                     />
                   </div>
 
-                  {selectedExercise.targetCode ? (
+                  {targetPreviewFiles ? (
                     <div className="flex min-w-0 flex-col gap-1.5">
                       <span className="text-[0.7rem] font-semibold uppercase tracking-wider text-muted-foreground">
                         Objetivo
                       </span>
                       <PreviewFrame
-                        files={selectedExercise.targetCode}
+                        files={targetPreviewFiles}
                         title="Objetivo"
                         channelId={`target:${selectedExercise.id}`}
                         resizable
                       />
                     </div>
                   ) : null}
+                </div>
+              ) : (
+                <div className="grid min-h-[220px] place-items-center rounded-md border bg-secondary/40 p-6 text-center">
+                  <div className="grid max-w-md gap-3">
+                    <FileText
+                      size={24}
+                      className="mx-auto text-muted-foreground"
+                      aria-hidden
+                    />
+                    <p className="m-0 text-sm font-semibold text-foreground">
+                      Respuesta sin iframe
+                    </p>
+                    <p className="m-0 text-sm leading-relaxed text-muted-foreground">
+                      Este modo se corrige con reglas sobre tu respuesta escrita o
+                      con la tabla del enunciado. Usa las imagenes de referencia si
+                      necesitas consultar las figuras del examen.
+                    </p>
+                  </div>
                 </div>
               )}
 
@@ -941,9 +1059,15 @@ export default function App() {
             validationResults={validationResults}
             hasRunValidation={hasRunValidation}
             fileLabels={{
-              html: getFileLabel(selectedExercise.topic, "html"),
-              css: getFileLabel(selectedExercise.topic, "css"),
-              javascript: getFileLabel(selectedExercise.topic, "javascript"),
+              html:
+                exerciseFileLabels.html ??
+                getFileLabel(selectedExercise.topic, "html"),
+              css:
+                exerciseFileLabels.css ??
+                getFileLabel(selectedExercise.topic, "css"),
+              javascript:
+                exerciseFileLabels.javascript ??
+                getFileLabel(selectedExercise.topic, "javascript"),
             }}
             onCopySolution={handleCopySolution}
           />

@@ -35,6 +35,7 @@ const topicOptions: Array<{ value: Topic | "todos"; label: string }> = [
   { value: "javascript", label: "JS" },
   { value: "jsp", label: "JSP" },
   { value: "servlets", label: "Servlets" },
+  { value: "examen", label: "Examen" },
 ];
 
 const topicDotClass: Record<Topic, string> = {
@@ -43,6 +44,7 @@ const topicDotClass: Record<Topic, string> = {
   javascript: "bg-topic-javascript",
   jsp: "bg-topic-jsp",
   servlets: "bg-topic-servlets",
+  examen: "bg-topic-examen",
 };
 
 export default function ExerciseList({

@@ -1,0 +1,51 @@
+{
+  "id": "examen25-10-jsp-el-jstl",
+  "topic": "examen",
+  "type": "written-answer",
+  "title": "Examen 2025 - 10. JSP, EL y JSTL",
+  "difficulty": "media",
+  "estimatedMinutes": 10,
+  "prompt": "Responde a la pregunta x) del examen: ¿Que se entiende por JSP y a que lenguaje de programacion esta ligado? ¿Que se entiende por Lenguaje de Expresion y que es necesario hacer para utilizarlo en un JSP? ¿Que se entiende por JSTL y que es necesario hacer para utilizarlo en una aplicacion web?",
+  "assets": [
+    {
+      "src": "exercises/assets/examen25-page-03.jpg",
+      "title": "Enunciado original, pregunta x",
+      "alt": "Pregunta x del examen"
+    }
+  ],
+  "editor": {
+    "labels": {
+      "html": "Respuesta",
+      "css": "Ejemplos JSP",
+      "javascript": "Notas"
+    },
+    "languages": {
+      "html": "plain",
+      "css": "html",
+      "javascript": "plain"
+    }
+  },
+  "starterCode": {
+    "html": "JSP:\n\nEL:\n\nJSTL:\n",
+    "css": "",
+    "javascript": ""
+  },
+  "targetCode": {
+    "html": "JSP significa JavaServer Pages: paginas del lado servidor ligadas a Java que se traducen/ejecutan como servlets para generar contenido dinamico. EL o Lenguaje de Expresion permite acceder a atributos y beans con expresiones como ${usuario.nombre}; en un JSP debe estar habilitado y se usa dentro de la pagina con los objetos/atributos disponibles. JSTL es una libreria de etiquetas estandar para control de flujo, salida, iteracion, etc.; para usarla hay que incluir la dependencia/libreria en la aplicacion y declarar la directiva taglib correspondiente, por ejemplo el prefijo c para core.",
+    "css": "<%@ taglib prefix=\"c\" uri=\"http://java.sun.com/jsp/jstl/core\" %>\n<c:out value=\"${usuario.nombre}\" />",
+    "javascript": ""
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "Respuesta JSP/EL/JSTL completa.",
+    "rules": [
+      {
+        "type": "keywords",
+        "field": "html",
+        "values": ["JSP", "Java", "Servlet", "EL", "Lenguaje de Expresion", "${", "JSTL", "taglib", "libreria"],
+        "minMatches": 6,
+        "message": "Incluye JSP ligado a Java, EL y JSTL con taglib/libreria."
+      }
+    ]
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "id": "examen25-09-aplicacion-web",
+  "topic": "examen",
+  "type": "written-answer",
+  "title": "Examen 2025 - 09. Concepto de aplicacion web",
+  "difficulty": "base",
+  "estimatedMinutes": 5,
+  "prompt": "Responde a la pregunta ix) del examen: ¿Que se entiende por Aplicacion Web?",
+  "assets": [
+    {
+      "src": "exercises/assets/examen25-page-03.jpg",
+      "title": "Enunciado original, pregunta ix",
+      "alt": "Pregunta ix del examen"
+    }
+  ],
+  "editor": {
+    "labels": {
+      "html": "Respuesta",
+      "css": "Esquema",
+      "javascript": "Notas"
+    },
+    "languages": {
+      "html": "plain",
+      "css": "plain",
+      "javascript": "plain"
+    }
+  },
+  "starterCode": {
+    "html": "",
+    "css": "",
+    "javascript": ""
+  },
+  "targetCode": {
+    "html": "Una aplicacion web es un sistema software accesible desde un navegador mediante protocolos web como HTTP/HTTPS. Suele organizarse con una parte cliente, que presenta la interfaz e interactua con el usuario, y una parte servidor, que procesa peticiones, aplica logica de negocio y accede a datos.",
+    "css": "",
+    "javascript": ""
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "Definicion de aplicacion web aceptada.",
+    "rules": [
+      {
+        "type": "keywords",
+        "field": "html",
+        "values": ["navegador", "cliente", "servidor", "HTTP", "peticiones", "datos", "web"],
+        "minMatches": 4,
+        "message": "Incluye navegador/web, cliente-servidor y peticiones o datos."
+      }
+    ]
+  }
+}

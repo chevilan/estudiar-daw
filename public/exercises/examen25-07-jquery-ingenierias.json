@@ -1,0 +1,74 @@
+{
+  "id": "examen25-07-jquery-ingenierias",
+  "topic": "examen",
+  "type": "written-answer",
+  "title": "Examen 2025 - 07. jQuery sobre la lista de ingenierias",
+  "difficulty": "media",
+  "estimatedMinutes": 14,
+  "prompt": "Resuelve la pregunta vii) del examen usando jQuery: 1) `Ingenieria Ambiental` debe aparecer en azul por defecto. 2) Al poner el raton encima de `Escuela Tecnica de Ingenieria`, `Ingenieria Informatica` se pone en verde. 3) Al hacer click en `Ingenieria Quimica`, la cabecera pasa a `Facultad de Fisica`.",
+  "assets": [
+    {
+      "src": "exercises/assets/examen25-page-03.jpg",
+      "title": "Enunciado original, pregunta vii",
+      "alt": "Pregunta vii del examen"
+    },
+    {
+      "src": "exercises/assets/examen25-page-08.jpg",
+      "title": "Figura 7",
+      "alt": "Figura 7 con la lista de ingenierias"
+    }
+  ],
+  "editor": {
+    "labels": {
+      "html": "HTML",
+      "css": "CSS",
+      "javascript": "jQuery"
+    },
+    "languages": {
+      "html": "html",
+      "css": "css",
+      "javascript": "javascript"
+    },
+    "initialFile": "javascript"
+  },
+  "starterCode": {
+    "html": "<h2>Escuela Tecnica de Ingenieria</h2>\n<ul>\n  <li>Ingenieria Quimica</li>\n  <li>Ingenieria Ambiental</li>\n  <li>Ingenieria Informatica</li>\n</ul>",
+    "css": "",
+    "javascript": "$(function () {\n  // Escribe aqui el codigo jQuery.\n});\n"
+  },
+  "targetCode": {
+    "html": "<h2>Escuela Tecnica de Ingenieria</h2>\n<ul>\n  <li>Ingenieria Quimica</li>\n  <li>Ingenieria Ambiental</li>\n  <li>Ingenieria Informatica</li>\n</ul>",
+    "css": "",
+    "javascript": "$(function () {\n  $('li:contains(\"Ingenieria Ambiental\")').css('color', 'blue');\n\n  $('h2').on('mouseover', function () {\n    $('li:contains(\"Ingenieria Informatica\")').css('color', 'green');\n  });\n\n  $('li:contains(\"Ingenieria Quimica\")').on('click', function () {\n    $('h2').text('Facultad de Fisica');\n  });\n});\n"
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "El comportamiento jQuery queda descrito.",
+    "rules": [
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "\\$\\s*\\(",
+        "message": "Usa selectores jQuery."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "Ambiental[\\s\\S]*\\.css\\s*\\([\\s\\S]*blue|eq\\s*\\(\\s*1\\s*\\)[\\s\\S]*\\.css\\s*\\([\\s\\S]*blue",
+        "message": "Pon Ingenieria Ambiental en azul por defecto."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "(mouseover|mouseenter|hover)[\\s\\S]*(Informatica|eq\\s*\\(\\s*2\\s*\\))[\\s\\S]*green",
+        "message": "Al pasar por el h2, pon Ingenieria Informatica en verde."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "click[\\s\\S]*(Quimica|eq\\s*\\(\\s*0\\s*\\))[\\s\\S]*(text|html)\\s*\\([\\s\\S]*Facultad de Fisica",
+        "message": "Al hacer click en Ingenieria Quimica, cambia la cabecera."
+      }
+    ]
+  }
+}

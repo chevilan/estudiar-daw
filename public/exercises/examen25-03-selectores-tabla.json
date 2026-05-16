@@ -1,0 +1,77 @@
+{
+  "id": "examen25-03-selectores-tabla",
+  "topic": "examen",
+  "type": "table-answer",
+  "title": "Examen 2025 - 03. Tabla de selectores CSS",
+  "difficulty": "media",
+  "estimatedMinutes": 10,
+  "prompt": "Resuelve la pregunta iii) del examen. Dado el HTML de la Figura 3.1, completa la tabla con N si el texto queda negro y R si queda rojo cuando se aplica, de forma aislada, la regla `{ color: red; }` al selector de cada columna.",
+  "notes": [
+    "La fila II no aparece en la tabla del examen, aunque si existe en el HTML.",
+    "Piensa cada columna como una regla independiente."
+  ],
+  "assets": [
+    {
+      "src": "exercises/assets/examen25-page-01.jpg",
+      "title": "Tabla original del enunciado",
+      "alt": "Tabla de selectores CSS de la pregunta iii"
+    },
+    {
+      "src": "exercises/assets/examen25-page-07.jpg",
+      "title": "Figura 3.1",
+      "alt": "Codigo HTML de la figura 3.1"
+    }
+  ],
+  "tableQuestion": {
+    "columns": ["div > p", "div + p", "h2 + p", "h2 ~ p"],
+    "rows": ["USC", "ETSE", "DAW", "3er Curso", "Santiago"],
+    "options": ["N", "R"]
+  },
+  "starterCode": {
+    "html": "{}",
+    "css": "",
+    "javascript": ""
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "La tabla de selectores coincide con el renderizado esperado.",
+    "rules": [
+      {
+        "type": "tableAnswer",
+        "answers": {
+          "USC": {
+            "div > p": "R",
+            "div + p": "N",
+            "h2 + p": "R",
+            "h2 ~ p": "R"
+          },
+          "ETSE": {
+            "div > p": "R",
+            "div + p": "N",
+            "h2 + p": "N",
+            "h2 ~ p": "R"
+          },
+          "DAW": {
+            "div > p": "R",
+            "div + p": "N",
+            "h2 + p": "N",
+            "h2 ~ p": "N"
+          },
+          "3er Curso": {
+            "div > p": "R",
+            "div + p": "N",
+            "h2 + p": "N",
+            "h2 ~ p": "N"
+          },
+          "Santiago": {
+            "div > p": "N",
+            "div + p": "N",
+            "h2 + p": "N",
+            "h2 ~ p": "N"
+          }
+        },
+        "message": "Completa correctamente todas las celdas N/R."
+      }
+    ]
+  }
+}

@@ -89,6 +89,17 @@
     "servlets-config-context-attributes-reto.json",
     "servlets-cookies-session-reto.json",
     "servlets-mvc-login-reto.json",
-    "servlets-session-listado-logout-reto.json"
+    "servlets-session-listado-logout-reto.json",
+    "examen25-01-html-basico.json",
+    "examen25-02-css-basico.json",
+    "examen25-03-selectores-tabla.json",
+    "examen25-04-css-float-externos.json",
+    "examen25-05-js-cuadrado-funciones.json",
+    "examen25-06-regex-lookahead.json",
+    "examen25-07-jquery-ingenierias.json",
+    "examen25-08-ajax-json-universidades.json",
+    "examen25-09-aplicacion-web.json",
+    "examen25-10-jsp-el-jstl.json",
+    "examen25-11-servlets-registro-preferencias.json"
   ]
 }

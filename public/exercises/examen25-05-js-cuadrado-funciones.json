@@ -1,0 +1,80 @@
+{
+  "id": "examen25-05-js-cuadrado-funciones",
+  "topic": "examen",
+  "type": "build",
+  "title": "Examen 2025 - 05. Funciones JavaScript sobre el cuadrado",
+  "difficulty": "reto",
+  "estimatedMinutes": 22,
+  "prompt": "Resuelve la pregunta v) del examen. Define la regla CSS `.miClase` y el JavaScript con `miFuncion_1()`, `miFuncion_2()` y `miFuncion_3()`: al pasar el raton por el cuadrado alterna el texto `DAW`/`Compostela`; al hacer doble click sobre el texto alterna el formato pequeno rojo punteado; al hacer click sobre `USC. ETSE.` alterna el color segun el tamano del cuadrado.",
+  "assets": [
+    {
+      "src": "exercises/assets/examen25-page-02.jpg",
+      "title": "Enunciado original, pregunta v",
+      "alt": "Pregunta v del examen"
+    },
+    {
+      "src": "exercises/assets/examen25-page-07.jpg",
+      "title": "Figura 5",
+      "alt": "Figura 5 del cuadrado y el texto"
+    }
+  ],
+  "starterCode": {
+    "html": "<main>\n  <h2>USC. ETSE.</h2>\n  <p class=\"cuadrado\"></p>\n  <p id=\"texto\">DAW</p>\n</main>",
+    "css": "body {\n  margin: 0;\n  min-height: 100vh;\n  display: grid;\n  place-items: center;\n  background: #f7f3eb;\n  font-family: Georgia, serif;\n}\n\nmain {\n  text-align: center;\n}\n\nh2,\n#texto {\n  cursor: pointer;\n}\n\n.cuadrado {\n  width: 100px;\n  height: 100px;\n  margin: 12px auto;\n  background: blue;\n  border: 4px solid #1f2937;\n}\n\n/* Define aqui .miClase */\n",
+    "javascript": "const titulo = document.querySelector('h2');\nconst cuadrado = document.querySelector('.cuadrado');\nconst texto = document.querySelector('#texto');\n\n// Define miFuncion_1, miFuncion_2 y miFuncion_3.\n"
+  },
+  "targetCode": {
+    "html": "<main>\n  <h2>USC. ETSE.</h2>\n  <p class=\"cuadrado\"></p>\n  <p id=\"texto\">DAW</p>\n</main>",
+    "css": "body {\n  margin: 0;\n  min-height: 100vh;\n  display: grid;\n  place-items: center;\n  background: #f7f3eb;\n  font-family: Georgia, serif;\n}\n\nmain {\n  text-align: center;\n}\n\nh2,\n#texto {\n  cursor: pointer;\n}\n\n.cuadrado {\n  width: 100px;\n  height: 100px;\n  margin: 12px auto;\n  background: blue;\n  border: 4px solid #1f2937;\n}\n\n.miClase {\n  width: 50px;\n  height: 50px;\n  background: red;\n  border-style: dotted;\n}\n",
+    "javascript": "function miFuncion_1() {\n  texto.textContent = texto.textContent.trim() === 'DAW' ? 'Compostela' : 'DAW';\n}\n\nfunction miFuncion_2() {\n  cuadrado.classList.toggle('miClase');\n}\n\nfunction miFuncion_3() {\n  const esPequeno = cuadrado.classList.contains('miClase');\n  const colorActual = getComputedStyle(cuadrado).backgroundColor;\n  const esVerde = colorActual === 'rgb(0, 128, 0)' || cuadrado.style.backgroundColor === 'green';\n\n  if (esPequeno) {\n    cuadrado.style.backgroundColor = esVerde ? 'red' : 'green';\n  } else {\n    cuadrado.style.backgroundColor = esVerde ? 'blue' : 'green';\n  }\n}\n\ncuadrado.addEventListener('mouseover', miFuncion_1);\ntexto.addEventListener('dblclick', miFuncion_2);\ntitulo.addEventListener('click', miFuncion_3);\n"
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "La interaccion del cuadrado esta implementada.",
+    "rules": [
+      {
+        "type": "regex",
+        "field": "css",
+        "pattern": "\\.miClase[\\s\\S]*width\\s*:\\s*50px[\\s\\S]*height\\s*:\\s*50px",
+        "message": "Define .miClase con tamano 50 x 50."
+      },
+      {
+        "type": "regex",
+        "field": "css",
+        "pattern": "\\.miClase[\\s\\S]*background\\s*:\\s*red[\\s\\S]*border[^;]*:\\s*[^;]*dotted|\\.miClase[\\s\\S]*border-style\\s*:\\s*dotted",
+        "message": "La clase miClase debe ser roja y con borde punteado."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "(function\\s+miFuncion_1|miFuncion_1\\s*=)[\\s\\S]*(function\\s+miFuncion_2|miFuncion_2\\s*=)[\\s\\S]*(function\\s+miFuncion_3|miFuncion_3\\s*=)",
+        "message": "Define miFuncion_1, miFuncion_2 y miFuncion_3."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "addEventListener\\s*\\(\\s*['\\\"](mouseover|mouseenter)['\\\"]",
+        "message": "Asocia el paso del raton por el cuadrado a miFuncion_1."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "addEventListener\\s*\\(\\s*['\\\"]dblclick['\\\"]",
+        "message": "Asocia el doble click sobre el texto a miFuncion_2."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "addEventListener\\s*\\(\\s*['\\\"]click['\\\"]",
+        "message": "Asocia el click sobre el h2 a miFuncion_3."
+      },
+      {
+        "type": "keywords",
+        "field": "javascript",
+        "values": ["DAW", "Compostela", "classList", "green", "blue", "red"],
+        "minMatches": 5,
+        "message": "Alterna texto, clase y colores segun el estado del cuadrado."
+      }
+    ]
+  }
+}

@@ -45,6 +45,7 @@
     --topic-javascript: 38 92% 35%;
     --topic-jsp: 174 78% 28%;
     --topic-servlets: 328 67% 38%;
+    --topic-examen: 262 52% 42%;
 
     --code: 222 47% 8%;
     --code-foreground: 210 20% 90%;
@@ -302,6 +303,7 @@
     --topic-javascript: 42 95% 58%;
     --topic-jsp: 61 66% 44%;
     --topic-servlets: 344 47% 68%;
+    --topic-examen: 190 81% 67%;
     --code: 0 0% 13%;
     --code-foreground: 43 59% 81%;
   }

@@ -44,6 +44,77 @@ Para ejercicios `visual-match`, anade `targetCode`:
 }
 ```
 
+Para preguntas teoricas o de examen que no necesitan iframe, usa
+`written-answer`. La respuesta se guarda en los mismos campos `starterCode`,
+pero puedes cambiar las etiquetas y el lenguaje de cada pestana:
+
+```json
+{
+  "type": "written-answer",
+  "editor": {
+    "labels": {
+      "html": "Respuesta",
+      "css": "Esquema",
+      "javascript": "Notas"
+    },
+    "languages": {
+      "html": "plain",
+      "css": "plain",
+      "javascript": "plain"
+    }
+  }
+}
+```
+
+Para tablas de respuesta cerrada, usa `table-answer` junto con
+`tableQuestion`. La tabla se serializa internamente en `starterCode.html`
+como JSON, por eso el valor inicial recomendado es `{}`:
+
+```json
+{
+  "type": "table-answer",
+  "tableQuestion": {
+    "columns": ["div > p", "div + p"],
+    "rows": ["USC", "ETSE"],
+    "options": ["N", "R"]
+  },
+  "starterCode": {
+    "html": "{}",
+    "css": "",
+    "javascript": ""
+  }
+}
+```
+
+Los ejercicios pueden incluir imagenes de referencia en `assets`. Las rutas
+relativas se resuelven desde `public/`:
+
+```json
+{
+  "assets": [
+    {
+      "src": "exercises/assets/examen25-page-01.jpg",
+      "title": "Enunciado original",
+      "alt": "Pagina escaneada del examen"
+    }
+  ]
+}
+```
+
+Si necesitas simular varios ficheros que alimentan una misma preview, usa
+`preview`. Por ejemplo, un ejercicio con `cssBasico.css` en `starterCode.css`
+y `cssPos.css` en `starterCode.javascript` puede combinar ambos como CSS y
+no ejecutar JavaScript:
+
+```json
+{
+  "preview": {
+    "cssFields": ["css", "javascript"],
+    "javascriptFields": []
+  }
+}
+```
+
 ## Reglas de validacion
 
 Valores de `topic` soportados:
@@ -53,6 +124,14 @@ Valores de `topic` soportados:
 - `javascript`
 - `jsp`
 - `servlets`
+- `examen`
+
+Valores de `type` soportados:
+
+- `build`
+- `visual-match`
+- `written-answer`
+- `table-answer`
 
 Los ejercicios de JSP y Servlets usan los mismos campos `starterCode.html`, `starterCode.css` y `starterCode.javascript`, pero la interfaz cambia las etiquetas para que funcionen como archivos de practica. Por ejemplo, en Servlets se usan como `JSP`, `web.xml` y `Servlet.java`. Tambien se desactiva la preview de iframe y se muestra un panel estructural porque el laboratorio no arranca un contenedor Java.
 
@@ -70,4 +149,27 @@ Los ejercicios de JSP y Servlets usan los mismos campos `starterCode.html`, `sta
 
 ```json
 { "type": "consoleIncludes", "value": "FizzBuzz", "message": "La consola debe incluir FizzBuzz." }
+```
+
+```json
+{
+  "type": "keywords",
+  "field": "html",
+  "values": ["JSP", "Java", "JSTL", "taglib"],
+  "minMatches": 3,
+  "message": "Incluye al menos tres conceptos clave."
+}
+```
+
+```json
+{
+  "type": "tableAnswer",
+  "answers": {
+    "USC": {
+      "div > p": "R",
+      "div + p": "N"
+    }
+  },
+  "message": "Completa correctamente la tabla."
+}
 ```

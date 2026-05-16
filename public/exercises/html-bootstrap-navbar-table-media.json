@@ -1,0 +1,63 @@
+{
+  "id": "html-bootstrap-navbar-table-media",
+  "topic": "html",
+  "type": "build",
+  "title": "Bootstrap: navbar y tabla de notas",
+  "difficulty": "media",
+  "estimatedMinutes": 20,
+  "prompt": "Crea una pagina Bootstrap con una barra de navegacion superior y una tabla de notas. La navbar debe tener marca, al menos 3 enlaces y ser responsive con navbar-expand-md. Debajo, usa una tabla con clases table, table-striped y table-hover, y pinta al menos 4 filas de alumnos con una insignia badge para el estado.",
+  "notes": [
+    "Carga Bootstrap CSS desde CDN.",
+    "Para las insignias puedes usar badge text-bg-success o text-bg-warning."
+  ],
+  "starterCode": {
+    "html": "<!-- Carga Bootstrap y crea la navbar + tabla -->\n<main>\n  <h1>Notas</h1>\n</main>",
+    "css": "body { padding-bottom: 24px; }\n",
+    "javascript": ""
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "Navbar y tabla Bootstrap listas.",
+    "rules": [
+      {
+        "type": "regex",
+        "field": "html",
+        "pattern": "bootstrap[^\\\"]*\\.min\\.css",
+        "message": "Carga Bootstrap CSS desde CDN."
+      },
+      {
+        "type": "domSelector",
+        "selector": ".navbar.navbar-expand-md",
+        "message": "Crea una navbar responsive con navbar-expand-md."
+      },
+      {
+        "type": "domSelector",
+        "selector": ".navbar-brand",
+        "message": "Incluye una marca en la navbar."
+      },
+      {
+        "type": "domSelector",
+        "selector": ".nav-link",
+        "minCount": 3,
+        "message": "Incluye al menos 3 enlaces .nav-link."
+      },
+      {
+        "type": "domSelector",
+        "selector": "table.table.table-striped.table-hover",
+        "message": "Usa una tabla con table, table-striped y table-hover."
+      },
+      {
+        "type": "domSelector",
+        "selector": "tbody tr",
+        "minCount": 4,
+        "message": "Pinta al menos 4 filas de alumnos."
+      },
+      {
+        "type": "domSelector",
+        "selector": ".badge",
+        "minCount": 4,
+        "message": "Usa insignias .badge para los estados."
+      }
+    ]
+  }
+}

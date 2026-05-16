@@ -1,0 +1,60 @@
+{
+  "id": "javascript-xhr-texto-base",
+  "topic": "javascript",
+  "type": "build",
+  "title": "XMLHttpRequest basico: cargar texto",
+  "difficulty": "base",
+  "estimatedMinutes": 12,
+  "prompt": "Usa XMLHttpRequest para cargar un texto remoto al pulsar #cargar. Crea el objeto XHR, abre una peticion GET a https://jsonplaceholder.typicode.com/posts/1, envia la peticion y, cuando cargue con status 200, muestra responseText en #salida.",
+  "notes": [
+    "Este ejercicio no pide parsear JSON todavia.",
+    "Usa onload para leer la respuesta cuando termine."
+  ],
+  "starterCode": {
+    "html": "<main>\n  <h1>Cargar texto con XHR</h1>\n  <button id=\"cargar\">Cargar</button>\n  <pre id=\"salida\"></pre>\n</main>",
+    "css": "body { font-family: system-ui, sans-serif; padding: 24px; }\nbutton { padding: 8px 12px; }\npre { background: #f3f5f7; padding: 14px; min-height: 130px; white-space: pre-wrap; }\n",
+    "javascript": "const boton = document.querySelector('#cargar');\nconst salida = document.querySelector('#salida');\n\n// Carga el texto con XMLHttpRequest.\n"
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "Texto cargado con XMLHttpRequest.",
+    "rules": [
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "new\\s+XMLHttpRequest\\s*\\(",
+        "message": "Crea un objeto XMLHttpRequest."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "\\.open\\s*\\(\\s*['\\\"]GET['\\\"]",
+        "message": "Abre una peticion GET."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "\\.send\\s*\\(",
+        "message": "Envia la peticion con send()."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "onload\\s*=|addEventListener\\s*\\(\\s*['\\\"]load['\\\"]",
+        "message": "Usa onload o el evento load."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "status\\s*={2,3}\\s*200",
+        "message": "Comprueba que status sea 200."
+      },
+      {
+        "type": "contains",
+        "field": "javascript",
+        "value": "responseText",
+        "message": "Muestra xhr.responseText."
+      }
+    ]
+  }
+}

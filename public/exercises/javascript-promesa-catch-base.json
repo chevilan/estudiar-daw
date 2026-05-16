@@ -1,0 +1,60 @@
+{
+  "id": "javascript-promesa-catch-base",
+  "topic": "javascript",
+  "type": "build",
+  "title": "Promesa basica: reject y catch",
+  "difficulty": "base",
+  "estimatedMinutes": 12,
+  "prompt": "Crea una funcion dividir(a, b) que devuelva una Promise. Si b es 0, debe rechazar con un Error. Si no, debe resolver con el resultado de la division. Llama a dividir(10, 0), captura el fallo con .catch() y muestra el mensaje en #error.",
+  "notes": [
+    "reject sirve para indicar que la operacion fallo.",
+    "catch recibe el error rechazado por la promesa."
+  ],
+  "starterCode": {
+    "html": "<main>\n  <h1>Division segura</h1>\n  <p id=\"resultado\"></p>\n  <p id=\"error\"></p>\n</main>",
+    "css": "body { font-family: system-ui, sans-serif; padding: 24px; }\n#error { color: #b00020; font-weight: 700; }\n",
+    "javascript": "const resultado = document.querySelector('#resultado');\nconst error = document.querySelector('#error');\n\n// Define dividir(a, b) con resolve/reject y usa catch().\n"
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "Promesa con reject y catch creada.",
+    "rules": [
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "new\\s+Promise\\s*\\(",
+        "message": "Crea una Promise."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "resolve\\s*\\(",
+        "message": "Usa resolve para el caso correcto."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "reject\\s*\\(",
+        "message": "Usa reject para el caso de error."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "new\\s+Error\\s*\\(",
+        "message": "Rechaza con un objeto Error."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "\\.catch\\s*\\(",
+        "message": "Captura el fallo con .catch()."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "dividir\\s*\\(\\s*10\\s*,\\s*0\\s*\\)",
+        "message": "Prueba el caso dividir(10, 0)."
+      }
+    ]
+  }
+}

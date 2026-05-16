@@ -1,0 +1,60 @@
+{
+  "id": "javascript-async-await-mensaje-media",
+  "topic": "javascript",
+  "type": "build",
+  "title": "Async/await: mostrar mensaje tras esperar",
+  "difficulty": "media",
+  "estimatedMinutes": 15,
+  "prompt": "Crea una funcion esperar(ms) que devuelva una Promise con setTimeout. Luego crea una funcion async iniciar() que cambie #estado a 'Cargando...', espere 1500 ms con await esperar(1500) y despues muestre 'Listo'. Captura errores con try/catch aunque en este caso no se produzcan.",
+  "notes": [
+    "async/await es otra forma de consumir promesas.",
+    "La funcion esperar(ms) debe devolver una Promise."
+  ],
+  "starterCode": {
+    "html": "<main>\n  <h1>Espera controlada</h1>\n  <p id=\"estado\">Sin iniciar</p>\n</main>",
+    "css": "body { font-family: system-ui, sans-serif; padding: 24px; }\n#estado { font-size: 1.4rem; font-weight: 700; }\n",
+    "javascript": "const estado = document.querySelector('#estado');\n\n// Define esperar(ms), iniciar() y llama a iniciar().\n"
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "Async/await usado correctamente.",
+    "rules": [
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "new\\s+Promise\\s*\\([\\s\\S]*setTimeout",
+        "message": "esperar(ms) debe devolver una Promise con setTimeout."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "async\\s+function|async\\s*\\(",
+        "message": "Define una funcion async."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "await\\s+esperar\\s*\\(\\s*1500\\s*\\)",
+        "message": "Espera 1500 ms con await esperar(1500)."
+      },
+      {
+        "type": "contains",
+        "field": "javascript",
+        "value": "Cargando",
+        "message": "Muestra el estado Cargando."
+      },
+      {
+        "type": "contains",
+        "field": "javascript",
+        "value": "Listo",
+        "message": "Muestra el estado Listo."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "try\\s*\\{[\\s\\S]*catch",
+        "message": "Usa try/catch dentro de la funcion async."
+      }
+    ]
+  }
+}

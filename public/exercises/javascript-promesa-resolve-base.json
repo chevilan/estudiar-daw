@@ -1,0 +1,54 @@
+{
+  "id": "javascript-promesa-resolve-base",
+  "topic": "javascript",
+  "type": "build",
+  "title": "Promesa basica: resolver un saludo",
+  "difficulty": "base",
+  "estimatedMinutes": 10,
+  "prompt": "Crea una funcion saludar(nombre) que devuelva una Promise. La promesa debe resolverse con el texto 'Hola, <nombre>' despues de 1 segundo usando setTimeout. Consume la promesa con .then() y escribe el resultado en #salida.",
+  "notes": [
+    "Una promesa sencilla recibe resolve y lo llama cuando termina.",
+    "No necesitas reject en este primer ejercicio."
+  ],
+  "starterCode": {
+    "html": "<main>\n  <h1>Saludo asincrono</h1>\n  <p id=\"salida\">Esperando...</p>\n</main>",
+    "css": "body { font-family: system-ui, sans-serif; padding: 24px; }\n#salida { font-weight: 700; }\n",
+    "javascript": "const salida = document.querySelector('#salida');\n\n// Define saludar(nombre) y consumela con .then().\n"
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "Promesa basica resuelta.",
+    "rules": [
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "new\\s+Promise\\s*\\(",
+        "message": "Crea una Promise con new Promise."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "resolve\\s*\\(",
+        "message": "Resuelve la promesa con resolve()."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "setTimeout\\s*\\(",
+        "message": "Simula la espera con setTimeout."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "\\.then\\s*\\(",
+        "message": "Consume la promesa con .then()."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "textContent|innerHTML",
+        "message": "Muestra el resultado en la pagina."
+      }
+    ]
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "id": "javascript-xhr-readystate-base",
+  "topic": "javascript",
+  "type": "build",
+  "title": "XMLHttpRequest: ver readyState",
+  "difficulty": "base",
+  "estimatedMinutes": 14,
+  "prompt": "Crea una peticion XMLHttpRequest y usa onreadystatechange para escribir en #log cada valor de readyState. Cuando readyState sea 4 y status sea 200, muestra 'Completado' en #estado.",
+  "notes": [
+    "readyState pasa por varios estados entre 0 y 4.",
+    "Este ejercicio ayuda a entender el ciclo de vida de XHR."
+  ],
+  "starterCode": {
+    "html": "<main>\n  <h1>Estados XHR</h1>\n  <button id=\"cargar\">Iniciar</button>\n  <p id=\"estado\">Esperando</p>\n  <ul id=\"log\"></ul>\n</main>",
+    "css": "body { font-family: system-ui, sans-serif; padding: 24px; }\nbutton { padding: 8px 12px; }\n#estado { font-weight: 700; }\n#log { padding-left: 22px; }\n",
+    "javascript": "const estado = document.querySelector('#estado');\nconst log = document.querySelector('#log');\n\n// Registra los cambios de readyState.\n"
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "readyState registrado correctamente.",
+    "rules": [
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "new\\s+XMLHttpRequest\\s*\\(",
+        "message": "Crea un XMLHttpRequest."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "onreadystatechange\\s*=",
+        "message": "Usa onreadystatechange."
+      },
+      {
+        "type": "contains",
+        "field": "javascript",
+        "value": "readyState",
+        "message": "Consulta xhr.readyState."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "readyState\\s*={2,3}\\s*4",
+        "message": "Comprueba readyState === 4."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "status\\s*={2,3}\\s*200",
+        "message": "Comprueba status 200."
+      },
+      {
+        "type": "contains",
+        "field": "javascript",
+        "value": "Completado",
+        "message": "Muestra el texto Completado al terminar."
+      }
+    ]
+  }
+}

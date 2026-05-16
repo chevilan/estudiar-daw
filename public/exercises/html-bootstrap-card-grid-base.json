@@ -1,0 +1,66 @@
+{
+  "id": "html-bootstrap-card-grid-base",
+  "topic": "html",
+  "type": "build",
+  "title": "Bootstrap: tarjetas en grid responsive",
+  "difficulty": "base",
+  "estimatedMinutes": 14,
+  "prompt": "Crea una seccion con Bootstrap que muestre 3 tarjetas de recursos DAW. Debes cargar Bootstrap desde CDN, usar un contenedor, una fila responsive y columnas que ocupen 12 en movil y 4 en escritorio. Cada tarjeta debe tener titulo, texto y un boton.",
+  "notes": [
+    "Usa clases como container, row, col-12, col-md-4, card, card-body y btn.",
+    "No hace falta escribir CSS propio salvo pequenos ajustes opcionales."
+  ],
+  "starterCode": {
+    "html": "<!-- Carga Bootstrap y crea aqui las 3 tarjetas -->\n<main>\n  <h1>Recursos DAW</h1>\n</main>",
+    "css": "body { padding: 24px; }\n",
+    "javascript": ""
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "Grid de tarjetas Bootstrap creado.",
+    "rules": [
+      {
+        "type": "regex",
+        "field": "html",
+        "pattern": "bootstrap[^\\\"]*\\.min\\.css",
+        "message": "Carga la hoja CSS de Bootstrap desde CDN."
+      },
+      {
+        "type": "contains",
+        "field": "html",
+        "value": "container",
+        "message": "Usa un contenedor Bootstrap."
+      },
+      {
+        "type": "contains",
+        "field": "html",
+        "value": "row",
+        "message": "Usa una fila Bootstrap."
+      },
+      {
+        "type": "regex",
+        "field": "html",
+        "pattern": "col-12[\\s\\S]*col-md-4|col-md-4[\\s\\S]*col-12",
+        "message": "Usa columnas col-12 y col-md-4."
+      },
+      {
+        "type": "domSelector",
+        "selector": ".card",
+        "minCount": 3,
+        "message": "Crea al menos 3 tarjetas .card."
+      },
+      {
+        "type": "domSelector",
+        "selector": ".card-body",
+        "minCount": 3,
+        "message": "Incluye .card-body en cada tarjeta."
+      },
+      {
+        "type": "domSelector",
+        "selector": ".btn",
+        "minCount": 3,
+        "message": "Anade un boton Bootstrap en cada tarjeta."
+      }
+    ]
+  }
+}

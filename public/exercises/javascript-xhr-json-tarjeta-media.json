@@ -1,0 +1,66 @@
+{
+  "id": "javascript-xhr-json-tarjeta-media",
+  "topic": "javascript",
+  "type": "build",
+  "title": "XMLHttpRequest: JSON a una tarjeta",
+  "difficulty": "media",
+  "estimatedMinutes": 18,
+  "prompt": "Pide https://jsonplaceholder.typicode.com/users/1 con XMLHttpRequest. Cuando status sea 200, convierte responseText con JSON.parse y pinta en la tarjeta el nombre, email y ciudad del usuario. Si el status no es 200, muestra un mensaje de error en #estado.",
+  "notes": [
+    "La ciudad esta en user.address.city.",
+    "Practica JSON.parse despues de recibir texto."
+  ],
+  "starterCode": {
+    "html": "<main>\n  <h1>Usuario</h1>\n  <button id=\"cargar\">Cargar usuario</button>\n  <p id=\"estado\"></p>\n  <article id=\"tarjeta\">\n    <h2 id=\"nombre\">Sin datos</h2>\n    <p id=\"email\"></p>\n    <p id=\"ciudad\"></p>\n  </article>\n</main>",
+    "css": "body { font-family: system-ui, sans-serif; padding: 24px; background: #f7f9fc; }\nmain { max-width: 520px; margin: auto; }\nbutton { padding: 9px 12px; }\n#tarjeta { margin-top: 14px; padding: 16px; background: white; border: 1px solid #d6deea; border-radius: 8px; }\n#estado { min-height: 22px; }\n",
+    "javascript": "const estado = document.querySelector('#estado');\nconst nombre = document.querySelector('#nombre');\nconst email = document.querySelector('#email');\nconst ciudad = document.querySelector('#ciudad');\n\n// Carga un usuario con XMLHttpRequest y pinta la tarjeta.\n"
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "Tarjeta JSON cargada con XHR.",
+    "rules": [
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "new\\s+XMLHttpRequest\\s*\\(",
+        "message": "Crea un XMLHttpRequest."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "\\.open\\s*\\(\\s*['\\\"]GET['\\\"]",
+        "message": "Abre una peticion GET."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "status\\s*={2,3}\\s*200",
+        "message": "Comprueba status 200."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "JSON\\.parse\\s*\\(",
+        "message": "Convierte responseText con JSON.parse."
+      },
+      {
+        "type": "contains",
+        "field": "javascript",
+        "value": "address",
+        "message": "Accede a address.city para la ciudad."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "textContent|innerHTML",
+        "message": "Pinta datos en la tarjeta."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "else\\s*\\{[\\s\\S]*(error|Error|fall)",
+        "message": "Muestra un mensaje si el status no es correcto."
+      }
+    ]
+  }
+}

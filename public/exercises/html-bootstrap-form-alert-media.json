@@ -1,0 +1,67 @@
+{
+  "id": "html-bootstrap-form-alert-media",
+  "topic": "html",
+  "type": "build",
+  "title": "Bootstrap: formulario con alertas",
+  "difficulty": "media",
+  "estimatedMinutes": 18,
+  "prompt": "Maqueta un formulario de contacto con Bootstrap. Debe cargar Bootstrap desde CDN, usar container, form-label, form-control, form-select y form-check. Encima del formulario incluye una alerta informativa y al final dos botones: enviar y limpiar.",
+  "notes": [
+    "El objetivo es practicar clases Bootstrap frecuentes en formularios.",
+    "Puedes usar alert alert-info, mb-3, btn btn-primary y btn btn-outline-secondary."
+  ],
+  "starterCode": {
+    "html": "<!-- Carga Bootstrap y maqueta el formulario -->\n<main>\n  <h1>Contacto</h1>\n</main>",
+    "css": "body { padding: 24px; }\n",
+    "javascript": ""
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "Formulario Bootstrap estructurado correctamente.",
+    "rules": [
+      {
+        "type": "regex",
+        "field": "html",
+        "pattern": "bootstrap[^\\\"]*\\.min\\.css",
+        "message": "Carga Bootstrap CSS desde CDN."
+      },
+      {
+        "type": "domSelector",
+        "selector": ".alert.alert-info",
+        "message": "Incluye una alerta informativa."
+      },
+      {
+        "type": "domSelector",
+        "selector": "form",
+        "message": "Crea un formulario."
+      },
+      {
+        "type": "domSelector",
+        "selector": ".form-label",
+        "minCount": 3,
+        "message": "Usa etiquetas con .form-label."
+      },
+      {
+        "type": "domSelector",
+        "selector": ".form-control",
+        "minCount": 2,
+        "message": "Usa al menos dos controles .form-control."
+      },
+      {
+        "type": "domSelector",
+        "selector": ".form-select",
+        "message": "Incluye un select con .form-select."
+      },
+      {
+        "type": "domSelector",
+        "selector": ".form-check-input",
+        "message": "Incluye un checkbox con .form-check-input."
+      },
+      {
+        "type": "domSelector",
+        "selector": ".btn.btn-primary",
+        "message": "Incluye un boton principal."
+      }
+    ]
+  }
+}

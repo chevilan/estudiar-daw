@@ -1,0 +1,73 @@
+{
+  "id": "javascript-jquery-panel-tareas-reto",
+  "topic": "javascript",
+  "type": "build",
+  "title": "jQuery: panel de tareas con selectores encadenados",
+  "difficulty": "reto",
+  "estimatedMinutes": 25,
+  "prompt": "Construye la logica jQuery de un panel de tareas. Al cargar el DOM, marca como urgentes las tareas con data-priority=\"alta\", muestra en #contador cuantas tareas visibles hay y permite filtrar por prioridad con el select. Al pulsar una tarea debe alternar la clase completada y recalcular el contador. Usa encadenamiento de metodos cuando apliques estilos o clases.",
+  "notes": [
+    "Carga jQuery desde CDN en el HTML para que $ exista en el preview.",
+    "Puedes usar .filter(), .not(), .toggleClass(), .data(), .hide(), .show() y .length.",
+    "El contador debe contar solo las tareas que no esten ocultas."
+  ],
+  "editor": {
+    "labels": {
+      "javascript": "jQuery"
+    },
+    "initialFile": "javascript"
+  },
+  "starterCode": {
+    "html": "<script src=\"https://code.jquery.com/jquery-3.7.1.min.js\"></script>\n<main class=\"panel\">\n  <h1>Tablero de tareas</h1>\n  <label>Prioridad\n    <select id=\"filtro\">\n      <option value=\"todas\">Todas</option>\n      <option value=\"alta\">Alta</option>\n      <option value=\"media\">Media</option>\n      <option value=\"baja\">Baja</option>\n    </select>\n  </label>\n  <p id=\"contador\">0 tareas visibles</p>\n  <ul id=\"tareas\">\n    <li class=\"tarea\" data-priority=\"alta\">Preparar practica AJAX</li>\n    <li class=\"tarea\" data-priority=\"media\">Repasar selectores jQuery</li>\n    <li class=\"tarea\" data-priority=\"baja\">Ordenar apuntes XML</li>\n    <li class=\"tarea\" data-priority=\"alta\">Entregar mini SPA</li>\n  </ul>\n</main>",
+    "css": "body { background: #f6f7fb; color: #20242d; font-family: system-ui, sans-serif; padding: 24px; }\n.panel { max-width: 620px; margin: 0 auto; }\nlabel { display: grid; gap: 6px; max-width: 220px; margin-bottom: 14px; font-weight: 700; }\nselect { padding: 8px; }\n#contador { font-weight: 700; }\n#tareas { list-style: none; padding: 0; display: grid; gap: 8px; }\n.tarea { cursor: pointer; padding: 12px 14px; background: white; border: 1px solid #d8deea; border-radius: 8px; }\n.urgente { border-color: #d33; background: #fff2f2; }\n.completada { text-decoration: line-through; opacity: .55; }\n",
+    "javascript": "$(function () {\n  // Implementa el panel con jQuery.\n});\n"
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "Panel jQuery resuelto con filtros y estado dinamico.",
+    "rules": [
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "\\$\\s*\\(\\s*function\\s*\\(",
+        "message": "Espera al DOM con $(function () { ... })."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "data-priority|\\.data\\s*\\(\\s*['\\\"]priority['\\\"]\\s*\\)",
+        "message": "Usa la prioridad de cada tarea."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "\\.filter\\s*\\(",
+        "message": "Filtra tareas con .filter()."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "\\.addClass\\s*\\([\\s\\S]*urgente",
+        "message": "Anade la clase urgente a las tareas de prioridad alta."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "\\.on\\s*\\(\\s*['\\\"]click['\\\"]",
+        "message": "Gestiona el click con .on()."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "\\.toggleClass\\s*\\([\\s\\S]*completada",
+        "message": "Alterna la clase completada."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "\\.length",
+        "message": "Usa .length para calcular el contador."
+      }
+    ]
+  }
+}

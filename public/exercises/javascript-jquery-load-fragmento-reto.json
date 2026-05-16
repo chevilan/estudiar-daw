@@ -1,0 +1,73 @@
+{
+  "id": "javascript-jquery-load-fragmento-reto",
+  "topic": "javascript",
+  "type": "build",
+  "title": "jQuery AJAX: cargar fragmentos con .load()",
+  "difficulty": "reto",
+  "estimatedMinutes": 22,
+  "prompt": "Implementa una mini zona de noticias con jQuery .load(). Al pulsar cada boton con data-url, carga el fragmento indicado dentro de #contenido. Usa el callback de .load(response, status, xhr) para mostrar 'Cargado' si status es success y un mensaje de error con xhr.status si falla. Marca como activo el boton pulsado y desactivalo mientras dura la carga.",
+  "notes": [
+    "Puedes usar rutas de ejemplo como noticias.html #portada; la validacion comprueba estructura, no red real.",
+    "La clave del ejercicio es usar el callback de .load() y gestionar status/xhr.",
+    "Recuerda this dentro del handler de click."
+  ],
+  "editor": {
+    "labels": {
+      "javascript": "jQuery AJAX"
+    },
+    "initialFile": "javascript"
+  },
+  "starterCode": {
+    "html": "<script src=\"https://code.jquery.com/jquery-3.7.1.min.js\"></script>\n<main>\n  <h1>Noticias</h1>\n  <nav class=\"acciones\">\n    <button data-url=\"noticias.html #portada\">Portada</button>\n    <button data-url=\"noticias.html #deportes\">Deportes</button>\n    <button data-url=\"noticias.html #cultura\">Cultura</button>\n  </nav>\n  <p id=\"estado\">Elige una seccion</p>\n  <section id=\"contenido\"></section>\n</main>",
+    "css": "body { font-family: system-ui, sans-serif; padding: 24px; }\nmain { max-width: 680px; margin: auto; }\n.acciones { display: flex; flex-wrap: wrap; gap: 8px; }\nbutton { padding: 9px 12px; border: 1px solid #8b95a7; background: white; }\nbutton.activo { background: #263238; color: white; }\n#contenido { margin-top: 16px; min-height: 120px; border: 1px dashed #abb4c2; padding: 16px; }\n",
+    "javascript": "$(function () {\n  // Carga fragmentos con .load() y muestra el estado.\n});\n"
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "Carga AJAX con .load() estructurada correctamente.",
+    "rules": [
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "\\.on\\s*\\(\\s*['\\\"]click['\\\"]",
+        "message": "Escucha el click de los botones."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "\\.data\\s*\\(\\s*['\\\"]url['\\\"]\\s*\\)|attr\\s*\\(\\s*['\\\"]data-url['\\\"]",
+        "message": "Lee la URL desde data-url."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "\\.load\\s*\\(",
+        "message": "Usa el metodo jQuery .load()."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "function\\s*\\(\\s*response\\s*,\\s*status\\s*,\\s*xhr\\s*\\)",
+        "message": "Usa el callback de .load(response, status, xhr)."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "status\\s*={2,3}\\s*['\\\"]success['\\\"]",
+        "message": "Comprueba si status es success."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "xhr\\.status",
+        "message": "Muestra el codigo HTTP con xhr.status cuando falle."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "\\.prop\\s*\\(\\s*['\\\"]disabled['\\\"]",
+        "message": "Desactiva o reactiva botones con .prop('disabled', ...)."
+      }
+    ]
+  }
+}

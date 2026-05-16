@@ -1,0 +1,73 @@
+{
+  "id": "javascript-jquery-delegacion-tabla-reto",
+  "topic": "javascript",
+  "type": "build",
+  "title": "jQuery: delegacion de eventos en una tabla dinamica",
+  "difficulty": "reto",
+  "estimatedMinutes": 30,
+  "prompt": "Completa la gestion de una tabla editable con jQuery. El boton #agregar debe leer el formulario, crear una fila con nombre, rol y puntos, limpiar los campos y actualizar la media. Como las filas son dinamicas, el boton .borrar de cada fila debe funcionar con delegacion de eventos desde #tabla. Usa closest() para localizar la fila, remove() para borrarla y recorre las filas restantes para recalcular la media.",
+  "notes": [
+    "No enlaces eventos directamente a botones .borrar que aun no existen.",
+    "La media debe salir de los valores de la columna puntos.",
+    "Practica .on(evento, selector, handler), .closest(), .find(), .each() y .val()."
+  ],
+  "editor": {
+    "labels": {
+      "javascript": "jQuery"
+    },
+    "initialFile": "javascript"
+  },
+  "starterCode": {
+    "html": "<script src=\"https://code.jquery.com/jquery-3.7.1.min.js\"></script>\n<main>\n  <h1>Equipo del proyecto</h1>\n  <form id=\"formulario\">\n    <input id=\"nombre\" placeholder=\"Nombre\" />\n    <input id=\"rol\" placeholder=\"Rol\" />\n    <input id=\"puntos\" type=\"number\" min=\"0\" max=\"10\" placeholder=\"Puntos\" />\n    <button id=\"agregar\" type=\"submit\">Agregar</button>\n  </form>\n  <table id=\"tabla\">\n    <thead><tr><th>Nombre</th><th>Rol</th><th>Puntos</th><th></th></tr></thead>\n    <tbody></tbody>\n  </table>\n  <p id=\"media\">Media: 0</p>\n</main>",
+    "css": "body { font-family: system-ui, sans-serif; padding: 24px; color: #171a22; }\nmain { max-width: 760px; margin: auto; }\nform { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; margin-bottom: 16px; }\ninput, button { padding: 9px; }\ntable { width: 100%; border-collapse: collapse; }\nth, td { border-bottom: 1px solid #d9dee8; padding: 10px; text-align: left; }\n#media { font-weight: 700; }\n",
+    "javascript": "$(function () {\n  // Agrega filas, borra con delegacion y calcula la media.\n});\n"
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "Tabla dinamica jQuery implementada con delegacion.",
+    "rules": [
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "\\.on\\s*\\(\\s*['\\\"]submit['\\\"]|\\.on\\s*\\(\\s*['\\\"]click['\\\"]\\s*,\\s*['\\\"]#agregar",
+        "message": "Gestiona el alta desde el formulario o el boton agregar."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "preventDefault\\s*\\(",
+        "message": "Evita el envio real del formulario."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "\\.val\\s*\\(",
+        "message": "Lee los campos con .val()."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "\\.append\\s*\\(",
+        "message": "Inserta la nueva fila con .append()."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "\\.on\\s*\\(\\s*['\\\"]click['\\\"]\\s*,\\s*['\\\"][.#]borrar",
+        "message": "Usa delegacion para los botones de borrar."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "\\.closest\\s*\\(\\s*['\\\"]tr['\\\"]\\s*\\)[\\s\\S]*\\.remove\\s*\\(",
+        "message": "Borra la fila usando closest('tr').remove()."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "\\.each\\s*\\(",
+        "message": "Recalcula la media recorriendo las filas con .each()."
+      }
+    ]
+  }
+}

@@ -1,0 +1,79 @@
+{
+  "id": "javascript-jquery-ajax-json-dashboard-reto",
+  "topic": "javascript",
+  "type": "build",
+  "title": "jQuery AJAX: dashboard JSON con $.ajax",
+  "difficulty": "reto",
+  "estimatedMinutes": 35,
+  "prompt": "Crea un dashboard con $.ajax que cargue https://jsonplaceholder.typicode.com/todos. Debes pedir JSON, filtrar tareas completadas y pendientes, pintar dos contadores, renderizar las 10 primeras tareas pendientes en #pendientes y mostrar errores en #estado. Usa beforeSend, success, error y complete para controlar estados de carga.",
+  "notes": [
+    "No uses fetch en este ejercicio: el objetivo es practicar AJAX con jQuery.",
+    "Puedes usar $.ajax({ url, method: 'GET', dataType: 'json', ... }).",
+    "Para pintar la lista puedes combinar .filter(), .slice(), .map(), .append() o .html()."
+  ],
+  "editor": {
+    "labels": {
+      "javascript": "jQuery AJAX"
+    },
+    "initialFile": "javascript"
+  },
+  "starterCode": {
+    "html": "<script src=\"https://code.jquery.com/jquery-3.7.1.min.js\"></script>\n<main class=\"dashboard\">\n  <h1>Tareas remotas</h1>\n  <button id=\"cargar\">Cargar datos</button>\n  <p id=\"estado\">Sin cargar</p>\n  <section class=\"metricas\">\n    <article><strong id=\"total\">0</strong><span>Total</span></article>\n    <article><strong id=\"hechas\">0</strong><span>Completadas</span></article>\n    <article><strong id=\"sinHacer\">0</strong><span>Pendientes</span></article>\n  </section>\n  <ol id=\"pendientes\"></ol>\n</main>",
+    "css": "body { font-family: system-ui, sans-serif; padding: 24px; background: #f4f6f8; }\n.dashboard { max-width: 760px; margin: auto; }\nbutton { padding: 10px 14px; }\n.metricas { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 16px 0; }\narticle { background: white; border: 1px solid #d8dee8; padding: 14px; border-radius: 8px; display: grid; gap: 4px; }\nstrong { font-size: 2rem; }\nol { background: white; padding: 18px 18px 18px 38px; border: 1px solid #d8dee8; }\n",
+    "javascript": "$(function () {\n  // Carga y resume tareas con $.ajax.\n});\n"
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "Dashboard AJAX con jQuery planteado correctamente.",
+    "rules": [
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "\\$\\.ajax\\s*\\(",
+        "message": "Usa $.ajax()."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "dataType\\s*:\\s*['\\\"]json['\\\"]",
+        "message": "Declara dataType: 'json'."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "beforeSend\\s*:",
+        "message": "Usa beforeSend para indicar carga."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "success\\s*:",
+        "message": "Procesa los datos en success."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "error\\s*:",
+        "message": "Gestiona fallos en error."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "complete\\s*:",
+        "message": "Usa complete para cerrar el estado de carga."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "\\.filter\\s*\\([\\s\\S]*completed",
+        "message": "Filtra por la propiedad completed."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "\\.slice\\s*\\(\\s*0\\s*,\\s*10\\s*\\)",
+        "message": "Limita la lista a las 10 primeras pendientes."
+      }
+    ]
+  }
+}

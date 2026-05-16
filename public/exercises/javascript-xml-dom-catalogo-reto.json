@@ -1,0 +1,73 @@
+{
+  "id": "javascript-xml-dom-catalogo-reto",
+  "topic": "javascript",
+  "type": "build",
+  "title": "XML DOM: parsear, consultar y renderizar catalogo",
+  "difficulty": "reto",
+  "estimatedMinutes": 32,
+  "prompt": "Parsea el XML inicial con DOMParser y renderiza una tabla de libros. Debes obtener cada <libro>, leer su atributo id, titulo, autor y precio, pintar solo los libros con precio menor o igual a 30, calcular el total y mostrar errores si el XML contiene parsererror. Usa metodos del XML DOM como getElementsByTagName o querySelectorAll.",
+  "notes": [
+    "DOMParser.parseFromString(xml, 'application/xml') devuelve un XMLDocument.",
+    "En XML importan mayusculas, minusculas y cierres correctos.",
+    "textContent sirve para extraer el texto de cada nodo."
+  ],
+  "starterCode": {
+    "html": "<main>\n  <h1>Catalogo XML</h1>\n  <table>\n    <thead><tr><th>ID</th><th>Titulo</th><th>Autor</th><th>Precio</th></tr></thead>\n    <tbody id=\"tabla\"></tbody>\n  </table>\n  <p id=\"total\"></p>\n  <p id=\"error\"></p>\n</main>",
+    "css": "body { font-family: system-ui, sans-serif; padding: 24px; }\nmain { max-width: 760px; margin: auto; }\ntable { width: 100%; border-collapse: collapse; }\nth, td { border-bottom: 1px solid #d8dee9; padding: 10px; text-align: left; }\n#error { color: #b00020; font-weight: 700; }\n",
+    "javascript": "const xml = `<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<biblioteca>\n  <libro id=\"js-01\"><titulo>JavaScript Avanzado</titulo><autor>Ana Vidal</autor><precio>28</precio></libro>\n  <libro id=\"css-02\"><titulo>CSS Moderno</titulo><autor>Luis Castro</autor><precio>33</precio></libro>\n  <libro id=\"ajax-03\"><titulo>AJAX y APIs</titulo><autor>Noa Torres</autor><precio>24</precio></libro>\n</biblioteca>`;\n\n// Parsea el XML y pinta la tabla filtrada.\n"
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "Catalogo XML procesado con XML DOM.",
+    "rules": [
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "new\\s+DOMParser\\s*\\(",
+        "message": "Crea un DOMParser."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "parseFromString\\s*\\([\\s\\S]*application/xml",
+        "message": "Parsea como application/xml."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "parsererror",
+        "message": "Comprueba si hay parsererror."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "getElementsByTagName\\s*\\(\\s*['\\\"]libro['\\\"]\\s*\\)|querySelectorAll\\s*\\(\\s*['\\\"]libro['\\\"]\\s*\\)",
+        "message": "Obtiene los nodos libro del XML."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "getAttribute\\s*\\(\\s*['\\\"]id['\\\"]\\s*\\)",
+        "message": "Lee el atributo id de cada libro."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "textContent",
+        "message": "Extrae valores con textContent."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "parseFloat\\s*\\(|Number\\s*\\(",
+        "message": "Convierte el precio a numero."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "createElement\\s*\\(\\s*['\\\"]tr['\\\"]\\s*\\)|innerHTML\\s*\\+=",
+        "message": "Pinta filas en la tabla."
+      }
+    ]
+  }
+}

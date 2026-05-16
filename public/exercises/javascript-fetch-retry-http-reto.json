@@ -1,0 +1,73 @@
+{
+  "id": "javascript-fetch-retry-http-reto",
+  "topic": "javascript",
+  "type": "build",
+  "title": "Fetch: errores HTTP y reintentos",
+  "difficulty": "reto",
+  "estimatedMinutes": 35,
+  "prompt": "Crea una funcion fetchConReintentos(url, intentos) que use fetch y promesas. Debe comprobar response.ok, lanzar Error con el status si la respuesta no es 2xx, reintentar hasta agotar intentos y esperar entre intentos con una funcion delay(ms) basada en Promise y setTimeout. Al final, pinta el JSON recibido o el error final en #salida.",
+  "notes": [
+    "fetch no rechaza la promesa por 404 o 500: hay que mirar response.ok.",
+    "Puedes resolverlo con async/await y un bucle for.",
+    "delay(ms) debe devolver una Promise."
+  ],
+  "starterCode": {
+    "html": "<main>\n  <h1>Fetch robusto</h1>\n  <button id=\"probar\">Probar carga</button>\n  <pre id=\"salida\"></pre>\n</main>",
+    "css": "body { font-family: system-ui, sans-serif; padding: 24px; }\nmain { max-width: 680px; margin: auto; }\nbutton { padding: 10px 14px; }\npre { margin-top: 14px; padding: 16px; background: #101828; color: #d1fadf; min-height: 160px; white-space: pre-wrap; }\n",
+    "javascript": "const salida = document.querySelector('#salida');\n\n// Implementa delay(ms) y fetchConReintentos(url, intentos).\n"
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "Fetch robusto con reintentos y errores HTTP implementado.",
+    "rules": [
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "function\\s+delay|const\\s+delay\\s*=",
+        "message": "Define una funcion delay(ms)."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "new\\s+Promise\\s*\\([\\s\\S]*setTimeout",
+        "message": "delay debe usar Promise y setTimeout."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "async\\s+function\\s+fetchConReintentos|const\\s+fetchConReintentos\\s*=\\s*async",
+        "message": "Define fetchConReintentos como funcion async."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "fetch\\s*\\(",
+        "message": "Usa fetch."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "!\\s*response\\.ok|!\\s*res\\.ok|\\.ok\\s*={2,3}\\s*false",
+        "message": "Comprueba response.ok y detecta errores HTTP."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "throw\\s+new\\s+Error\\s*\\([\\s\\S]*status",
+        "message": "Lanza un Error que incluya el status HTTP."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "for\\s*\\(",
+        "message": "Usa un bucle para controlar los reintentos."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "await\\s+delay\\s*\\(",
+        "message": "Espera entre reintentos con await delay(...)."
+      }
+    ]
+  }
+}

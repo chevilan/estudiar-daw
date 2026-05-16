@@ -1,0 +1,73 @@
+{
+  "id": "javascript-promesas-pipeline-reto",
+  "topic": "javascript",
+  "type": "build",
+  "title": "Promesas: pipeline encadenado con validacion",
+  "difficulty": "reto",
+  "estimatedMinutes": 30,
+  "prompt": "Crea un pipeline de promesas para procesar una lista de alumnos. La funcion obtenerAlumnos() debe devolver una Promise que resuelva un array tras setTimeout. Encadena then() para filtrar aprobados, ordenar por nota descendente y convertirlos a strings 'Nombre - nota'. Si no hay aprobados, lanza un Error. Termina con catch() y finally(), pintando el resultado en #salida y escribiendo en consola cada fase.",
+  "notes": [
+    "No uses async/await en este ejercicio: practica encadenamiento con then().",
+    "Cada then debe devolver el dato transformado para la siguiente fase.",
+    "Usa throw new Error(...) dentro de una fase del pipeline."
+  ],
+  "starterCode": {
+    "html": "<main>\n  <h1>Pipeline de alumnos</h1>\n  <pre id=\"salida\"></pre>\n</main>",
+    "css": "body { font-family: system-ui, sans-serif; padding: 24px; }\nmain { max-width: 640px; margin: auto; }\npre { background: #111827; color: #e5e7eb; padding: 16px; min-height: 160px; white-space: pre-wrap; }\n",
+    "javascript": "const alumnos = [\n  { nombre: 'Ana', nota: 8.4 },\n  { nombre: 'Brais', nota: 4.9 },\n  { nombre: 'Carmen', nota: 9.1 },\n  { nombre: 'Diego', nota: 5.2 }\n];\n\n// Crea obtenerAlumnos() y el pipeline de promesas.\n"
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "Pipeline de promesas encadenado correctamente.",
+    "rules": [
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "new\\s+Promise\\s*\\(",
+        "message": "Crea una promesa con new Promise."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "setTimeout\\s*\\(",
+        "message": "Simula asincronia con setTimeout."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "(\\.then\\s*\\([\\s\\S]*){3,}",
+        "message": "Encadena al menos tres .then()."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "\\.filter\\s*\\(",
+        "message": "Filtra los alumnos aprobados."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "\\.sort\\s*\\(",
+        "message": "Ordena los resultados."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "\\.map\\s*\\(",
+        "message": "Transforma los aprobados a strings con .map()."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "throw\\s+new\\s+Error\\s*\\(",
+        "message": "Lanza un Error si no hay aprobados."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "\\.catch\\s*\\([\\s\\S]*\\.finally\\s*\\(",
+        "message": "Termina con catch() y finally()."
+      }
+    ]
+  }
+}

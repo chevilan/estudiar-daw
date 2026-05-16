@@ -1,0 +1,73 @@
+{
+  "id": "javascript-xhr-post-json-headers-reto",
+  "topic": "javascript",
+  "type": "build",
+  "title": "XMLHttpRequest: POST JSON con cabeceras",
+  "difficulty": "reto",
+  "estimatedMinutes": 30,
+  "prompt": "Crea una peticion POST con XMLHttpRequest. Al enviar el formulario, evita el submit real, construye un objeto con titulo y cuerpo, conviertelo con JSON.stringify, abre un POST a https://jsonplaceholder.typicode.com/posts, configura Content-Type: application/json;charset=UTF-8, envia el cuerpo y muestra el id devuelto si el status esta entre 200 y 299. Si falla, muestra status y statusText.",
+  "notes": [
+    "No uses fetch ni $.ajax.",
+    "Para comprobar rango HTTP puedes usar xhr.status >= 200 && xhr.status < 300.",
+    "El ejercicio fuerza tanto cabeceras como tratamiento de errores."
+  ],
+  "starterCode": {
+    "html": "<form id=\"postForm\">\n  <h1>Nuevo post</h1>\n  <input id=\"titulo\" placeholder=\"Titulo\" />\n  <textarea id=\"cuerpo\" placeholder=\"Cuerpo\"></textarea>\n  <button>Enviar</button>\n  <p id=\"salida\"></p>\n</form>",
+    "css": "body { font-family: system-ui, sans-serif; padding: 24px; }\nform { max-width: 480px; margin: auto; display: grid; gap: 10px; }\ninput, textarea, button { padding: 10px; font: inherit; }\ntextarea { min-height: 120px; }\n#salida { min-height: 24px; font-weight: 700; }\n",
+    "javascript": "const form = document.querySelector('#postForm');\nconst salida = document.querySelector('#salida');\n\n// Envia el formulario con XHR POST JSON.\n"
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "POST JSON con XMLHttpRequest estructurado correctamente.",
+    "rules": [
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "preventDefault\\s*\\(",
+        "message": "Evita el envio real del formulario."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "new\\s+XMLHttpRequest\\s*\\(",
+        "message": "Crea una instancia de XMLHttpRequest."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "\\.open\\s*\\(\\s*['\\\"]POST['\\\"]",
+        "message": "Abre la peticion con metodo POST."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "\\.setRequestHeader\\s*\\(\\s*['\\\"]Content-Type['\\\"]\\s*,\\s*['\\\"]application/json",
+        "message": "Configura la cabecera Content-Type JSON."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "JSON\\.stringify\\s*\\(",
+        "message": "Convierte el objeto a JSON con JSON.stringify."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "\\.send\\s*\\(\\s*JSON\\.stringify",
+        "message": "Envia el JSON en xhr.send(...)."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "status\\s*>=\\s*200[\\s\\S]*status\\s*<\\s*300",
+        "message": "Comprueba el rango HTTP 2xx."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "statusText",
+        "message": "Muestra statusText cuando falle."
+      }
+    ]
+  }
+}

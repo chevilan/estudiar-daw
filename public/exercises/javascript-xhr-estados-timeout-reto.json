@@ -1,0 +1,73 @@
+{
+  "id": "javascript-xhr-estados-timeout-reto",
+  "topic": "javascript",
+  "type": "build",
+  "title": "XMLHttpRequest: estados, timeout y cancelacion",
+  "difficulty": "reto",
+  "estimatedMinutes": 32,
+  "prompt": "Implementa un visor de estados de XMLHttpRequest. Al pulsar #cargar, crea un XHR GET a https://jsonplaceholder.typicode.com/posts/1, registra cada cambio de readyState en #log, configura timeout a 4000 ms, muestra el titulo si status es 200 y gestiona onerror, ontimeout y abort. El boton #cancelar debe abortar la peticion activa.",
+  "notes": [
+    "Usa onreadystatechange para registrar readyState 1, 2, 3 y 4.",
+    "Guarda el XHR actual en una variable accesible para poder abortarlo.",
+    "No uses fetch."
+  ],
+  "starterCode": {
+    "html": "<main>\n  <h1>Monitor XHR</h1>\n  <button id=\"cargar\">Cargar post</button>\n  <button id=\"cancelar\">Cancelar</button>\n  <p id=\"resultado\"></p>\n  <ol id=\"log\"></ol>\n</main>",
+    "css": "body { font-family: system-ui, sans-serif; padding: 24px; }\nmain { max-width: 620px; margin: auto; }\nbutton { padding: 9px 12px; margin-right: 8px; }\n#resultado { font-weight: 700; }\n#log { background: #f6f8fa; padding: 16px 16px 16px 34px; border: 1px solid #d9e0ea; }\n",
+    "javascript": "const cargar = document.querySelector('#cargar');\nconst cancelar = document.querySelector('#cancelar');\nconst resultado = document.querySelector('#resultado');\nconst log = document.querySelector('#log');\nlet xhrActual = null;\n\n// Implementa el monitor XHR.\n"
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "XMLHttpRequest gestionado con estados, timeout y cancelacion.",
+    "rules": [
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "new\\s+XMLHttpRequest\\s*\\(",
+        "message": "Crea un XMLHttpRequest."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "onreadystatechange\\s*=",
+        "message": "Usa onreadystatechange."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "readyState",
+        "message": "Consulta readyState."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "\\.timeout\\s*=\\s*4000",
+        "message": "Configura timeout a 4000 ms."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "ontimeout\\s*=",
+        "message": "Gestiona ontimeout."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "onerror\\s*=",
+        "message": "Gestiona onerror."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "\\.abort\\s*\\(",
+        "message": "Permite cancelar con abort()."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "JSON\\.parse\\s*\\(",
+        "message": "Parsea la respuesta JSON."
+      }
+    ]
+  }
+}

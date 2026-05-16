@@ -1,0 +1,73 @@
+{
+  "id": "javascript-jquery-formulario-validacion-reto",
+  "topic": "javascript",
+  "type": "build",
+  "title": "jQuery: validacion avanzada de formulario",
+  "difficulty": "reto",
+  "estimatedMinutes": 28,
+  "prompt": "Implementa una validacion jQuery para el formulario de registro. En submit, evita el envio, valida email, password y condiciones. Debes mostrar errores junto a cada campo, anadir la clase invalido al contenedor .campo con error, quitarla cuando se corrija y habilitar #enviar solo cuando todo sea valido. Usa expresiones regulares y eventos input/change.",
+  "notes": [
+    "El email debe tener formato usuario@dominio.ext.",
+    "La password debe tener al menos 8 caracteres, una mayuscula y un numero.",
+    "Practica .siblings(), .parent(), .toggleClass(), .prop() y .on()."
+  ],
+  "editor": {
+    "labels": {
+      "javascript": "jQuery"
+    },
+    "initialFile": "javascript"
+  },
+  "starterCode": {
+    "html": "<script src=\"https://code.jquery.com/jquery-3.7.1.min.js\"></script>\n<form id=\"registro\" novalidate>\n  <div class=\"campo\">\n    <label for=\"email\">Email</label>\n    <input id=\"email\" type=\"email\" />\n    <small class=\"error\"></small>\n  </div>\n  <div class=\"campo\">\n    <label for=\"password\">Password</label>\n    <input id=\"password\" type=\"password\" />\n    <small class=\"error\"></small>\n  </div>\n  <label class=\"check\"><input id=\"condiciones\" type=\"checkbox\" /> Acepto las condiciones</label>\n  <button id=\"enviar\" disabled>Crear cuenta</button>\n  <p id=\"estado\"></p>\n</form>",
+    "css": "body { font-family: system-ui, sans-serif; padding: 24px; background: #fbfbfd; }\nform { max-width: 440px; margin: auto; display: grid; gap: 14px; }\n.campo { display: grid; gap: 5px; }\ninput { padding: 9px; border: 1px solid #aeb7c6; }\n.error { min-height: 18px; color: #b00020; }\n.invalido input { border-color: #b00020; background: #fff3f3; }\nbutton { padding: 10px 12px; }\n",
+    "javascript": "$(function () {\n  // Valida el formulario en tiempo real y en submit.\n});\n"
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "Formulario validado con jQuery.",
+    "rules": [
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "preventDefault\\s*\\(",
+        "message": "Evita el envio por defecto en submit."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "RegExp|/[^\\n]+/",
+        "message": "Usa expresiones regulares para validar."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "\\.on\\s*\\(\\s*['\\\"](input|change|submit)",
+        "message": "Escucha eventos input, change o submit con .on()."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "\\.toggleClass\\s*\\([\\s\\S]*invalido",
+        "message": "Marca los campos invalidos con toggleClass('invalido', ...)."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "\\.siblings\\s*\\([\\s\\S]*error|\\.find\\s*\\([\\s\\S]*error",
+        "message": "Escribe los mensajes en el elemento .error del campo."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "\\.prop\\s*\\(\\s*['\\\"]disabled['\\\"]",
+        "message": "Habilita o deshabilita el boton con .prop('disabled', ...)."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "\\.is\\s*\\(\\s*['\\\"]:checked['\\\"]\\s*\\)",
+        "message": "Comprueba el checkbox con .is(':checked')."
+      }
+    ]
+  }
+}

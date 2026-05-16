@@ -1,0 +1,79 @@
+{
+  "id": "javascript-ajax-spa-router-reto",
+  "topic": "javascript",
+  "type": "build",
+  "title": "AJAX: mini SPA con rutas y carga de datos",
+  "difficulty": "reto",
+  "estimatedMinutes": 40,
+  "prompt": "Construye una mini SPA sin recargar la pagina. Los enlaces del nav deben cancelar su navegacion, cambiar location.hash, marcar el enlace activo y cargar datos distintos con fetch segun la ruta: #usuarios pide /users y #posts pide /posts. Debes renderizar solo los 5 primeros elementos, mostrar un estado de carga, comprobar response.ok y gestionar errores. Al abrir la pagina, debe renderizar la ruta actual o #usuarios por defecto.",
+  "notes": [
+    "Usa rutas hash para simular navegacion SPA.",
+    "La interfaz no debe recargar la pagina completa.",
+    "Este ejercicio mezcla eventos, Fetch, promesas, estado de UI y render dinamico."
+  ],
+  "starterCode": {
+    "html": "<main>\n  <h1>Mini SPA AJAX</h1>\n  <nav>\n    <a href=\"#usuarios\" data-route=\"usuarios\">Usuarios</a>\n    <a href=\"#posts\" data-route=\"posts\">Posts</a>\n  </nav>\n  <p id=\"estado\"></p>\n  <section id=\"vista\"></section>\n</main>",
+    "css": "body { font-family: system-ui, sans-serif; padding: 24px; background: #f6f8fb; }\nmain { max-width: 760px; margin: auto; }\nnav { display: flex; gap: 8px; margin-bottom: 16px; }\na { padding: 8px 12px; border: 1px solid #9aa4b5; color: #1f2937; text-decoration: none; background: white; }\na.activo { background: #1f2937; color: white; }\n#vista { display: grid; gap: 10px; }\n.item { background: white; border: 1px solid #d8dee8; padding: 12px; border-radius: 8px; }\n",
+    "javascript": "const estado = document.querySelector('#estado');\nconst vista = document.querySelector('#vista');\nconst enlaces = document.querySelectorAll('nav a');\n\n// Implementa el router SPA con AJAX.\n"
+  },
+  "validation": {
+    "mode": "all",
+    "successMessage": "Mini SPA AJAX construida con rutas hash y fetch.",
+    "rules": [
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "preventDefault\\s*\\(",
+        "message": "Evita la navegacion normal de los enlaces."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "location\\.hash|window\\.location\\.hash",
+        "message": "Usa location.hash para la ruta."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "hashchange",
+        "message": "Escucha el evento hashchange."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "fetch\\s*\\(",
+        "message": "Carga datos con fetch."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "!\\s*response\\.ok|!\\s*res\\.ok",
+        "message": "Comprueba response.ok."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "\\.json\\s*\\(",
+        "message": "Convierte la respuesta con .json()."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "\\.slice\\s*\\(\\s*0\\s*,\\s*5\\s*\\)",
+        "message": "Renderiza solo los 5 primeros elementos."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "classList\\.add\\s*\\([\\s\\S]*activo|\\.className\\s*=",
+        "message": "Marca el enlace activo."
+      },
+      {
+        "type": "regex",
+        "field": "javascript",
+        "pattern": "try\\s*\\{[\\s\\S]*catch|\\.catch\\s*\\(",
+        "message": "Gestiona errores de carga."
+      }
+    ]
+  }
+}
